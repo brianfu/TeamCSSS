@@ -1,37 +1,37 @@
 """
  Pygame base template for opening a window
- 
+
  Sample Python/Pygame Programs
  Simpson College Computer Science
  http://programarcadegames.com/
  http://simpson.edu/computer-science/
- 
+
  Explanation video: http://youtu.be/vRB_983kUMc
 """
- 
+
 import pygame
 from pygame.locals import *
- 
+
 # Define some colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
- 
+
 pygame.init()
- 
+
 # Set the width and height of the screen [width, height]
 size = (1280, 720)
 
 screen = pygame.display.set_mode(size)
- 
+
 pygame.display.set_caption("Grid")
- 
+
 font = pygame.font.SysFont('Calibri', 25, True, False)
 
 # Loop until the user clicks the close button.
 done = False
- 
+
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
 
@@ -50,39 +50,39 @@ for m in range (36):
     for n in range (24):
         s_c_list[m].append(0)
 
+print(range(len(s_c_list)))
+print(range(len(s_c_list[1])))
+
 
 #30x30 px, 36 x 24 grid
 #Function for square draw
-def draw_square(position, state_counter, color):
+def draw_square(x, y, state_counter, color):
     #do in mainloop: if position is same as current position, change colors
-    pygame.draw.rect(screen, color, [position[0]*30,position[1]*30, 30, 30], 0) #col by row mat.
+    pygame.draw.rect(screen, color, [x*30,y*30, 30, 30], 0) #col by row mat.
     text = font.render(str(state_counter), True, BLACK)
     return text
     #bilt in mainloop "screen.blit(text, [position[0]*30, position[1]*30])"
-    
- 
+
+
 # -------- Main Program Loop -----------
 while not done:
-    print("lul?")
     # --- Main event loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-            
+
         #if event key down
         elif event.type == pygame.KEYDOWN:
             #print(current_pos);
-            
+
             #if pressed space
             if event.key == pygame.K_SPACE:
-                if state_counter >= 3:
-                    state_counter = 0
-                else:
-                    state_counter += 1
-                    
+                s_c_list[current_pos[0]][current_pos[1]] += 1
+                s_c_list[current_pos[0]][current_pos[1]] = s_c_list[current_pos[0]][current_pos[1]] % 4
+
                 #might as well do flag
                 space_pressed = True
-                    
+
             #Move keys
             elif event.key == pygame.K_RIGHT:
                 #print("SHIT IS FUCKED")
@@ -106,56 +106,49 @@ while not done:
                 else:
                     current_pos[1] -= 1
             #ik i fucked up the order dw bout it
-                   
+
     #text = draw_square([2,2], state_counter, GREEN)
     #screen.blit(text, [2*30,2*30])
-    
-    
+
+
     # --- Game logic should go here
-    mcount = 0
-    ncount = 0
-    print( s_c_list )
-    for m in s_c_list: #36
-        for n in m: #24
-            print( "we made it!" + str( mcount) + str( ncount) )
+    for m in range(35-1): #36
+        for n in range(23-1): #24
             #Find and draw current position
-            position = [mcount,ncount]
-            if position == current_pos:
-                text = draw_square(position, state_counter, GREEN)
+            xVal = m
+            yVal = n
+            if [xVal, yVal] == current_pos:
+                text = draw_square(xVal, yVal, s_c_list[m][n], GREEN)
                 #add to and check for overflow in state counter ([0,3] only)
                 '''if space_pressed:
-                   s_c_list[m][n] = s_c_list[n][m] + 1 '''              
+                   s_c_list[m][n] = s_c_list[n][m] + 1 '''
             else:
-                text = draw_square(position, state_counter, RED)
-        
+                text = draw_square(xVal, yVal, s_c_list[m][n], RED)
+
             #Bilt in words here
-            screen.blit(text, [position[0]*30,position[1]*30])
-            
-            ncount += 1
+            screen.blit(text, [xVal*30,yVal*30])
             #position[1] += 1 #iterator #these don't work
-        ncount = 0
-        mcount += 1
         #position[0] += 1
-    
+
     #Reset space_pressed flag
     space_pressed = False
-    
+
     # --- Screen-clearing code goes here
- 
+
     # Here, we clear the screen to white. Don't put other drawing commands
     # above this, or they will be erased with this command.
- 
+
     # If you want a background image, replace this clear with blit'ing the
     # background image.
     #screen.fill(WHITE)
- 
+
     # --- Drawing code should go here
- 
+
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
- 
+
     # --- Limit to 60 frames per second
     clock.tick(60)
- 
+
 # Close the window and quit.
 pygame.quit()
