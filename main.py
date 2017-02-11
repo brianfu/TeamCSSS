@@ -3,6 +3,7 @@ import pygame
 from pygame.locals import *
 import Core.load_sound
 import Core.load_image
+from Core.detect_collision import detect_collision
 import Core.Command
 import Char.Character
 
@@ -39,6 +40,7 @@ keys_pressed = []
 objects = []
 
 Char = Char.Character.Character();
+aRect = pygame.Rect(100,100,100,100)
 group = pygame.sprite.Group(Char)
 
 Command = Core.Command.Command();
@@ -71,6 +73,14 @@ def draw_square(x, y, state_counter, curr_color, txt_color):
     text = font25.render(str(state_counter), True, txt_color)
     return text
 
+def empty():
+    print('Empty Floor Tile')
+def wall():
+    print('Wall Tile')
+def exit():
+    print('Exit Tile')
+tiles = {0: empty, 1: wall, 2: exit}
+
 
 # -------- Main Program Loop -----------
 while not done:
@@ -89,6 +99,7 @@ while not done:
 
     # --- Game logic should go here
     Char.update(tick,current_room)
+    current_tile = Char.getTile()
     #Reset space_pressed flag
     space_pressed = False
 
@@ -117,6 +128,7 @@ while not done:
 
             #Blit in words here
             screen.blit(text, [xVal*30,yVal*30])
+
 
     group.draw(screen);
     # --- Go ahead and update the screen with what we've drawn.
