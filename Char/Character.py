@@ -1,5 +1,6 @@
 import pygame
 import os
+import math
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -38,8 +39,8 @@ class Character(pygame.sprite.Sprite):
                 deltamove[i%2] += self.Direction[i]* -1;
             else:
                 deltamove[i%2] += self.Direction[i]; #add 1 to deltamove if 0 or 1, minus 1 if 2 or 3
-        future_Pos_x = 0
-        future_Pos_y = 0
+        future_Pos_x = self.Pos_x
+        future_Pos_y = self.Pos_y
         if deltamove[0] != 0 and deltamove[1] != 0:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
@@ -47,10 +48,12 @@ class Character(pygame.sprite.Sprite):
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
 
+        print(future_Pos_y)
+        print(future_Pos_x)
 
-        if True:
-            self.Pos_x += future_Pos_x
-            self.Pos_y += future_Pos_y
+        if current_room[int(math.floor(future_Pos_x/30))][int(math.floor(future_Pos_y/30))] != 1 and current_room[int(math.floor((future_Pos_x+30)/30))][int(math.floor((future_Pos_y+30)/30))] != 1:
+            self.Pos_x = future_Pos_x
+            self.Pos_y = future_Pos_y
 
         if self.Ghoststate:
             self.image = self.images[1];
@@ -82,6 +85,10 @@ class Character(pygame.sprite.Sprite):
                 self.Direction[2] = 0;
             elif command.spec == "LEFT":
                 self.Direction[3] = 0;
+
+    def getTile(self):
+        current_room[int(math.floor(future_Pos_x/30))][int(math.floor(future_Pos_y/30))] != 1 and current_room[int(math.floor((future_Pos_x+30)/30))][int(math.floor((future_Pos_y+30)/30))]
+
 
 '''
     def draw(self,screen):
