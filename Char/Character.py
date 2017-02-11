@@ -16,39 +16,47 @@ def load_image(name, colorkey=None):
     return image, image.get_rect()
 
 class Character(pygame.sprite.Sprite):
-    
+
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.Ghoststate = False
         self.Pos_x = 50;
         self.Pos_y = 50;
         self.Timecountdown = 200 #at 60fps, the number should be 60*time wanted
-        #self.Direction = 0; #can be 0-7, 
+        #self.Direction = 0; #can be 0-7,
         self.Orientation = 0; #can be 0-3
         self.Velocity = 216 #pixels / second
         self.Direction = [0,0,0,0]
         self.images = [pygame.image.load('Art/Char_0.jpg'),pygame.image.load('Art/Char_1.png')]
-        
-        
-    def update(self,tick):
+        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
+
+
+    def update(self,tick,current_room):
         deltamove = [0,0];
         for i in range(4):
             if i==3 or i==2:
                 deltamove[i%2] += self.Direction[i]* -1;
             else:
                 deltamove[i%2] += self.Direction[i]; #add 1 to deltamove if 0 or 1, minus 1 if 2 or 3
-        
+        future_Pos_x = 0
+        future_Pos_y = 0
         if deltamove[0] != 0 and deltamove[1] != 0:
-            self.Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
-            self.Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
+            future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
+            future_Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
         else:
-            self.Pos_x += deltamove[1]*(self.Velocity*tick/1000) 
-            self.Pos_y += deltamove[0]*(self.Velocity*tick/1000)
+            future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
+            future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
+
+
+        if True:
+            self.Pos_x += future_Pos_x
+            self.Pos_y += future_Pos_y
+
         if self.Ghoststate:
             self.image = self.images[1];
         else: self.image = self.images[0];
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
-        
+
     def getCommand(self,command):
         if command.ctype == "keypress":
             if command.spec == "DOWN":
@@ -73,8 +81,8 @@ class Character(pygame.sprite.Sprite):
             elif command.spec == "UP":
                 self.Direction[2] = 0;
             elif command.spec == "LEFT":
-                self.Direction[3] = 0;            
-        
+                self.Direction[3] = 0;
+
 '''
     def draw(self,screen):
         self.image.draw(screen);
