@@ -1,6 +1,5 @@
 import pygame
 import os
-import math
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -16,47 +15,44 @@ def load_image(name, colorkey=None):
         image.set_colorkey(colorkey, RLEACCEL)
     return image, image.get_rect()
 
-class Character(pygame.sprite.Sprite):
-
+class Enemy(pygame.sprite.Sprite):
+    
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.Ghoststate = False
-        self.Pos_x = 50;
-        self.Pos_y = 50;
-        self.Timecountdown = 200 #at 60fps, the number should be 60*time wanted
-        #self.Direction = 0; #can be 0-7,
-        self.Orientation = 0; #can be 0-3
+        self.Possesedstate = false
+        self.Pos.x = 50;
+        self.Pos.y = 50;
+        self.EnemyType = 0 
+        self.Hitpoints = 1
+        self.Armour = 0
+        self.AttackDamage = 0
+        self.SpecialTraits = 0 #Special Traits are stored as integers and checked for as integers.
+        self.Direction = 0; #can be 0-7, 
+        self.Orientation = 0 #can be 0-3
         self.Velocity = 216 #pixels / second
         self.Direction = [0,0,0,0]
         self.images = [pygame.image.load('Art/Char_0.jpg'),pygame.image.load('Art/Char_1.png')]
-        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
-
-
-    def update(self,tick,current_room):
+        
+        
+    def update(self,tick):
         deltamove = [0,0];
         for i in range(4):
             if i==3 or i==2:
                 deltamove[i%2] += self.Direction[i]* -1;
             else:
                 deltamove[i%2] += self.Direction[i]; #add 1 to deltamove if 0 or 1, minus 1 if 2 or 3
-        future_Pos_x = self.Pos_x
-        future_Pos_y = self.Pos_y
+        
         if deltamove[0] != 0 and deltamove[1] != 0:
-            future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
-            future_Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
+            self.Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
+            self.Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
         else:
-            future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
-            future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
-
-        if current_room[int(math.floor(future_Pos_x/30))][int(math.floor(future_Pos_y/30))] != 1 and current_room[int(math.floor((future_Pos_x+30)/30))][int(math.floor((future_Pos_y+30)/30))] != 1:
-            self.Pos_x = future_Pos_x
-            self.Pos_y = future_Pos_y
-
+            self.Pos_x += deltamove[1]*(self.Velocity*tick/1000) 
+            self.Pos_y += deltamove[0]*(self.Velocity*tick/1000)
         if self.Ghoststate:
             self.image = self.images[1];
         else: self.image = self.images[0];
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
-
+        
     def getCommand(self,command):
         if command.ctype == "keypress":
             if command.spec == "DOWN":
@@ -81,13 +77,28 @@ class Character(pygame.sprite.Sprite):
             elif command.spec == "UP":
                 self.Direction[2] = 0;
             elif command.spec == "LEFT":
-                self.Direction[3] = 0;
-
-    def getTile(self):
-        return [int(math.floor(self.Pos_x/30)),int(math.floor(self.Pos_y/30))]
-
-
+                self.Direction[3] = 0;            
+        
 '''
     def draw(self,screen):
         self.image.draw(screen);
         return 0; #Update later with drawing stuff'''
+class Guard(Enemy):
+    def __init__(self):
+        Enemy.__init__(self)
+        Enemy.EnemyType = 1
+        Enemy.Hitpoints = 100
+        Enemy.Armour = 1
+        Enemy.AttackDamage = 2
+        Enemy.SpecialTraits = 0
+        #Enemy.images = #NEED TO ADD ENEMY IMAGES#
+
+class Scientist(Enemy):
+    def __init__(self):
+        Enemy.__init__(self)
+        Enemy.EnemyType = 2
+        Enemy.Hitpoints = 50
+        Enemy.Armour = 0
+        Enemy.AttackDamage = 0
+        Enemy.SpecialTraits = 0
+        #Enemy.images = #NEED TO ADD ENEMY IMAGES#
