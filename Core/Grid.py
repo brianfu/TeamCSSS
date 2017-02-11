@@ -96,8 +96,10 @@ while not done:
 
                 #might as well do flag
                 space_pressed = True
-            if event.key == pygame.K_x:
+            elif event.key == pygame.K_x:
                 s_c_list[current_pos[0]][current_pos[1]] -= 1
+            elif event.key == pygame.K_r:
+                s_c_list[current_pos[0]][current_pos[1]] = 0
             #Move keys
             elif event.key == pygame.K_RIGHT:
                 current_pos[0] += 1
