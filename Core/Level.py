@@ -12,7 +12,7 @@ class Level():
         for m in range(3):
             self.rooms.append([])
             for n in range(3):
-                roomName = 'Core/' + str(level_num) + "-" + str(m) + "_" + str(n)
+                roomName = 'Core/Levels/' + str(level_num) + "-" + str(m) + "_" + str(n)
                 self.rooms[m].append(pickle.load(open(roomName,"rb")))
 
     def get_current_room(self):

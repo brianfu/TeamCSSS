@@ -9,7 +9,6 @@ import Char.Character
 import Char.Enemy
 import Core.Level
 
-
 if not pygame.font: print('Warning, fonts disabled')
 if not pygame.mixer: print('Warning, sound disabled')
 
@@ -70,7 +69,7 @@ room_grid_position = [0,0]
 current_level = Core.Level.Level()
 current_level.load_level(1)
 current_room = current_level.get_current_room()
-current_entities = current_level.get_current_entities()
+
 
 #make 36 x 24 matrix
 #temporary, will eventually pickle
@@ -84,6 +83,9 @@ for m in range (36):
         else:
             current_room[m].append(0)
 '''
+
+current_room[15][15] = 1
+current_room[17][15] = 1
 
 #30x30 px, 36 x 24 grid
 #Function for square draw
@@ -117,16 +119,10 @@ while not done:
         Chardude.getCommand(Command);
 
     # --- Game logic should go here
-    current_tile = Chardude.getTile()
-    print(current_tile)
-    if current_room[current_tile[0]][current_tile[1]] == 2:
-        current_level.enter_door(current_tile, Char)
-        current_room = current_level.get_current_room()
-        current_entities = current_level.get_current_entities()
-    for enemy in current_entities:
+    for enemy in enemylist:
         enemy.update(tick)
-    Chardude.update(tick,current_room,current_entities)
-    
+    Chardude.update(tick,current_room,enemylist)
+    current_tile = Chardude.getTile()
 
     # --- Screen-clearing code goes here
 
@@ -154,7 +150,7 @@ while not done:
             #Blit in words here
             screen.blit(text, [xVal*30,yVal*30])
     
-    group2 = pygame.sprite.Group(current_level.get_enemy_list())
+    group2 = pygame.sprite.Group(enemylist)
    
     
     group.draw(screen);
