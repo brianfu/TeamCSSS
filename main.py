@@ -73,8 +73,8 @@ def empty():
     print('Empty Floor Tile')
 def wall():
     print('Wall Tile')
-def exit():
-    print('Exit Tile')
+def door():
+    print('Door Tile')
 tiles = {0: empty, 1: wall, 2: exit}
 
 
@@ -94,8 +94,12 @@ while not done:
         Char.getCommand(Command);
 
     # --- Game logic should go here
-    Char.update(tick,current_room)
     current_tile = Char.getTile()
+    print(current_tile)
+    if current_room[current_tile[0]][current_tile[1]] == 2:
+        current_level.enter_door(current_tile, Char)
+        current_room = current_level.get_current_room()
+    Char.update(tick,current_room)
     #Reset space_pressed flag
     space_pressed = False
 
