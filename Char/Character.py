@@ -58,30 +58,17 @@ class Character(pygame.sprite.Sprite):
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
 
     def getCommand(self,command):
-        if command.ctype == "keypress":
-            if command.spec == "DOWN":
-                self.Orientation = 0;
-                self.Direction[0] = 1;
-            elif command.spec == "RIGHT":
-                self.Orientation = 1;
-                self.Direction[1] = 1;
-            elif command.spec == "UP":
-                self.Orientation = 2;
-                self.Direction[2] = 1;
-            elif command.spec == "LEFT":
-                self.Orientation = 3;
-                self.Direction[3] = 1;
-            elif command.spec == "DIMENSION":
-                self.Ghoststate = not self.Ghoststate
-        elif command.ctype == "keydepress":
-            if command.spec == "DOWN":
-                self.Direction[0] = 0;
-            elif command.spec == "RIGHT":
-                self.Direction[1] = 0;
-            elif command.spec == "UP":
-                self.Direction[2] = 0;
-            elif command.spec == "LEFT":
-                self.Direction[3] = 0;
+        if command.ctype == "go_dir":
+            self.Orientation = command.spec;
+            self.Direction[command.spec] = 1;
+            
+        elif command.ctype == "stop_dir":
+            self.Direction[command.spec] = 0;
+        
+        elif command.ctype == "ghost_mode":
+            if command.spec == "swap":
+                if self.Ghoststate:
+                    unGhost(self);
 
     def getTile(self):
         return [int(math.floor(self.Pos_x/30)),int(math.floor(self.Pos_y/30))]
