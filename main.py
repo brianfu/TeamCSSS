@@ -6,6 +6,7 @@ import Core.load_image
 from Core.detect_collision import detect_collision
 import Core.Command
 import Char.Character
+import Core.Level
 
 
 if not pygame.font: print('Warning, fonts disabled')
@@ -37,8 +38,6 @@ clock = pygame.time.Clock()
 #Define
 keys_pressed = []
 
-objects = []
-
 Char = Char.Character.Character();
 aRect = pygame.Rect(100,100,100,100)
 group = pygame.sprite.Group(Char)
@@ -46,18 +45,14 @@ group = pygame.sprite.Group(Char)
 Command = Core.Command.Command();
 tick = 0;
 
-current_room = []
-'''
-In a room, currently the values for stuff are:
-0 - empty air, no interaction
-1 - wall, Char cannot move there
-'''
-
-room_grid_position = [0,0]
+current_level = Core.Level.Level()
+current_level.load_level(1)
+current_room = current_level.get_current_room()
 
 #make 36 x 24 matrix
 #temporary, will eventually pickle
 #for now, walls around outside
+'''
 for m in range (36):
     current_room.append([])
     for n in range (24):
@@ -65,6 +60,7 @@ for m in range (36):
             current_room[m].append(1)
         else:
             current_room[m].append(0)
+'''
 
 #30x30 px, 36 x 24 grid
 #Function for square draw
