@@ -19,9 +19,9 @@ class Enemy(pygame.sprite.Sprite):
     
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.Possessedstate = False
-        self.Pos_x = 50;
-        self.Pos_y = 50;
+        self.Possesedstate = false
+        self.Pos.x = 50;
+        self.Pos.y = 50;
         self.EnemyType = 0 
         self.Hitpoints = 1
         self.Armour = 0
@@ -33,8 +33,6 @@ class Enemy(pygame.sprite.Sprite):
         self.Velocity = 216 #pixels / second
         self.Direction = [0,0,0,0]
         self.images = [pygame.image.load('Art/Char_0.jpg'),pygame.image.load('Art/Char_1.png')]
-        self.image = self.images[0]
-        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
         
         
     def update(self,tick):
@@ -50,12 +48,16 @@ class Enemy(pygame.sprite.Sprite):
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
         else:
-            self.Pos_x += deltamove[1]*(self.Velocity*tick/1000) 
-            self.Pos_y += deltamove[0]*(self.Velocity*tick/1000)
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
+
+        if current_room[int(math.floor(future_Pos_x/30))][int(math.floor(future_Pos_y/30))] != 1 and current_room[int(math.floor((future_Pos_x+30)/30))][int(math.floor((future_Pos_y+30)/30))] != 1:
+            self.Pos_x = future_Pos_x
+            self.Pos_y = future_Pos_y
+
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
-            
+
+
     def getCommand(self,command):
         if command.ctype == "keypress":
             if command.spec == "DOWN":
@@ -98,7 +100,7 @@ class Guard(Enemy):
 class Scientist(Enemy):
     def __init__(self):
         Enemy.__init__(self)
-        self.EnemyType = 2
+        Enemy.EnemyType = 2
         Enemy.Hitpoints = 50
         Enemy.Armour = 0
         Enemy.AttackDamage = 0
