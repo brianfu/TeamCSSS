@@ -73,6 +73,14 @@ def draw_square(x, y, state_counter, color):
     text = font25.render(str(state_counter), True, BLACK)
     return text
 
+def empty():
+    print('Empty Floor Tile')
+def wall():
+    print('Wall Tile')
+def exit():
+    print('Exit Tile')
+tiles = {0: empty, 1: wall, 2: exit}
+
 
 # -------- Main Program Loop -----------
 while not done:
@@ -91,6 +99,7 @@ while not done:
 
     # --- Game logic should go here
     Char.update(tick,current_room)
+    current_tile = Char.getTile()
     #Reset space_pressed flag
     space_pressed = False
 
