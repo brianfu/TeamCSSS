@@ -21,6 +21,11 @@ class Character(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.Ghoststate = False
+        self.AttemptUnghost = False
+        self.AttemptGhost = False
+        
+        self.Possessing = null
+        
         self.Pos_x = 50;
         self.Pos_y = 50;
         self.Timecountdown = 200 #at 60fps, the number should be 60*time wanted
@@ -31,6 +36,13 @@ class Character(pygame.sprite.Sprite):
         self.images = [pygame.image.load('Art/Char_0.jpg'),pygame.image.load('Art/Char_1.png')]
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
 
+    def unGhost(self):
+        self.AttemptUnghost = True
+        return
+    
+    def goGhost(self):
+        self.AttemptGhost = True
+        return
 
     def update(self,tick,current_room):
         deltamove = [0,0];
@@ -68,10 +80,14 @@ class Character(pygame.sprite.Sprite):
         elif command.ctype == "ghost_mode":
             if command.spec == "swap":
                 if self.Ghoststate:
-                    unGhost(self);
+                    self.unGhost();
+                else:
+                    self.goGhost();
 
     def getTile(self):
         return [int(math.floor(self.Pos_x/30)),int(math.floor(self.Pos_y/30))]
+        
+   
 
 
 '''
