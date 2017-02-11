@@ -20,6 +20,7 @@ class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.Possessedstate = False
+        self.Possessable = True
         self.Pos_x = 50;
         self.Pos_y = 50;
         self.EnemyType = 0 

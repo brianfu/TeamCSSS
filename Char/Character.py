@@ -41,7 +41,7 @@ class Character(pygame.sprite.Sprite):
     def unGhost(self,current_room,enemylist):
         self.AttemptUnghost = False
         for i in range(len(enemylist)):
-            if self.rect.colliderect(enemylist[i].rect):
+            if enemylist[i].Possessable and self.rect.colliderect(enemylist[i].rect):
                 self.Possessing = enemylist.pop(i)
                 self.Ghoststate = False
                 self.Pos_x = self.Possessing.Pos_x
