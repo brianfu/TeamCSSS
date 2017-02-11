@@ -118,7 +118,7 @@ while not done:
 
     # --- Game logic should go here
     current_tile = Chardude.getTile()
-    print(current_tile)
+    #print(current_tile)
     if current_room[current_tile[0]][current_tile[1]] == 2:
         current_level.enter_door(current_tile, Char)
         current_room = current_level.get_current_room()
@@ -154,7 +154,7 @@ while not done:
             #Blit in words here
             screen.blit(text, [xVal*30,yVal*30])
     
-    group2 = pygame.sprite.Group(current_level.get_enemy_list())
+    group2 = pygame.sprite.Group(current_entities)
    
     
     group.draw(screen);

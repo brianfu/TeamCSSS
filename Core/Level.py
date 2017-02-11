@@ -6,7 +6,7 @@ class Level():
     def __init__(self):
         self.rooms = [] # [xval room, yval room, xval roomtile, yval roomtile]
         self.room_grid_position = 2 # position
-        self.entities = [[[]]] # list of entities: enemies, objects, boolets, weapons, puddings, manifestos, etc.
+        self.entities = [[[] for x in range(3)] for y in range(3)] # list of entities: enemies, objects, boolets, weapons, puddings, manifestos, etc.
 
     def load_level(self, level_num):
         for m in range(3):
@@ -16,7 +16,7 @@ class Level():
                 self.rooms[m].append(pickle.load(open(roomName,"rb")))
 
     def get_current_room(self):
-        print(len(self.rooms))
+        #print(len(self.rooms))
         return self.rooms[int(math.floor(self.room_grid_position/3))][self.room_grid_position%3]
 
     def get_current_entities(self):
