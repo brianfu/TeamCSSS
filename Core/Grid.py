@@ -27,7 +27,12 @@ screen = pygame.display.set_mode(size)
 
 pygame.display.set_caption("Grid")
 
-font = pygame.font.SysFont('Calibri', 25, True, False)
+font10 = pygame.font.SysFont('Calibri', 10, True, False)
+font15 = pygame.font.SysFont('Calibri', 15, True, False)
+font25 = pygame.font.SysFont('Calibri', 25, True, False)
+font40 = pygame.font.SysFont('Calibri', 40, True, False)
+font60 = pygame.font.SysFont('Calibri', 60, True, False)
+font80 = pygame.font.SysFont('Calibri', 80, True, False)
 
 # Loop until the user clicks the close button.
 done = False
