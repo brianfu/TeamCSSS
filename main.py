@@ -66,9 +66,9 @@ for m in range (36):
 
 #30x30 px, 36 x 24 grid
 #Function for square draw
-def draw_square(x, y, state_counter, color):
-    pygame.draw.rect(screen, color, [x*30,y*30, 30, 30], 0) #col by row mat.
-    text = font25.render(str(state_counter), True, BLACK)
+def draw_square(x, y, state_counter, curr_color, txt_color):
+    pygame.draw.rect(screen, curr_color, [x*30,y*30, 30, 30], 0) #col by row mat.
+    text = font25.render(str(state_counter), True, txt_color)
     return text
 
 
@@ -102,11 +102,18 @@ while not done:
     #screen.fill(WHITE)
 
     # --- Drawing code should go here
+    if Char.Ghoststate:
+        curr_color = BLACK
+        txt_color = WHITE
+    else:
+        curr_color = WHITE
+        txt_color = BLACK
+    
     for m in range(len(current_room)): #36
         for n in range(len(current_room[0])): #24
             xVal = m
             yVal = n
-            text = draw_square(xVal, yVal, current_room[m][n], WHITE)
+            text = draw_square(xVal, yVal, current_room[m][n], curr_color, txt_color)
 
             #Blit in words here
             screen.blit(text, [xVal*30,yVal*30])
