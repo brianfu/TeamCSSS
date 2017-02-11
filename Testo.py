@@ -136,6 +136,8 @@ while not done:
     
     a= Core.textboxthatworks.textbox(screen)
     a.create_textbox()
+    a.line2("Jet fuel steel beams")
+    a.blitz()
 
     #Reset space_pressed flag
     space_pressed = False
