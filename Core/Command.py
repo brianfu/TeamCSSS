@@ -17,7 +17,7 @@ class Command(object):
             self.ctype = "keypress";
             if event.key in self.commands.keys():
                 self.spec = self.commands[event.key];
-            else: self.spec = "null"
+            else: self.spec = "null";
         
         elif event.type == KEYUP:
             self.ctype = "keydepress";
