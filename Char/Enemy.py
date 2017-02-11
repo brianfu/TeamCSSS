@@ -27,6 +27,7 @@ class Enemy(pygame.sprite.Sprite):
         self.Armour = 0
         self.AttackDamage = 0
         self.SpecialTraits = 0 #Special Traits are stored as integers and checked for as integers.
+        self.Alerted = 0
         self.Direction = 0; #can be 0-7, 
         self.Orientation = 0 #can be 0-3
         self.Velocity = 216 #pixels / second
@@ -41,18 +42,22 @@ class Enemy(pygame.sprite.Sprite):
                 deltamove[i%2] += self.Direction[i]* -1;
             else:
                 deltamove[i%2] += self.Direction[i]; #add 1 to deltamove if 0 or 1, minus 1 if 2 or 3
-        
+        future_Pos_x = self.Pos_x
+        future_Pos_y = self.Pos_y
         if deltamove[0] != 0 and deltamove[1] != 0:
-            self.Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
-            self.Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
+            future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
+            future_Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
         else:
-            self.Pos_x += deltamove[1]*(self.Velocity*tick/1000) 
-            self.Pos_y += deltamove[0]*(self.Velocity*tick/1000)
-        if self.Ghoststate:
-            self.image = self.images[1];
-        else: self.image = self.images[0];
+            future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
+            future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
+
+        if current_room[int(math.floor(future_Pos_x/30))][int(math.floor(future_Pos_y/30))] != 1 and current_room[int(math.floor((future_Pos_x+30)/30))][int(math.floor((future_Pos_y+30)/30))] != 1:
+            self.Pos_x = future_Pos_x
+            self.Pos_y = future_Pos_y
+
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
-        
+
+
     def getCommand(self,command):
         if command.ctype == "keypress":
             if command.spec == "DOWN":
@@ -67,8 +72,6 @@ class Enemy(pygame.sprite.Sprite):
             elif command.spec == "LEFT":
                 self.Orientation = 3;
                 self.Direction[3] = 1;
-            elif command.spec == "DIMENSION":
-                self.Ghoststate = not self.Ghoststate
         elif command.ctype == "keydepress":
             if command.spec == "DOWN":
                 self.Direction[0] = 0;
@@ -77,8 +80,9 @@ class Enemy(pygame.sprite.Sprite):
             elif command.spec == "UP":
                 self.Direction[2] = 0;
             elif command.spec == "LEFT":
-                self.Direction[3] = 0;            
-        
+                self.Direction[3] = 0;          
+    def getTile(self):
+        return [int(math.floor(self.Pos_x/30)),int(math.floor(self.Pos_y/30))]
 '''
     def draw(self,screen):
         self.image.draw(screen);
