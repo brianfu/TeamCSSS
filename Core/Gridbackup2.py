@@ -73,7 +73,8 @@ else:
 def draw_square(x, y, state_counter, color):
     #do in mainloop: if position is same as current position, change colors
     pygame.draw.rect(screen, color, [x*30,y*30, 30, 30], 0) #col by row mat.
-    text = font25.render(str(state_counter), True, BLACK)
+    text = font.render(str(state_counter), True, BLACK)
+    #print(font.size(str(state_counter)))
     return text
     #bilt in mainloop "screen.blit(text, [position[0]*30, position[1]*30])"
 
