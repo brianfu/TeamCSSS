@@ -44,7 +44,7 @@ group = pygame.sprite.Group(Char)
 Command = Core.Command.Command();
 tick = 0;
 
-current_room = [] 
+current_room = []
 '''
 In a room, currently the values for stuff are:
 0 - empty air, no interaction
@@ -90,7 +90,7 @@ while not done:
         Char.getCommand(Command);
 
     # --- Game logic should go here
-    Char.update(tick)
+    Char.update(tick,current_room)
     #Reset space_pressed flag
     space_pressed = False
 
@@ -112,7 +112,7 @@ while not done:
 
             #Blit in words here
             screen.blit(text, [xVal*30,yVal*30])
-           
+
     group.draw(screen);
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
@@ -122,5 +122,3 @@ while not done:
 
 # Close the window and quit.
 pygame.quit()
-
-
