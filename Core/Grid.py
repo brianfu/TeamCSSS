@@ -78,33 +78,25 @@ while not done:
             #if pressed space
             if event.key == pygame.K_SPACE:
                 s_c_list[current_pos[0]][current_pos[1]] += 1
-                s_c_list[current_pos[0]][current_pos[1]] = s_c_list[current_pos[0]][current_pos[1]] % 4
+                #s_c_list[current_pos[0]][current_pos[1]] = s_c_list[current_pos[0]][current_pos[1]] % 4
 
                 #might as well do flag
                 space_pressed = True
-
+            if event.key == pygame.K_x:
+                s_c_list[current_pos[0]][current_pos[1]] -= 1
             #Move keys
             elif event.key == pygame.K_RIGHT:
-                #print("SHIT IS FUCKED")
-                if current_pos[0] >= 35:
-                    current_pos[0] = 0
-                else:
-                    current_pos[0] += 1
+                current_pos[0] += 1
+                current_pos[0] %= 36
             elif event.key == pygame.K_LEFT:
-                if current_pos[0] <= 0:
-                    current_pos[0] = 35
-                else:
-                    current_pos[0] -= 1
+                current_pos[0] -= 1
+                current_pos[0] %= 36
             elif event.key == pygame.K_DOWN:
-                if current_pos[1] >= 23:
-                    current_pos[1] = 0
-                else:
-                    current_pos[1] += 1
+                current_pos[1] += 1
+                current_pos[1] %= 24
             elif event.key == pygame.K_UP:
-                if current_pos[1] <= 0:
-                    current_pos[1] = 23
-                else:
-                    current_pos[1] -= 1
+                current_pos[1] -= 1
+                current_pos[1] %= 24
             #ik i fucked up the order dw bout it
 
     #text = draw_square([2,2], state_counter, GREEN)
@@ -112,8 +104,8 @@ while not done:
 
 
     # --- Game logic should go here
-    for m in range(35-1): #36
-        for n in range(23-1): #24
+    for m in range(len(s_c_list)): #36
+        for n in range(len(s_c_list[0])): #24
             #Find and draw current position
             xVal = m
             yVal = n
@@ -123,7 +115,7 @@ while not done:
                 '''if space_pressed:
                    s_c_list[m][n] = s_c_list[n][m] + 1 '''
             else:
-                text = draw_square(xVal, yVal, s_c_list[m][n], RED)
+                text = draw_square(xVal, yVal, s_c_list[m][n], WHITE)
 
             #Bilt in words here
             screen.blit(text, [xVal*30,yVal*30])
