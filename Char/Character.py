@@ -48,8 +48,8 @@ class Character(pygame.sprite.Sprite):
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
 
-        print(future_Pos_y)
-        print(future_Pos_x)
+        #print(future_Pos_y)
+        #print(future_Pos_x)
 
         if current_room[int(math.floor(future_Pos_x/30))][int(math.floor(future_Pos_y/30))] != 1 and current_room[int(math.floor((future_Pos_x+30)/30))][int(math.floor((future_Pos_y+30)/30))] != 1:
             self.Pos_x = future_Pos_x
