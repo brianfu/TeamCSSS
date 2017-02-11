@@ -3,6 +3,7 @@ import pygame
 from pygame.locals import *
 import Core.load_sound
 import Core.load_image
+from Core.detect_collision import detect_collision
 import Core.Command
 import Char.Character
 
@@ -39,6 +40,7 @@ keys_pressed = []
 objects = []
 
 Char = Char.Character.Character();
+aRect = pygame.Rect(100,100,100,100)
 group = pygame.sprite.Group(Char)
 
 Command = Core.Command.Command();
@@ -110,6 +112,7 @@ while not done:
 
             #Blit in words here
             screen.blit(text, [xVal*30,yVal*30])
+
 
     group.draw(screen);
     # --- Go ahead and update the screen with what we've drawn.
