@@ -25,7 +25,7 @@ screen = pygame.display.set_mode(size)
 
 pygame.display.set_caption("Ghost in the fuck you")
 
-font = pygame.font.SysFont('Calibri', 25, True, False)
+font25 = pygame.font.SysFont('Calibri', 25, True, False)
 
 # Loop until the user clicks the close button.
 done = False
@@ -67,11 +67,9 @@ for m in range (36):
 #30x30 px, 36 x 24 grid
 #Function for square draw
 def draw_square(x, y, state_counter, color):
-    #do in mainloop: if position is same as current position, change colors
     pygame.draw.rect(screen, color, [x*30,y*30, 30, 30], 0) #col by row mat.
-    text = font.render(str(state_counter), True, BLACK)
+    text = font25.render(str(state_counter), True, BLACK)
     return text
-    #bilt in mainloop "screen.blit(text, [position[0]*30, position[1]*30])"
 
 
 # -------- Main Program Loop -----------

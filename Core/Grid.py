@@ -8,8 +8,15 @@
 
  Explanation video: http://youtu.be/vRB_983kUMc
 """
+"""
+How to use by Ari:
+run Grid.py <output> <input>
+"""
 
+import pickle
 import pygame
+import os
+import sys
 from pygame.locals import *
 
 # Define some colors
@@ -45,13 +52,15 @@ n_list = []
 
 #this doesnt work
 #make 36 x 24 matrix
-for m in range (36):
-    s_c_list.append([])
-    for n in range (24):
-        s_c_list[m].append(0)
+if len(sys.argv) > 2:
+    s_c_list = pickle.load(open(sys.argv[2],"rb"))
+else:
+    for m in range (36):
+        s_c_list.append([])
+        for n in range (24):
+            s_c_list[m].append(0)
 
-print(range(len(s_c_list)))
-print(range(len(s_c_list[1])))
+
 
 
 #30x30 px, 36 x 24 grid
@@ -99,10 +108,6 @@ while not done:
                 current_pos[1] %= 24
             #ik i fucked up the order dw bout it
 
-    #text = draw_square([2,2], state_counter, GREEN)
-    #screen.blit(text, [2*30,2*30])
-
-
     # --- Game logic should go here
     for m in range(len(s_c_list)): #36
         for n in range(len(s_c_list[0])): #24
@@ -144,3 +149,5 @@ while not done:
 
 # Close the window and quit.
 pygame.quit()
+os.system('touch output.room')
+pickle.dump(s_c_list, open(sys.argv[1],"wb") )
