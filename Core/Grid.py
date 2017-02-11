@@ -73,7 +73,7 @@ else:
 def draw_square(x, y, state_counter, color):
     #do in mainloop: if position is same as current position, change colors
     pygame.draw.rect(screen, color, [x*30,y*30, 30, 30], 0) #col by row mat.
-    text = font.render(str(state_counter), True, BLACK)
+    text = font25.render(str(state_counter), True, BLACK)
     return text
     #bilt in mainloop "screen.blit(text, [position[0]*30, position[1]*30])"
 
@@ -96,8 +96,10 @@ while not done:
 
                 #might as well do flag
                 space_pressed = True
-            if event.key == pygame.K_x:
+            elif event.key == pygame.K_x:
                 s_c_list[current_pos[0]][current_pos[1]] -= 1
+            elif event.key == pygame.K_r:
+                s_c_list[current_pos[0]][current_pos[1]] = 0
             #Move keys
             elif event.key == pygame.K_RIGHT:
                 current_pos[0] += 1
