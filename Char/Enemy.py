@@ -22,12 +22,13 @@ class Character(pygame.sprite.Sprite):
         self.Possesedstate = false
         self.Pos.x = 50;
         self.Pos.y = 50;
+        self.EnemyType = 0 #Enemy Type should be stored as integer, which should lead to an entry in a list with appropriate Hitpoints/Amrour/AttackDamage/SpecialTraits values.
         self.Hitpoints = 100
-        self.Armour = 0;
-        self.AttackDamage = 0;
-        self.SpecialTraits = 0; #Special Traits are stored as integers and checked for as integers.
+        self.Armour = 0
+        self.AttackDamage = 0
+        self.SpecialTraits = 0 #Special Traits are stored as integers and checked for as integers.
         #self.Direction = 0; #can be 0-7, 
-        self.Orientation = 0; #can be 0-3
+        self.Orientation = 0 #can be 0-3
         self.Velocity = 216 #pixels / second
         self.Direction = [0,0,0,0]
         self.images = [pygame.image.load('Art/Char_0.jpg'),pygame.image.load('Art/Char_1.png')]
