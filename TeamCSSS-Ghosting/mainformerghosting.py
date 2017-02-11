@@ -6,8 +6,8 @@ import Core.load_image
 from Core.detect_collision import detect_collision
 import Core.Command
 import Char.Character
+import Char.Enemy
 import Core.Level
-
 
 if not pygame.font: print('Warning, fonts disabled')
 if not pygame.mixer: print('Warning, sound disabled')
@@ -38,16 +38,38 @@ clock = pygame.time.Clock()
 #Define
 keys_pressed = []
 
-Char = Char.Character.Character();
+
+objects = []
+
+Chardude = Char.Character.Character();
+
+
 aRect = pygame.Rect(100,100,100,100)
-group = pygame.sprite.Group(Char)
+group = pygame.sprite.Group(Chardude)
 
 Command = Core.Command.Command();
 tick = 0;
 
+
+enemylist = []; # this is a temp thing
+enemylist.append(Char.Enemy.Scientist());
+
+oldbody = Char.Enemy.Enemy();
+Chardude.Possessing = oldbody;
+
+current_room = []
+'''
+In a room, currently the values for stuff are:
+0 - empty air, no interaction
+1 - wall, Char cannot move there
+'''
+
+room_grid_position = [0,0]
+
 current_level = Core.Level.Level()
 current_level.load_level(1)
 current_room = current_level.get_current_room()
+
 
 #make 36 x 24 matrix
 #temporary, will eventually pickle
@@ -62,6 +84,9 @@ for m in range (36):
             current_room[m].append(0)
 '''
 
+current_room[15][15] = 1
+current_room[17][15] = 1
+
 #30x30 px, 36 x 24 grid
 #Function for square draw
 def draw_square(x, y, state_counter, curr_color, txt_color):
@@ -73,8 +98,8 @@ def empty():
     print('Empty Floor Tile')
 def wall():
     print('Wall Tile')
-def door():
-    print('Door Tile')
+def exit():
+    print('Exit Tile')
 tiles = {0: empty, 1: wall, 2: exit}
 
 
@@ -91,17 +116,13 @@ while not done:
         elif event.type == pygame.KEYUP:
             keys_pressed.remove(event.key);
         Command.makeFromEvent(event);
-        Char.getCommand(Command);
+        Chardude.getCommand(Command);
 
     # --- Game logic should go here
-    current_tile = Char.getTile()
-    print(current_tile)
-    if current_room[current_tile[0]][current_tile[1]] == 2:
-        current_level.enter_door(current_tile, Char)
-        current_room = current_level.get_current_room()
-    Char.update(tick,current_room)
-    #Reset space_pressed flag
-    space_pressed = False
+    for enemy in enemylist:
+        enemy.update(tick)
+    Chardude.update(tick,current_room,enemylist)
+    current_tile = Chardude.getTile()
 
     # --- Screen-clearing code goes here
 
@@ -113,7 +134,7 @@ while not done:
     #screen.fill(WHITE)
 
     # --- Drawing code should go here
-    if Char.Ghoststate:
+    if Chardude.Ghoststate:
         curr_color = BLACK
         txt_color = WHITE
     else:
@@ -128,9 +149,13 @@ while not done:
 
             #Blit in words here
             screen.blit(text, [xVal*30,yVal*30])
-
-
+    
+    group2 = pygame.sprite.Group(enemylist)
+   
+    
     group.draw(screen);
+    group2.draw(screen);
+    
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
 

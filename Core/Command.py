@@ -17,16 +17,18 @@ class Command(object):
             self.ctype = "ghost_mode"
             self.spec = "swap"
             return 0;
-        if event.type == KEYDOWN:
+        if event.type == KEYDOWN and event.key in self.commands.keys():
             self.ctype = "go_dir";
             if event.key in self.commands.keys():
                 self.spec = self.commands[event.key];
-            else: self.spec = "null";
+            return 0;
         
-        elif event.type == KEYUP:
+        elif event.type == KEYUP and event.key in self.commands.keys():
             self.ctype = "stop_dir";
             if event.key in self.commands.keys():
                 self.spec = self.commands[event.key];
-            else: self.spec = "null";
+            return 0;
+        self.ctype = "null"
+        self.spec = "null"
             
             
