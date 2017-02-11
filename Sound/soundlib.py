@@ -1,8 +1,8 @@
 import pygame
 import os
 
-MUSIC_PATH = "Sound/Music"
-SFX_PATH = "Sound/SFX"
+MUSIC_PATH = "Music"
+SFX_PATH = "SFX"
 
 _sfx_lib = { }
 
