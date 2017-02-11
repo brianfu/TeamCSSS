@@ -6,9 +6,9 @@ class Command(object):
         self.ctype = "null" #types are go_dir stop_dir ghost_mode etc
         self.spec = "null" #UP,DOWN,LEFT,RIGHT,true, false
         self.commands = {
-            pygame.K_w: 2
-            pygame.K_d: 1
-            pygame.K_a: 3
+            pygame.K_w: 2,
+            pygame.K_d: 1,
+            pygame.K_a: 3,
             pygame.K_s: 0
             }
         
