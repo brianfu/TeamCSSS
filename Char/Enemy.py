@@ -15,19 +15,19 @@ def load_image(name, colorkey=None):
         image.set_colorkey(colorkey, RLEACCEL)
     return image, image.get_rect()
 
-class Character(pygame.sprite.Sprite):
+class Enemy(pygame.sprite.Sprite):
     
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.Possesedstate = false
         self.Pos.x = 50;
         self.Pos.y = 50;
-        self.EnemyType = 0 #Enemy Type should be stored as integer, which should lead to an entry in a list with appropriate Hitpoints/Amrour/AttackDamage/SpecialTraits values.
-        self.Hitpoints = 100
+        self.EnemyType = 0 
+        self.Hitpoints = 1
         self.Armour = 0
         self.AttackDamage = 0
         self.SpecialTraits = 0 #Special Traits are stored as integers and checked for as integers.
-        #self.Direction = 0; #can be 0-7, 
+        self.Direction = 0; #can be 0-7, 
         self.Orientation = 0 #can be 0-3
         self.Velocity = 216 #pixels / second
         self.Direction = [0,0,0,0]
@@ -83,3 +83,22 @@ class Character(pygame.sprite.Sprite):
     def draw(self,screen):
         self.image.draw(screen);
         return 0; #Update later with drawing stuff'''
+class Guard(Enemy):
+    def __init__(self):
+        Enemy.__init__(self)
+        Enemy.EnemyType = 1
+        Enemy.Hitpoints = 100
+        Enemy.Armour = 1
+        Enemy.AttackDamage = 2
+        Enemy.SpecialTraits = 0
+        #Enemy.images = #NEED TO ADD ENEMY IMAGES#
+
+class Scientist(Enemy):
+    def __init__(self):
+        Enemy.__init__(self)
+        Enemy.EnemyType = 2
+        Enemy.Hitpoints = 50
+        Enemy.Armour = 0
+        Enemy.AttackDamage = 0
+        Enemy.SpecialTraits = 0
+        #Enemy.images = #NEED TO ADD ENEMY IMAGES#
