@@ -190,11 +190,6 @@ class Character(object):
     def shoot(self):
         print("Hi")
         
-    def isghost(self):
-        if self.Ghoststate:
-            return True
-        else:
-            return False
 
 
 

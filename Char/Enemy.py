@@ -49,7 +49,7 @@ class Enemy(object):
         self.timer = 0;
         self.CurrentBullets = []
 
-    def update(self,tick,current_level,char_x,char_y):
+    def update(self,tick,current_level,char_x,char_y, ghosted):
         current_room = current_level.get_current_room()
         
         if (self.Alerted==0):

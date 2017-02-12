@@ -15,6 +15,7 @@ import Sound.charsoundhandler
 import GOscreen
 import Core.draw_tile
 import Core.textboxthatworks
+import Core.Cursor
 
 if not pygame.font: print('Warning, fonts disabled')
 if not pygame.mixer: print('Warning, sound disabled')
@@ -155,7 +156,7 @@ while not done:
         current_bullets.clear();
     ## CODE UPDATING ##
     for enemy in current_entities:
-        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y)
+        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y, Chardude.Ghoststate)
         for bullet in enemy.CurrentBullets:
             current_bullets.append(bullet)
     for i in range(len(current_bullets)):
@@ -211,7 +212,7 @@ while not done:
     textbox.create_textbox()
     textbox.blitz()    
     
-    Core.Cursor(pygame, screen, Chardude.isghost() )
+    Core.Cursor(pygame, screen, Chardude.Ghoststate )
     
     
     
