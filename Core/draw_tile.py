@@ -64,6 +64,12 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
             screen.blit(tile_image, imagerect)
             return font25.render('', True, txt_color)
 
+        elif int( current_room[x][y] ) == 4:
+            tile_image = pygame.image.load('Art/Portal_End.png')
+            imagerect = pygame.Rect(x*30, y*30, 30, 30)
+            screen.blit(tile_image, imagerect)
+            return font25.render('', True, txt_color)
+
         elif int( current_room[x][y] ) == 10:
             if int( current_room[x+1][y] ) == 10 and int( current_room[x][y+1] ) == 10 and int( current_room[x-1][y] ) != 10 and int( current_room[x][y-1] ) != 10:
                 if isGhoststate:

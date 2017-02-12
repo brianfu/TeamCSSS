@@ -5,7 +5,7 @@ def TitleScreen(pygame, screen):
     screen.blit(lul, (0,0,1280,720))
     lul = pygame.image.load("TitleScreen/escapefilter.png")
     screen.blit(lul, (0,0,1280,720))
-    lul = pygame.image.load("TitleScreen/FillerRussian.png")
+    lul = pygame.image.load("Art/Splash_Art.png")
     screen.blit(lul, (0,screen.get_height()/3,1280,720))#FILLer
 
     done = False
@@ -52,23 +52,23 @@ def TitleScreen(pygame, screen):
                 MOUSE = True
 
         # --- Drawing code should go here
-        butrects = [(600, h/2, 400, 30), (600, h/2+90, 400, 30), (600, h/2+180, 400, 30)]
+        butrects = [(800, h/2, 400, 30), (800, h/2+90, 400, 30), (800, h/2+180, 400, 30)]
         screen.fill((20,22,20), butrects[0])
         but1text = font25.render("Start", 2, sovietred)
-        screen.blit(but1text, (700, h/2+6)) 
+        screen.blit(but1text, (900, h/2+6))
         screen.fill((20,22,20), butrects[1])
         but2text = font25.render("Settings", 2, sovietred)
-        screen.blit(but2text, (700, h/2+96))
+        screen.blit(but2text, (900, h/2+96))
         screen.fill((20,22,20), butrects[2])
         but3text = font25.render("Exit", 2, sovietred)
-        screen.blit(but3text, (700, h/2+186))
+        screen.blit(but3text, (900, h/2+186))
         title = font40.render("I don't know who, where or what I am doing, but I know I need to ", 2, sovietred)
         title2 = font120.render("POBEG!", 2, sovietgold)
         screen.fill((20,22,20), (10,h/8,1150,40))
-        screen.blit(title, (20, h/8)) 
-        screen.fill((20,22,20), (w/2 +80,h/4,500,130))
-        screen.blit(title2, (w/2 +90, h/4)) 
-        
+        screen.blit(title, (20, h/8))
+        screen.fill((20,22,20), (w/2 +140,h/4,500,130))
+        screen.blit(title2, (w/2 +140, h/4))
+
         if pygame.Rect(butrects[0]).collidepoint(mousex, mousey):
             return True
         elif pygame.Rect(butrects[1]).collidepoint(mousex, mousey):
@@ -78,7 +78,7 @@ def TitleScreen(pygame, screen):
                 screen.blit(lul, (0,0,1280,720))
                 lul = pygame.image.load("TitleScreen/escapefilter.png")
                 screen.blit(lul, (0,0,1280,720))
-                lul = pygame.image.load("TitleScreen/FillerRussian.png")
+                lul = pygame.image.load("Art/Splash_Art.png")
                 screen.blit(lul, (0,screen.get_height()/3,1280,720))#FILLer
                 MOUSE = False
                 # --- Main event loop
@@ -107,7 +107,7 @@ def TitleScreen(pygame, screen):
                 butrects = [(600, h/2, 400, 30), (600, h/2+90, 400, 30), (600, h/2+180, 400, 30)]
                 screen.fill((20,22,20), butrects[0])
                 but1text = font25.render("Nevada Military Base", 2, sovietred)
-                screen.blit(but1text, (700, h/2+6)) 
+                screen.blit(but1text, (700, h/2+6))
                 screen.fill((20,22,20), butrects[1])
                 but2text = font25.render("West Germany Military Base", 2, sovietred)
                 screen.blit(but2text, (700, h/2+96))
@@ -116,7 +116,7 @@ def TitleScreen(pygame, screen):
                 screen.blit(but3text, (700, h/2+186))
                 title = font40.render("Select Setting: ", 2, sovietred)
                 screen.fill((20,22,20), (10,h/8,1150,40))
-                screen.blit(title, (20, h/8)) 
+                screen.blit(title, (20, h/8))
                 pygame.display.flip()
                 if MOUSE:
                     if pygame.Rect(butrects[0]).collidepoint(mousex, mousey):
@@ -128,13 +128,13 @@ def TitleScreen(pygame, screen):
                     elif pygame.Rect(butrects[2]).collidepoint(mousex, mousey):
                         poop = 3
                         mousex, mousey = 0,0
-                    
-                    
-        
+
+
+
         elif pygame.Rect(butrects[2]).collidepoint(mousex, mousey):
             return False
-        
-        
+
+
         # --- Go ahead and update the screen with what we've drawn.
         pygame.display.flip()
 
@@ -149,4 +149,3 @@ if __name__ == "__main__":
     size = (1280, 720)
     screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
     TitleScreen(screen)
-    
