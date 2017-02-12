@@ -2,6 +2,7 @@ import pygame
 import os
 from random import randrange
 import math
+import Core.Bullet
 import Char.Movement
 
 def load_image(name, colorkey=None):
@@ -32,7 +33,7 @@ class Enemy(pygame.sprite.Sprite):
         self.Armour = 0
         self.AttackDamage = 0
         self.SpecialTraits = 0 #Special Traits are stored as integers and checked for as integers.
-        self.Alerted = 0
+        self.Alerted = 1
         self.Direction = 0; #can be 0-7,
         self.Orientation = 0 #can be 0-3
         self.Velocity = 216 #pixels / second
@@ -96,26 +97,38 @@ class Enemy(pygame.sprite.Sprite):
     def Chase(self, target_x, target_y): #target_x should be Character.Pos_x, target_y should be Character.Pos_y
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
         B=target_x-self.Pos_x
-        A_neg = False
-        if(A<0):    #Only dealing with directional vector above X-axis (cartesian quardinate plane with Enemy at origin)
-            A_neg = True
-            A = -A
-        if(B!=0):
-            R = A/B #Avoiding ripping a hole in the universe
-            if (0<=R and R<2.4142):
-                self.Direction[1]=1 #Right
-            if(-2.4142<R and R<=0):
-                self.Direction[3]=1 #Left
-            if(R<= -0.4142 or 0.4142<=R):
+        C=A*A + B*B
+        if(self.Moving==False):
+            self.StopTime -= 1
+        if(C>=10000 and self.StopTime<=0): #More than 200 pixels away, C>200^2
+            self.Moving= True
+            A_neg = False
+            if(A<0):    #Only dealing with directional vector above X-axis (cartesian quardinate plane with Enemy at origin)
+                A_neg = True
+                A = -A
+            if(B!=0):
+                R = A/B #Avoiding ripping a hole in the universe
+                if (0<=R and R<2.4142):
+                    self.Direction[1]=1 #Right
+                if(-2.4142<R and R<=0):
+                    self.Direction[3]=1 #Left
+                if(R<= -0.4142 or 0.4142<=R):
+                    if(A_neg):
+                        self.Direction[0]=1 #Down
+                    else:
+                        self.Direction[2]=1 #Up
+            elif(B==0): #Pretty much case where B approaches infinity and negative infinity
                 if(A_neg):
                     self.Direction[0]=1 #Down
                 else:
                     self.Direction[2]=1 #Up
-        elif(B==0): #Pretty much case where B approaches infinity and negative infinity
-            if(A_neg):
-                self.Direction[0]=1 #Down
-            else:
-                self.Direction[2]=1 #Up
+        elif(self.Moving==True and C<=10000): #Less than 200 pixels away
+            self.Moving = False
+            self.Direction = [0,0,0,0]
+            self.StopTime = 30 #1/2 secs
+        if(self.StopTime==30 or self.StopTime==15):
+            Core.Bullet.Bullet(self.Pos_x, self.Pos_y, target_x, target_y, False)
+
     
     def Flee(self, target_x, target_y): #target_x should be Character.Pos_x, target_y should be Character.Pos_y
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
