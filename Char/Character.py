@@ -20,7 +20,6 @@ def load_image(name, colorkey=None):
 
 class Character(object):
 
-
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.Ghoststate = False
@@ -51,6 +50,7 @@ class Character(object):
         self.Ghoststate = False
         self.Pos_x = self.Possessing.Pos_x
         self.Pos_y = self.Possessing.Pos_y
+        self.Orientation = self.Possessing.Orientation
         self.absorbedimages = self.Possessing.images
         self.hasGun = self.Possessing.hasGun
 
@@ -67,8 +67,8 @@ class Character(object):
         self.AttemptGhost = False
         if self.Possessing == 0:
             return
-        self.Possessing.Pos_x = 30*(math.floor(self.Pos_x/30 + .5))
-        self.Possessing.Pos_y = 30*(math.floor(self.Pos_y/30 + .5))
+        self.Possessing.Pos_x = self.Pos_x
+        self.Possessing.Pos_y = self.Pos_y
         self.Possessing.Incapacitated = True
         self.Possessing.IncapacitatedTimer = 120
         enemylist.append(self.Possessing)
