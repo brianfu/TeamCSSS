@@ -8,10 +8,6 @@ import Core.Command
 import Char.Character
 import Char.Enemy
 import Core.Level
-import TitleScreen
-import Sound.soundlib
-import Sound.charsoundhandler
-
 
 
 if not pygame.font: print('Warning, fonts disabled')
@@ -34,16 +30,10 @@ screen = pygame.display.set_mode(size)
 
 pygame.display.set_caption("No Swears Pls - Das Spiel")
 
+font25 = pygame.font.SysFont('Calibri', 25, True, False)
+
 # Loop until the user clicks the close button.
 done = False
-
-# Start Title Menu
-if not TitleScreen.TitleScreen(pygame, screen):
-    done = True
-    pygame.quit()
-    sys.exit()
-
-font25 = pygame.font.SysFont('Calibri', 25, True, False)
 
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
@@ -140,8 +130,6 @@ def door():
     print('Door Tile')
 tiles = {0: empty, 1: wall, 2: exit}
 
-# Start the tunes
-Sound.soundlib.play_music("Ambi.ogg", -1)
 
 # -------- Main Program Loop -----------
 while not done:
@@ -157,19 +145,17 @@ while not done:
             keys_pressed.remove(event.key);
         Command.makeFromEvent(event);
         Chardude.getCommand(Command);
-        
 
     # --- Game logic should go here
     current_tile = Chardude.getTile()
     #print(current_tile)
-    if current_tile[0] % 35 == 0 or current_tile[1] % 23 == 0:
+    if (current_tile[0] % 35 == 0 or current_tile[1] % 23 == 0) and not Chardude.Ghoststate:
         current_level.enter_door(current_tile, Chardude)
         current_room = current_level.get_current_room()
         current_entities = current_level.get_current_entities()
     for enemy in current_entities:
         enemy.update(tick,current_room)
     Chardude.update(tick,current_room,current_entities)
-    Sound.charsoundhandler.update(Chardude, tick)
 
 
     # --- Screen-clearing code goes here
