@@ -31,7 +31,7 @@ class Enemy(pygame.sprite.Sprite):
         self.Armour = 0
         self.AttackDamage = 0
         self.SpecialTraits = 0 #Special Traits are stored as integers and checked for as integers.
-        self.Alerted = 0
+        self.Alerted = 1
         self.Direction = 0; #can be 0-7,
         self.Orientation = 0 #can be 0-3
         self.Velocity = 216 #pixels / second
@@ -45,6 +45,7 @@ class Enemy(pygame.sprite.Sprite):
         self.StopTime = 0
 
     def update(self,tick,current_room,char_x,char_y):
+        self.Direction = [0,0,0,0]
         if (self.Alerted==0):
             self.PatrolCycle()
         elif(self.Alerted==1):
@@ -89,16 +90,16 @@ class Enemy(pygame.sprite.Sprite):
     
     def Chase(self, target_x, target_y): #target_x should be Character.Pos_x, target_y should be Character.Pos_y
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
-        B=self.Pos_x-target_x
+        B=target_x-self.Pos_x
         A_neg = False
         if(A<0):    #Only dealing with directional vector above X-axis (cartesian quardinate plane with Enemy at origin)
             A_neg = True
             A = -A
         if(B!=0):
             R = A/B #Avoiding ripping a hole in the universe
-            if (0<=R or R<2.4142):
+            if (0<=R and R<2.4142):
                 self.Direction[1]=1 #Right
-            if(-2.4142<R or R<=0):
+            if(-2.4142<R and R<=0):
                 self.Direction[3]=1 #Left
             if(R<= -0.4142 or 0.4142<=R):
                 if(A_neg):
@@ -110,7 +111,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.Direction[0]=1 #Down
             else:
                 self.Direction[2]=1 #Up
-
+        print(self.Direction[0],self.Direction[1],self.Direction[2],self.Direction[3])
     #def Flee():
                           
     def move(self,tick,current_room):
