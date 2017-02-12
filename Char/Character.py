@@ -34,19 +34,24 @@ class Character(object):
         self.Pos_x = 50;
         self.Pos_y = 50;
         self.size = [38,38];
+        
         self.Timecountdown = 200 #at 60fps, the number should be 60*time wanted
         self.Orientation = 0; #can be 0-7
         self.Velocity = 110 #pixels / second
         self.MaxVelocity = 220
         self.Direction = [0,0,0,0]
+        
         self.ghostimages = [pygame.image.load('Art/Player_alt_dimension_head.png'),pygame.image.load('Art/Player_arms_alt_dimension.png')]
         self.absorbedimages = []
+        self.portalimage = pygame.image.load('Art/Portal.png')
+        
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
         self.timer = 0;
         self.Moving = False;
         self.hasGun = False;
         self.currentpicture = pygame.image.load('Art/Player_Portrait.png')
         self.ghostTimer = 10000
+        self.portalvalue = 0
 
     def absorb(self,enemylist,index):
         self.Possessing = enemylist.pop(index)
@@ -63,6 +68,7 @@ class Character(object):
         for i in range(len(enemylist)):
             if enemylist[i].Possessable and self.rect.colliderect(enemylist[i].rect):
                 self.absorb(enemylist,i);
+                self.portalvalue = 15
                 self.PlayGhostSound = True
                 return
         return
@@ -83,6 +89,7 @@ class Character(object):
         self.hasGun = False
         self.countdowntime = time.time()
         self.currentpicture = pygame.image.load("Art/Player-Ghost-Portrait.png")
+        self.portalvalue = -15
         return
 
     def update(self,tick,current_level,enemylist):
@@ -186,6 +193,13 @@ class Character(object):
         return [int(math.floor((self.Pos_x+self.size[0]/2)/30)),int(math.floor((self.Pos_y + self.size[1]/2)/30))]
 
     def draw(self,tick,screen):
+        ##PORTALROTATEOUT##
+        if self.portalvalue < 0:
+            self.portalvalue += 1;
+            port = pygame.transform.rotozoom(self.portalimage, (self.portalvalue)*-30, (14+self.portalvalue)/14)
+            prect = port.get_rect();
+            screen.blit(port,[self.Pos_x + 19 - prect.center[0], self.Pos_y + 19 - prect.center[1]])
+            return
         if self.Ghoststate:
             drawimages = self.ghostimages
         else:
@@ -208,7 +222,14 @@ class Character(object):
             armcenter[1]-=9*math.cos(angle)
         screen.blit(arms,[self.Pos_x + 19 - armcenter[0],self.Pos_y + 19 - armcenter[1]])
         screen.blit(head,[self.Pos_x + 19 - headcenter[0],self.Pos_y + 19 - headcenter[1]])
-
+        ##PORTALROTATEIN##
+        if self.portalvalue > 0:
+            self.portalvalue -= 1;
+            port = pygame.transform.rotozoom(self.portalimage, (14-self.portalvalue)*30, self.portalvalue/14)
+            prect = port.get_rect();
+            screen.blit(port,[self.Pos_x + 19 - prect.center[0], self.Pos_y + 19 - prect.center[1]])
+        
+        
     def shoot(self):
         print("Hi")
 
