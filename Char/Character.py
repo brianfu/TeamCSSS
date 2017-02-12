@@ -45,6 +45,7 @@ class Character(object):
         self.Moving = False;
         self.hasGun = False;
         self.currentpicture = pygame.image.load('Art/Player_Portrait.png')
+        self.ghostTimer = 10000
 
     def absorb(self,enemylist,index):
         self.Possessing = enemylist.pop(index)
@@ -93,10 +94,12 @@ class Character(object):
             self.unGhost(current_room, enemylist);
 
         if self.Ghoststate:
-            if time.time()-self.countdowntime > 18:
-                self.Ghoststate = False
+            self.ghostTimer -= tick
+            if self.ghostTimer < 0:
                 return False
-
+        else:
+            self.ghostTimer += 2*tick
+            self.ghostTimer = min(self.ghostTimer, 10000)
         return True
 
     def setOrientation(self,deltamove):

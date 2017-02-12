@@ -46,6 +46,7 @@ class Enemy(object):
         self.StopTime = 0
         self.FireCooldown = 0
         self.Name = "Giorgio"
+        self.securityClearance = "None"
         self.timer = 0;
         self.CurrentBullets = []
         self.Incapacitated = False
@@ -302,6 +303,7 @@ class Guard(Enemy):
         Enemy.AttackDamage = 2
         Enemy.SpecialTraits = 0
         self.Name = "Guard"
+        self.securityClearance = "Medium"
         self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Pistol.png')]
 
 class Scientist(Enemy):
@@ -314,5 +316,6 @@ class Scientist(Enemy):
         Enemy.AttackDamage = 0
         Enemy.SpecialTraits = 0
         self.Name = "Scientist"
+        self.securityClearance = "Low"
         self.images = [pygame.image.load('Art/Scientist.png'),pygame.image.load('Art/Arms.png')]
         #Enemy.images = #NEED TO ADD ENEMY IMAGES#
