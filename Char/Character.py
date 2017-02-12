@@ -151,8 +151,6 @@ class Character(pygame.sprite.Sprite):
         if canmovey:
             self.Pos_y = future_Pos_y
 
-
-
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
 
 

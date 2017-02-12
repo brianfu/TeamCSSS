@@ -169,7 +169,7 @@ while not done:
         current_room = current_level.get_current_room()
         current_entities = current_level.get_current_entities()
     for enemy in current_entities:
-        enemy.update(tick,current_room)
+        enemy.update(tick,current_room,Chardude.Pos_x,Chardude.Pos_y)
     Chardude.update(tick,current_room,current_entities)
     Sound.charsoundhandler.update(Chardude, tick)
 

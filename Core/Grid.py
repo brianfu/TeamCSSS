@@ -103,7 +103,9 @@ while not done:
             elif event.key == pygame.K_v:
                 s_c_list[current_pos[0]][current_pos[1]] = -1
             elif event.key == pygame.K_w:
-                s_c_list[current_pos[0]][current_pos[1]] = 1            
+                s_c_list[current_pos[0]][current_pos[1]] = 1
+            elif event.key == pygame.K_l:
+                s_c_list[current_pos[0]][current_pos[1]] = 12            
             #Move keys
             elif event.key == pygame.K_RIGHT:
                 current_pos[0] += 1
