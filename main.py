@@ -199,6 +199,7 @@ while not done:
                     current_level.get_current_entities().append(Char.Enemy.Guard(m*30,n*30));
 
         current_entities = current_level.get_current_entities()
+        pygame.mouse.set_visible(True)
         if not TitleScreen.TitleScreen(pygame, screen): #launch title screen
             done = True
             pygame.quit()
