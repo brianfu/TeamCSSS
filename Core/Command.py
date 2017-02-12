@@ -29,9 +29,14 @@ class Command(object):
                 self.spec = self.commands[event.key];
             return 0;
 
-        if event.type == MOUSEBUTTONUP:
+        if event.type == MOUSEBUTTONDOWN: #switched from before
             self.ctype = "fire_gun";
             self.spec = "rifle";
+            return 0;
+        
+        if event.type == MOUSEBUTTONUP:
+            self.ctype = "non-firing"
+            self.spec = "unarmed"
             return 0;
 
         self.ctype = "null"
