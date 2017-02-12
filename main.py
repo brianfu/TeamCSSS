@@ -14,6 +14,7 @@ import Sound.soundlib
 import Sound.charsoundhandler
 import GOscreen
 import Core.draw_tile
+import Core.textboxthatworks
 
 if not pygame.font: print('Warning, fonts disabled')
 if not pygame.mixer: print('Warning, sound disabled')
@@ -191,6 +192,12 @@ while not done:
 
     for bullet in current_bullets:
         pygame.draw.rect(screen, BLACK, bullet.rect, 2)
+        
+    #Stuff to insert in main() mainloop here (for textboxthatworks):
+    textbox = Core.textboxthatworks.textbox(screen)
+    textbox.line1("Test")
+    textbox.create_textbox()
+    textbox.blitz()    
 
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
