@@ -144,7 +144,7 @@ class Enemy(object):
                 self.StopTime = 60
         if(self.StopTime>0):
             if(self.StopTime%(60/clip_size)==0):
-                self.CurrentBullets.append(Core.Bullet.Bullet(self.Pos_x, self.Pos_y, target_x, target_y+0.0001, False))
+                self.CurrentBullets.append(Core.Bullet.Bullet(self.Pos_x, self.Pos_y, target_x, target_y, False))
         if(self.Moving==False and self.StopTime>0):
             self.StopTime -= 1
 
