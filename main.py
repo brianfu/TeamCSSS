@@ -61,13 +61,13 @@ keys_pressed = []
 
 ## CHANGE THIS BECAUSE IT IS ARCHAIC ##
 Chardude = Char.Character.Character();
-group = pygame.sprite.Group(Chardude)
+#group = pygame.sprite.Group(Chardude)
 
 Command = Core.Command.Command();
 tick = 0;
 
 oldbody = Char.Enemy.Enemy(50,50);
-Chardude.Possessing = oldbody;
+Chardude.absorb(oldbody);
 
 current_level = Core.Level.Level()
 current_level.load_level(1)
