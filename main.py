@@ -212,7 +212,9 @@ while not done:
     textbox.create_textbox()
     textbox.blitz()
     if shooting:
-        print(textbox.callbacks(click_pos))
+        if textbox.callbacks(click_pos) != "none":
+            gameOver =  True
+        
     
     Core.Cursor.DrawCursor(pygame, screen, Chardude.Ghoststate )
     

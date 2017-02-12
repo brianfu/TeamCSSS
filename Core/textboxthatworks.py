@@ -70,6 +70,8 @@ class textbox(object):
             boxrect = pygame.Rect([((self.x_pos*self.x_offset)+self.x_gap)- (1/2)*self.textsize[i][0], ((self.y_pos*self.y_offset)+self.y_gap)-(1/2)*self.textsize[i][1], 2*self.textsize[i][0], 2*self.textsize[i][1]])
             if boxrect.collidepoint(click_pos):
                 return i
+            else:
+                return "none"
                 
                 
     def txt_getcmd(self, command):
