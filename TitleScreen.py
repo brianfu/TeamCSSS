@@ -9,12 +9,11 @@ def TitleScreen(screen):
 
     done = False
     clock = pygame.time.Clock()
-    font25 = pygame.font.SysFont('Roboto Slab', 25, True, False)
-    font40 = pygame.font.SysFont('Roboto Slab', 40, True, False)
-    font120 = pygame.font.SysFont('Roboto Slab', 120, True, False)
-    '''pygame.mixer.music.load("../Sound/Music/Tema.ogg")
-    pygame.mixer.music.play(-1)'''
-    Sound.soundlib.play_music("Tema.ogg", -1)
+    font25 = pygame.font.Font('TitleScreen/Imperial Web.ttf', 15)
+    font40 = pygame.font.Font('TitleScreen/Imperial Web.ttf', 26)
+    font120 = pygame.font.SysFont('TitleScreen/Imperial Web.ttf', 180)
+    '''pygame.mixer.music.play(-1)'
+    Sound.soundlib.play_music("Tema.ogg", -1)'''
     sovietred = (204,0,0)
     sovietgold = (255,215,0)
     w,h = screen.get_width(), screen.get_height()
@@ -52,7 +51,7 @@ def TitleScreen(screen):
                 MOUSE = True
 
         # --- Drawing code should go here
-        butrects = [(600, h/2, 400, 50), (600, h/2+90, 400, 50), (600, h/2+180, 400, 50)]
+        butrects = [(600, h/2, 400, 30), (600, h/2+90, 400, 30), (600, h/2+180, 400, 30)]
         screen.fill((20,22,20), butrects[0])
         but1text = font25.render("Start", 2, sovietred)
         screen.blit(but1text, (700, h/2+6)) 
@@ -63,11 +62,11 @@ def TitleScreen(screen):
         but3text = font25.render("Exit", 2, sovietred)
         screen.blit(but3text, (700, h/2+186))
         title = font40.render("I don't know who, where or what I am doing, but I know I need to ", 2, sovietred)
-        title2 = font120.render("Pobeg!", 2, sovietgold)
-        screen.fill((20,22,20), (10,h/8,1260,60))
+        title2 = font120.render("POBEG!", 2, sovietgold)
+        screen.fill((20,22,20), (10,h/8,1150,40))
         screen.blit(title, (20, h/8)) 
-        screen.fill((20,22,20), (w/3 *2 -30,h/4,400,140))
-        screen.blit(title2, (w/3 *2 -20, h/4-20)) 
+        screen.fill((20,22,20), (w/2 +80,h/4,500,130))
+        screen.blit(title2, (w/2 +90, h/4)) 
         
         if pygame.Rect(butrects[0]).collidepoint(mousex, mousey):
             return "start"
@@ -89,6 +88,6 @@ if __name__ == "__main__":
     import Sound.soundlib
     pygame.init()
     size = (1280, 720)
-    screen = pygame.display.set_mode(size)
+    screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
     TitleScreen(screen)
     
