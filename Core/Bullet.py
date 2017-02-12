@@ -1,5 +1,6 @@
 import pygame
 import math
+import Sound.soundlib
 class Bullet():
 
     def __init__(self, origin_x, origin_y, aim_x, aim_y, new_owner):
@@ -15,6 +16,7 @@ class Bullet():
         self.m = (self.Aim_y - self.Origin_y)/(self.Aim_x - self.Origin_x) if (self.Aim_x - self.Origin_x) != 0 else 0 
         self.HasHit = False
         self.char_bullet = new_owner# is true if it belongs to the main character, false otherwise
+        Sound.soundlib.play_sound("SFX/Pistol_Shot_01.wav")
 
         # BULLETS SHOULD DISAPEAR AT THE EDGE OF THE SCREEN, ON ENEMY OR PLAYER HIT, WALL OR DOOR HIT
 
