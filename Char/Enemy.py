@@ -78,9 +78,9 @@ class Enemy(object):
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
     
     def PatrolCycle(self, current_room):
-        gridPos = self.getTile()
-        currentPath = str( current_room[gridPos[0]][gridPos[1]] ) -int( current_room[gridPos[0]][gridPos[1]] )[-1]
-        print( currentPath )
+        #gridPos = self.getTile()
+        #currentPath = str( current_room[gridPos[0]][gridPos[1]] ) - int( current_room[gridPos[0]][gridPos[1]] )[-1]
+        #print( currentPath )
         self.PatrolCycleLength += 1
         if(self.PatrolCycleLength>=30):
             self.PatrolCycleLength = 0;
@@ -219,7 +219,7 @@ class Enemy(object):
         self.Pos_x,self.Pos_y = Char.Movement.tryMoveTo(self.Pos_x,self.Pos_y,
             future_Pos_x,future_Pos_y,
             self.size[0],self.size[1],
-            current_level,False)
+            current_level,False,self.Name)
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])        
     
@@ -297,7 +297,8 @@ class Guard(Enemy):
         Enemy.Armour = 1
         Enemy.AttackDamage = 2
         Enemy.SpecialTraits = 0
-        self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Arms.png')]
+        self.Name = "Guard"
+        self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Pistol.png')]
 
 class Scientist(Enemy):
     def __init__(self,newX,newY):
@@ -308,5 +309,6 @@ class Scientist(Enemy):
         Enemy.Armour = 0
         Enemy.AttackDamage = 0
         Enemy.SpecialTraits = 0
+        self.Name = "Scientist"
         self.images = [pygame.image.load('Art/Scientist.png'),pygame.image.load('Art/Arms.png')]
         #Enemy.images = #NEED TO ADD ENEMY IMAGES#
