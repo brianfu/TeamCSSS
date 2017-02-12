@@ -7,6 +7,10 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 PURPLE = (128,0,128)
 GREY = (220,220,220)
+BLUE = (0, 32, 255)
+ORANGE = (255,160,16)
+CYAN = (0,255,255)
+
 
 #Shadow bar
 #Controls
@@ -24,7 +28,7 @@ class textbox(object):
         self.rendered_text = ['','','','','']
         self.text = ['','','','','']
         self.textsize = []
-        self.color = [GREEN, RED, PURPLE, RED, GREY]
+        self.color = [BLUE, ORANGE, CYAN, GREEN, GREY]
         self.rec_area_mat = []
         self.mouse_pos = pygame.mouse.get_pos()
         self.draw_border = 2
@@ -51,12 +55,12 @@ class textbox(object):
         #pygame.draw.rect(self.screen, WHITE, [self.x_pos*self.x_offset, self.y_pos*self.y_offset, 10*self.x_offset, 24*self.y_offset]) 
         
     def line1(self):
-        self.rendered_text[0] = self.font.render(str(self.text[0]), True, GREY)
+        self.rendered_text[0] = self.font.render(str(self.text[0]), True, BLACK)
     
-    def line2(self):
+    def line2(self): #written text for press e
         self.rendered_text[1] = self.font.render(str(self.text[1]), True, BLACK)
         
-    def line3(self):
+    def line3(self): #written text
         self.rendered_text[2] = self.font.render(str(self.text[2]), True, BLACK)
         
     def line4(self): #Status printer
