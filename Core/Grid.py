@@ -105,7 +105,29 @@ while not done:
             elif event.key == pygame.K_w:
                 s_c_list[current_pos[0]][current_pos[1]] = 1
             elif event.key == pygame.K_l:
-                s_c_list[current_pos[0]][current_pos[1]] = 12            
+                s_c_list[current_pos[0]][current_pos[1]] = 12
+            
+            # Quick numbers
+            elif event.key == pygame.K_1:
+                s_c_list[current_pos[0]][current_pos[1]] = 1  
+            elif event.key == pygame.K_2:
+                s_c_list[current_pos[0]][current_pos[1]] = 2  
+            elif event.key == pygame.K_3:
+                s_c_list[current_pos[0]][current_pos[1]] = 3  
+            elif event.key == pygame.K_4:
+                s_c_list[current_pos[0]][current_pos[1]] = 4  
+            elif event.key == pygame.K_5:
+                s_c_list[current_pos[0]][current_pos[1]] = 5  
+            elif event.key == pygame.K_6:
+                s_c_list[current_pos[0]][current_pos[1]] = 6  
+            elif event.key == pygame.K_7:
+                s_c_list[current_pos[0]][current_pos[1]] = 7  
+            elif event.key == pygame.K_8:
+                s_c_list[current_pos[0]][current_pos[1]] = 8  
+            elif event.key == pygame.K_9:
+                s_c_list[current_pos[0]][current_pos[1]] = 9  
+            elif event.key == pygame.K_0:
+                s_c_list[current_pos[0]][current_pos[1]] = 0
             #Move keys
             elif event.key == pygame.K_RIGHT:
                 current_pos[0] += 1

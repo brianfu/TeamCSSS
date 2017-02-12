@@ -33,6 +33,7 @@ class Enemy(object):
         self.Armour = 0
         self.AttackDamage = 0
         self.SpecialTraits = 0 #Special Traits are stored as integers and checked for as integers.
+        self.Alerted = 1
         self.Orientation = 0 #can be 0-7
         self.Velocity = 216 #pixels / second
         self.Direction = [0,0,0,0]
@@ -47,19 +48,28 @@ class Enemy(object):
         self.Name = "Giorgio"
         self.timer = 0;
         self.CurrentBullets = []
-        self.Alertness = 0
-        #self.Alerted = 1
+        self.Incapacitated = False
+        self.IncapacitatedTimer = 0
+		self.Alertness = 0
+		#self.Alerted = 0
 
     def update(self,tick,current_level,char_x,char_y, ghosted, newAlertnessLevel):
         current_room = current_level.get_current_room()
         self.Alertness = newAlertnessLevel
         
-        if (self.Alerted<1):
+        if (self.Incapacitated):
+            if (self.IncapacitatedTimer > 0):
+                self.IncapacitatedTimer -= 1
+                return
+            else:
+                self.Incapacitated = False
+        
+        if (self.Alertness < 1):
             self.PatrolCycle()
-        elif(self.Alerted>1):
+        elif(self.Alertness>1):
             self.Direction = [0,0,0,0]
             self.Chase(char_x, char_y)
-        elif(self.Alerted>20):
+        elif(self.Alertness>20):
             self.Direction = [0,0,0,0]
             self.Flee(char_x, char_y)
 
