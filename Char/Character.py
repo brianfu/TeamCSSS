@@ -84,6 +84,7 @@ class Character(pygame.sprite.Sprite):
         if self.Ghoststate:
             self.image = self.images[1];
             if time.time()-self.countdowntime > 18:
+                self.Ghoststate = False
                 return False
         else: self.image = self.images[0];
         
