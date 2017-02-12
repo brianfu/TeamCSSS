@@ -200,7 +200,8 @@ while not done:
                 screen.blit(text, [m*30,n*30])
 
     for entity in current_entities:
-        entity.draw(tick,screen)
+        if(entity.Hitpoints>0):
+            entity.draw(tick,screen)
     Chardude.draw(tick,screen)
 
 

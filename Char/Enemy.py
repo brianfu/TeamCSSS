@@ -75,7 +75,8 @@ class Enemy(object):
         elif(self.Alertness>20):
             self.Direction = [0,0,0,0]
             self.Flee(char_x, char_y)
-
+        if(len(current_bullets)):
+            self.Check_Bullet_Collision(current_bullets)
         self.move(tick,current_level)
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
@@ -194,6 +195,18 @@ class Enemy(object):
                 self.Direction[2]=1 #Up
             else:
                 self.Direction[0]=1 #Down
+                
+    def Check_Bullet_Collision(self, current_bullets):
+        for x in range(0, len(current_bullets)):
+            if(current_bullets[x].char_bullet):
+                A=current_bullets[x].Pos_x
+                B=current_bullets[x].Pos_y
+                C1=self.Pos_x
+                C2=self.Pos_x+self.size[0]
+                D1=self.Pos_y
+                D2=self.Pos_y+self.size[1]
+                if((C1<=A<=C2) and (D1<=B<=D2)):
+                    self.Hitpoints = 0
 
     def move(self,tick,current_level):
         current_room = current_level.get_current_room()
