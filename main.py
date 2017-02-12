@@ -10,6 +10,7 @@ import Char.Enemy
 import Core.Level
 import TitleScreen
 import Sound.soundlib
+import Sound.charsoundhandler
 
 
 
@@ -156,6 +157,7 @@ while not done:
             keys_pressed.remove(event.key);
         Command.makeFromEvent(event);
         Chardude.getCommand(Command);
+        
 
     # --- Game logic should go here
     current_tile = Chardude.getTile()
@@ -167,6 +169,7 @@ while not done:
     for enemy in current_entities:
         enemy.update(tick,current_room)
     Chardude.update(tick,current_room,current_entities)
+    Sound.charsoundhandler.update(Chardude, tick)
 
 
     # --- Screen-clearing code goes here
