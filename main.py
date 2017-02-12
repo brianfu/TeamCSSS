@@ -220,7 +220,7 @@ while not done:
     #Actual draws and loop mechs
     textbox.create_textbox()
     textbox.blitz()
-    screen.blit(Chardude.currentpicture, (1230,670,40,40))
+    screen.blit(Chardude.currentpicture, (1150,590,124,120))
 
     Core.Cursor.DrawCursor(pygame, screen, Chardude.Ghoststate, Chardude.hasGun )
 
