@@ -28,6 +28,8 @@ class Character(pygame.sprite.Sprite):
 
         self.Possessing = 0
 
+        self.PlayGhostSound = False
+
         self.Pos_x = 50;
         self.Pos_y = 50;
         self.size = [40,40];
@@ -39,9 +41,6 @@ class Character(pygame.sprite.Sprite):
         self.Direction = [0,0,0,0]
         self.images = [pygame.image.load('Art/Player_original_head.png'),pygame.image.load('Art/Player_alt_dimension_head.png')]
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
-        
-        self.countdownsfx = pygame.mixer.Sound("Sound/SFX/ghostdimentioncountdown.wav")
-        self.countdownend = pygame.mixer.Sound("Sound/SFX/ghostdimentioncountdownEnding.wav")
 
 
     def unGhost(self,current_room,enemylist):
@@ -53,8 +52,7 @@ class Character(pygame.sprite.Sprite):
                 self.Pos_x = self.Possessing.Pos_x
                 self.Pos_y = self.Possessing.Pos_y
                 self.images[0] = self.Possessing.images[0]
-                self.countdownsfx.stop()
-                self.countdownend.play()
+                self.PlayGhostSound = True
                 return
         return
 
@@ -68,8 +66,7 @@ class Character(pygame.sprite.Sprite):
         enemylist.append(self.Possessing)
         self.Possessing = 0
         self.Ghoststate = True
-        self.countdownsfx.play()
-        self.countdowntime = time.time() # 18 seconds
+        self.PlayGhostSound = True
         return
 
 
@@ -101,14 +98,14 @@ class Character(pygame.sprite.Sprite):
                 deltamove[i%2] += self.Direction[i]; #add 1 to deltamove if 0 or 1, minus 1 if 2 or 3
         future_Pos_x = self.Pos_x
         future_Pos_y = self.Pos_y
-        
+
         if deltamove[0]!=0 or deltamove[1]!=0:
             self.Velocity += (3*tick)//5
             self.Velocity = min(self.Velocity,self.MaxVelocity)
         else:
             self.Velocity -= (3*tick)//5
             self.Velocity = max(self.Velocity,self.MaxVelocity/2)
-        
+
         if deltamove[0] != 0 and deltamove[1] != 0:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
@@ -119,36 +116,43 @@ class Character(pygame.sprite.Sprite):
         gridpos_x = int(future_Pos_x//30)
         gridpos_y = int(future_Pos_y//30)
         canmovex = True
-        xrect = pygame.Rect(  future_Pos_x,  self.Pos_y,  self.size[0],  self.size[1])
-        for x in (0,1,2):
-            for y in (0,1,2):
-                if xrect.colliderect(
-                pygame.Rect( (gridpos_x+x)*30,  (gridpos_y+y)*30,  30,  30) ):
-                    if current_room[gridpos_x+x][gridpos_y+y] == 1:
-                        canmovex = False
-                        break
-                    elif current_room[gridpos_x+x][gridpos_y+y] == 11 and self.Ghoststate==False:
-                        canmovex = False
-                        break
+        if future_Pos_x > 1075 - self.size[0] or future_Pos_x < 0:
+            canmovex = False
+        else:
+            xrect = pygame.Rect(  future_Pos_x,  self.Pos_y,  self.size[0],  self.size[1])
+            for x in (0,1,2):
+                for y in (0,1,2):
+                    if xrect.colliderect(
+                    pygame.Rect( (gridpos_x+x)*30,  (gridpos_y+y)*30,  30,  30) ):
+                        if current_room[gridpos_x+x][gridpos_y+y] == 1:
+                            canmovex = False
+                            break
+                        elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11) and self.Ghoststate==False:
+                            canmovex = False
+                            break
         if canmovex:
             self.Pos_x = future_Pos_x
         canmovey = True
-        yrect = pygame.Rect(  self.Pos_x,  future_Pos_y,  self.size[0],  self.size[1])
-        for x in (0,1,2):
-            for y in (0,1,2):
-                if yrect.colliderect(
-                pygame.Rect( (gridpos_x+x)*30,  (gridpos_y+y)*30,  30,  30) ):
-                    if current_room[gridpos_x+x][gridpos_y+y] == 1:
-                        canmovey = False
-                        break
-                    elif current_room[gridpos_x+x][gridpos_y+y] == 11 and self.Ghoststate==False:
-                        canmovey = False
-                        break
+        if future_Pos_y > 715 - self.size[1] or future_Pos_y < 0:
+            canmovey = False
+        else:
+            yrect = pygame.Rect(  self.Pos_x,  future_Pos_y,  self.size[0],  self.size[1])
+            for x in (0,1,2):
+                for y in (0,1,2):
+                    if yrect.colliderect(
+                    pygame.Rect( (gridpos_x+x)*30,  (gridpos_y+y)*30,  30,  30) ):
+                        if current_room[gridpos_x+x][gridpos_y+y] == 1:
+                            canmovey = False
+                            break
+                        elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11) and self.Ghoststate==False:
+                            canmovey = False
+                            break
+
         if canmovey:
             self.Pos_y = future_Pos_y
-                    
-       
-            
+
+
+
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
 
 
@@ -170,6 +174,10 @@ class Character(pygame.sprite.Sprite):
 
     def getTile(self):
         return [int(math.floor((self.Pos_x+self.size[0]/2)/30)),int(math.floor((self.Pos_y + self.size[1]/2)/30))]
+
+
+    def shoot(self):
+        print("Hi")
 
 
 
