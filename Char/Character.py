@@ -67,6 +67,7 @@ class Character(pygame.sprite.Sprite):
         self.Possessing = 0
         self.Ghoststate = True
         self.PlayGhostSound = True
+        self.countdowntime = time.time()
         return
 
 
