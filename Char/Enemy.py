@@ -32,7 +32,7 @@ class Enemy(pygame.sprite.Sprite):
         self.Armour = 0
         self.AttackDamage = 0
         self.SpecialTraits = 0 #Special Traits are stored as integers and checked for as integers.
-        self.Alerted = 2
+        self.Alerted = 0
         self.Direction = 0; #can be 0-7,
         self.Orientation = 0 #can be 0-3
         self.Velocity = 216 #pixels / second
