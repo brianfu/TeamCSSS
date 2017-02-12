@@ -20,9 +20,16 @@ class Enemy(pygame.sprite.Sprite):
     def __init__(self,newX,newY):
         pygame.sprite.Sprite.__init__(self)
         self.Possessedstate = False
+<<<<<<< HEAD
         self.Pos_x = newX;
         self.Pos_y = newY;
         self.EnemyType = 0
+=======
+        self.Possessable = True
+        self.Pos_x = 50;
+        self.Pos_y = 50;
+        self.EnemyType = 0 
+>>>>>>> a85fcbb61d3c89f8e3626dff6920e531f1da9e34
         self.Hitpoints = 1
         self.Armour = 0
         self.AttackDamage = 0
