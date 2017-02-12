@@ -337,4 +337,4 @@ class Janitor(Enemy):
         self.hasGun = False
         self.EnemyType = 4
         self.Name = "Janitor"
-        self.images = [pygame.image.load('Art/Green_hat.png'),pygame.image.load('Art/Arms.png')]
+        self.images = [pygame.image.load('Art/Green_hat_portrait.png'),pygame.image.load('Art/Arms.png')]
