@@ -18,6 +18,8 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
+YELLOW = (200, 200, 0)
+GREY = (100,100,100)
 
 pygame.init()
 
@@ -74,7 +76,7 @@ for m in range(len(current_room)):
             Chardude.Pos_x = 30 * m
             Chardude.Pos_y = 30 * n
         elif current_room[m][n] == 5:
-            current_level.get_current_entities().append(Char.Enemy.Scientist(m*30,n*30));
+            current_level.get_current_entities().append(Char.Enemy.Guard(m*30,n*30));
 
 current_entities = current_level.get_current_entities()
 
@@ -93,10 +95,32 @@ for m in range (36):
 
 #30x30 px, 36 x 24 grid
 #Function for square draw
-def draw_square(x, y, state_counter, curr_color, txt_color):
+def draw_tile(x, y, state_counter, curr_color, txt_color):
+
+    if current_room[x][y] == -1:
+        curr_color = BLACK
+    if current_room[x][y] == 2:
+        curr_color = [70,55,30]
+    if current_room[x][y] == 10:
+        curr_color = [140,100,80]
+
+    if Chardude.Ghoststate:
+        if current_room[x][y] == 1:
+            curr_color = YELLOW
+        if current_room[x][y] == 11:
+            curr_color = [150,150,0]
+    else:
+        if current_room[x][y] == 1:
+            curr_color = GREY
+        if current_room[x][y] == 11:
+            curr_color = [150,150,150]
+
     pygame.draw.rect(screen, curr_color, [x*30,y*30, 30, 30], 0) #col by row mat.
-    text = font25.render(str(state_counter), True, txt_color)
-    return text
+    if current_room[x][y] not in [-1,0,1,2,3,5,10,11]:
+        text = font25.render(str(state_counter), True, txt_color)
+        return text
+    return font25.render(str(""), True, txt_color)
+
 
 def empty():
     print('Empty Floor Tile')
@@ -125,7 +149,7 @@ while not done:
     # --- Game logic should go here
     current_tile = Chardude.getTile()
     print(current_tile)
-    if current_room[current_tile[0]][current_tile[1]] == 2:
+    if current_tile[0] % 35 == 0 or current_tile[1] % 23 == 0:
         current_level.enter_door(current_tile, Chardude)
         current_room = current_level.get_current_room()
         current_entities = current_level.get_current_entities()
@@ -145,8 +169,8 @@ while not done:
 
     # --- Drawing code should go here
     if Chardude.Ghoststate:
-        curr_color = BLACK
-        txt_color = WHITE
+        curr_color = RED
+        txt_color = YELLOW
     else:
         curr_color = WHITE
         txt_color = BLACK
@@ -155,7 +179,7 @@ while not done:
         for n in range(len(current_room[0])): #24
             xVal = m
             yVal = n
-            text = draw_square(xVal, yVal, current_room[m][n], curr_color, txt_color)
+            text = draw_tile(xVal, yVal, current_room[m][n], curr_color, txt_color)
 
             #Blit in words here
             screen.blit(text, [xVal*30,yVal*30])
