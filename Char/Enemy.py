@@ -22,7 +22,6 @@ def load_image(name, colorkey=None):
 class Enemy(object):
 
     def __init__(self,newX,newY):
-        pygame.sprite.Sprite.__init__(self)
         self.Dead = False
         self.Possessedstate = False
         self.Pos_x = newX;

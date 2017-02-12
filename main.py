@@ -243,7 +243,7 @@ while not done:
     #Actual draws and loop mechs
     textbox.create_textbox(menubar_photo)
     textbox.blitz()
-    textbox.button_trigger()
+    #textbox.button_trigger()
     
     screen.blit(Chardude.currentpicture, (1150,590,124,120))
 

@@ -21,7 +21,6 @@ def load_image(name, colorkey=None):
 class Character(object):
 
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
         self.Ghoststate = False
         self.AttemptUnghost = False
         self.AttemptGhost = False
