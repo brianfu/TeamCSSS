@@ -25,6 +25,22 @@ def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_level, isAGho
                     elif int(current_room[gridpos_x+x][gridpos_y+y]) in (10, 11, 12, 14, 15) and isAGhost==False:
                         canmovex = False
                         break
+                    
+                    # Special Doors
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) == 20 and chartype != "Guard":
+                        canmovex = False
+                        break
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) == 21 and chartype != "Soldier":
+                        canmovex = False
+                        break
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) == 22 and chartype != "Janitor":
+                        canmovex = False
+                        break
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) == 23 and chartype != "Scientist":
+                        canmovex = False
+                        break
+                    
+                    # Button stuff
                     elif int(current_room[gridpos_x+x][gridpos_y+y]) ==  16 and isAGhost == True:
                         current_level.activate_room_ether_button()
                         current_level.check_room_buttons()
@@ -37,8 +53,8 @@ def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_level, isAGho
                     if int(current_room[gridpos_x+x][gridpos_y+y]) not in (18, 19) and current_level.get_room_reg_b_state() == 1:
                         button_held = False
                         for enemy in current_level.get_current_entities():
-                            e_gridpos_x = int((enemy.Pos_x+10)//30)
-                            e_gridpos_y = int((enemy.Pos_y+10)//30)
+                            e_gridpos_x = int((enemy.Pos_x)//30)
+                            e_gridpos_y = int((enemy.Pos_y)//30)
                             if int(current_room[e_gridpos_x][e_gridpos_y]) in (18, 19):
                                 button_held = True
                         if not button_held:
@@ -65,6 +81,22 @@ def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_level, isAGho
                     elif int(current_room[gridpos_x+x][gridpos_y+y]) in (10, 11, 12, 14, 15) and isAGhost==False:
                         canmovey = False
                         break
+                    
+                    # Special Doors
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) == 20 and chartype != "Guard":
+                        canmovey = False
+                        break
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) == 21 and chartype != "Soldier":
+                        canmovey = False
+                        break
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) == 22 and chartype != "Janitor":
+                        canmovey = False
+                        break
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) == 23 and chartype != "Scientist":
+                        canmovey = False
+                        break                    
+                    
+                    # Button stuff
                     elif int(current_room[gridpos_x+x][gridpos_y+y]) ==  16 and isAGhost == True:
                         current_level.activate_room_ether_button()
                         current_level.check_room_buttons()
@@ -77,8 +109,8 @@ def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_level, isAGho
                     if int(current_room[gridpos_x+x][gridpos_y+y]) not in (18, 19) and current_level.get_room_reg_b_state() == 1:
                         button_held = False
                         for enemy in current_level.get_current_entities():
-                            e_gridpos_x = int((enemy.Pos_x+10)//30)
-                            e_gridpos_y = int((enemy.Pos_y+10)//30)
+                            e_gridpos_x = int((enemy.Pos_x)//30)
+                            e_gridpos_y = int((enemy.Pos_y)//30)
                             if int(current_room[e_gridpos_x][e_gridpos_y]) in (18, 19):
                                 button_held = True
                         if not button_held:
