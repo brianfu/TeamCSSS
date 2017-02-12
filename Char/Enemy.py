@@ -75,7 +75,8 @@ class Enemy(object):
         elif(self.Alertness>20):
             self.Direction = [0,0,0,0]
             self.Flee(char_x, char_y)
-
+        if(len(current_bullets)):
+            self.Check_Bullet_Collision(current_bullets)
         self.move(tick,current_level)
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
@@ -194,10 +195,22 @@ class Enemy(object):
                 self.Direction[2]=1 #Up
             else:
                 self.Direction[0]=1 #Down
+                
+    def Check_Bullet_Collision(self, current_bullets):
+        for x in range(0, len(current_bullets)):
+            if(current_bullets[x].char_bullet):
+                A=current_bullets[x].Pos_x
+                B=current_bullets[x].Pos_y
+                C1=self.Pos_x
+                C2=self.Pos_x+self.size[0]
+                D1=self.Pos_y
+                D2=self.Pos_y+self.size[1]
+                if((C1<=A<=C2) and (D1<=B<=D2)):
+                    self.Hitpoints = 0
 
     def move(self,tick,current_level):
         current_room = current_level.get_current_room()
-        
+
         #Turn Cartesian Direction Vector[4] to Python directional Vector[2]
         deltamove = [0,0];
         for i in range(4):
@@ -211,21 +224,21 @@ class Enemy(object):
         #Compensate for diagonal movement
         if deltamove[0] !=0 or deltamove[1]!=0:
             self.setOrientation(deltamove)
-        
+
         if deltamove[0] != 0 and deltamove[1] != 0:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
         else:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
-        
+
         self.Pos_x,self.Pos_y = Char.Movement.tryMoveTo(self.Pos_x,self.Pos_y,
             future_Pos_x,future_Pos_y,
             self.size[0],self.size[1],
             current_level,False,self.Name)
 
-        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])        
-    
+        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
+
     def setOrientation(self,deltamove):
         if deltamove[0]==1:
             if deltamove[1]==0:
@@ -246,7 +259,7 @@ class Enemy(object):
                 self.Orientation = 5;
             else:
                 self.Orientation = 3;
-    
+
     def getCommand(self,command):
         if command.ctype == "keypress":
             if command.spec == "DOWN":
@@ -270,7 +283,7 @@ class Enemy(object):
                 self.Direction[2] = 0;
             elif command.spec == "LEFT":
                 self.Direction[3] = 0;
-    
+
     def getTile(self):
         return [int(math.floor(self.Pos_x/30)),int(math.floor(self.Pos_y/30))]
 
@@ -346,4 +359,4 @@ class Janitor(Enemy):
         self.AttackDamage = 0
         self.SpecialTraits = 0
         self.Name = "Janitor"
-        self.images = [pygame.image.load('Art/Green_hat_portrait.png'),pygame.image.load('Art/Arms.png')]
+        self.images = [pygame.image.load('Art/Green_hat.png'),pygame.image.load('Art/Arms.png')]
