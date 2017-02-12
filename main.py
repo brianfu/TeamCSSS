@@ -137,6 +137,8 @@ while not done:
         if event.type == pygame.MOUSEBUTTONUP:
             click_pos = pygame.mouse.get_pos()
             shooting = True
+        else:
+            shooting = False
         Command.makeFromEvent(event);
         Chardude.getCommand(Command);
         textbox.txt_getcmd(Command)
@@ -144,7 +146,7 @@ while not done:
 
     if shooting:
         current_bullets.append(Core.Bullet.Bullet(Chardude.Pos_x + Chardude.size[0]/2, Chardude.Pos_y + Chardude.size[1]/2, click_pos[0], click_pos[1], True))
-        shooting = False
+        #shooting = False
 
     # --- Game logic should go here
     current_tile = Chardude.getTile()
@@ -211,7 +213,6 @@ while not done:
     textbox.line5()
     textbox.create_textbox()
     textbox.blitz()
-    print( "made it here" )
     if shooting:
         print( "made it there" )
         if textbox.callbacks(click_pos) != "none":
