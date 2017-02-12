@@ -1,3 +1,4 @@
+import Sound.soundlib
 
 def TitleScreen(pygame, screen):
     lul = pygame.image.load("TitleScreen/escape.png")
@@ -12,8 +13,8 @@ def TitleScreen(pygame, screen):
     font25 = pygame.font.Font('TitleScreen/Imperial Web.ttf', 15)
     font40 = pygame.font.Font('TitleScreen/Imperial Web.ttf', 26)
     font120 = pygame.font.SysFont('TitleScreen/Imperial Web.ttf', 180)
-    '''pygame.mixer.music.play(-1)'
-    Sound.soundlib.play_music("Tema.ogg", -1)'''
+    '''pygame.mixer.music.play(-1)'''
+    Sound.soundlib.play_music("Tema.ogg", 1)
     sovietred = (204,0,0)
     sovietgold = (255,215,0)
     w,h = screen.get_width(), screen.get_height()
