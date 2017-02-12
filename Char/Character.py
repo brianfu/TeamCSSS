@@ -44,6 +44,7 @@ class Character(object):
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
         self.timer = 0;
         self.moving = False;
+        self.hasGun = False;
 
     def absorb(self,enemylist,index):
         self.Possessing = enemylist.pop(index)
@@ -51,7 +52,8 @@ class Character(object):
         self.Pos_x = self.Possessing.Pos_x
         self.Pos_y = self.Possessing.Pos_y
         self.absorbedimages = self.Possessing.images
-        
+        self.hasGun = self.Possessing.hasGun
+
     def unGhost(self,current_room,enemylist):
         self.AttemptUnghost = False
         for i in range(len(enemylist)):
@@ -72,12 +74,13 @@ class Character(object):
         enemylist.append(self.Possessing)
         self.Possessing = 0
         self.Ghoststate = True
-        self.PlayGhostSound = True
+        self.PlayGhostSound = True        
+        self.hasGun = False
         self.countdowntime = time.time()
         return
 
     def update(self,tick,current_level,enemylist):
-        
+
         current_room = current_level.get_current_room();
 
         self.move(tick,current_level)
@@ -92,7 +95,7 @@ class Character(object):
             if time.time()-self.countdowntime > 18:
                 self.Ghoststate = False
                 return False
-        
+
         return True
 
     def setOrientation(self,deltamove):
@@ -148,7 +151,7 @@ class Character(object):
             future_Pos_x,future_Pos_y,
             self.size[0],self.size[1],
             current_level,self.Ghoststate)
-        
+
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
 
     def getCommand(self,command):
@@ -188,10 +191,10 @@ class Character(object):
         headcenter =[hrect.width/2,hrect.height/2]
         screen.blit(arms,[self.Pos_x + 20 - armcenter[0],self.Pos_y + 20 - armcenter[1]])
         screen.blit(head,[self.Pos_x + 20 - headcenter[0],self.Pos_y + 20 - headcenter[1]])
-    
+
     def shoot(self):
         print("Hi")
-        
+
 
 
 
