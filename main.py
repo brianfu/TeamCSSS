@@ -221,16 +221,8 @@ while not done:
         if textbox.callbacks(click_pos) != "none":
             print( "made it here" )
             gameOver =  True
-        
-    
-<<<<<<< HEAD
-    Core.Cursor.DrawCursor(pygame, screen, Chardude.isghost() )
-=======
-    Core.Cursor.DrawCursor(pygame, screen, Chardude.Ghoststate )
->>>>>>> origin/master
-    
-    
-    
+            
+    Core.Cursor.DrawCursor(pygame, screen, Chardude.Ghoststate )  
     
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
