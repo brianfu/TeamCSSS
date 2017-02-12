@@ -39,7 +39,7 @@ class Enemy(object):
         self.Direction = [0,0,0,0]
         self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Arms.png')]
         #self.image = self.images[0]
-        self.size = [40,40]
+        self.size = [38,38]
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
         self.PatrolCycleLength = 0
         self.Moving = False
@@ -265,8 +265,8 @@ class Enemy(object):
         hrect = head.get_rect();
         armcenter = [arect.width/2,arect.height/2]
         headcenter =[hrect.width/2,hrect.height/2]
-        screen.blit(arms,[self.Pos_x + 20 - armcenter[0],self.Pos_y + 20 - armcenter[1]])
-        screen.blit(head,[self.Pos_x + 20 - headcenter[0],self.Pos_y + 20 - headcenter[1]])
+        screen.blit(arms,[self.Pos_x + 19 - armcenter[0],self.Pos_y + 19 - armcenter[1]])
+        screen.blit(head,[self.Pos_x + 19 - headcenter[0],self.Pos_y + 19 - headcenter[1]])
 
 class Guard(Enemy):
     def __init__(self,newX,newY):
