@@ -26,8 +26,6 @@ GREY = (100,100,100)
 
 pygame.init()
 
-pygame.mouse.set_visible(False)
-
 # Set the width and height of the screen [width, height]
 size = (1280, 720)
 
@@ -42,6 +40,8 @@ if not TitleScreen.TitleScreen(pygame, screen):
     done = True
     pygame.quit()
     sys.exit()
+
+pygame.mouse.set_visible(False)
 
 # Loop until the user clicks the close button.
 done = False

@@ -27,6 +27,8 @@ class Character(pygame.sprite.Sprite):
 
         self.Possessing = 0
 
+        self.PlayGhostSound = False
+
         self.Pos_x = 50;
         self.Pos_y = 50;
         self.size = [40,40];
@@ -49,6 +51,7 @@ class Character(pygame.sprite.Sprite):
                 self.Pos_x = self.Possessing.Pos_x
                 self.Pos_y = self.Possessing.Pos_y
                 self.images[0] = self.Possessing.images[0]
+                self.PlayGhostSound = True
                 return
         return
 
@@ -62,6 +65,7 @@ class Character(pygame.sprite.Sprite):
         enemylist.append(self.Possessing)
         self.Possessing = 0
         self.Ghoststate = True
+        self.PlayGhostSound = True
         return
 
 
