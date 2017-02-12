@@ -19,6 +19,8 @@ import os
 import sys
 from pygame.locals import *
 
+import Art.art
+
 import Core.textboxthatworks
 
 # Define some colors
@@ -79,6 +81,8 @@ def draw_square(x, y, state_counter, color):
     return text
     #bilt in mainloop "screen.blit(text, [position[0]*30, position[1]*30])"
 
+art = Art.art.art(screen)
+
 
 # -------- Main Program Loop -----------
 while not done:
@@ -128,7 +132,9 @@ while not done:
                    s_c_list[m][n] = s_c_list[n][m] + 1 '''
             else:
                 text = draw_square(xVal, yVal, s_c_list[m][n], WHITE)
-
+            
+            art.blitz("Char_1.png",30,20)
+            
             #Bilt in words here
             screen.blit(text, [xVal*30,yVal*30])
             #position[1] += 1 #iterator #these don't work
