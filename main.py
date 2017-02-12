@@ -193,11 +193,7 @@ while not done:
 
     #Stuff to insert in main() mainloop here (for textboxthatworks):
     textbox = Core.textboxthatworks.textbox(screen)
-    textbox.line1("Test1")
-    textbox.line2("Test2")
-    textbox.line3("Test3")
-    textbox.line4("Test4")
-    textbox.line5("Test5")
+    textbox.line1("Test")
     textbox.create_textbox()
     textbox.blitz()
 
