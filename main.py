@@ -181,17 +181,13 @@ while not done:
         current_room = current_level.get_current_room()
         current_entities = current_level.get_current_entities()
     for enemy in current_entities:
-<<<<<<< HEAD
-        enemy.update(tick,current_room)
+        enemy.update(tick,current_room,Chardude.Pos_x,Chardude.Pos_y)
     for bullet in current_bullets:
         bullet.update(tick,current_room,current_entities,Chardude)
     Chardude.update(tick,current_room,current_entities)
-=======
-        enemy.update(tick,current_room,Chardude.Pos_x,Chardude.Pos_y)
     if not Chardude.update(tick,current_room,current_entities):
         gameOver = True
-        
->>>>>>> 5d1255c7d7d68f1bb340d5119d55b345cd682f8f
+
     Sound.charsoundhandler.update(Chardude, tick)
 
 
@@ -238,7 +234,7 @@ while not done:
 
     # --- Limit to 60 frames per second
     tick = clock.tick(60)
-    
+
     if gameOver:
         GOscreen.GO(pygame, screen)
         gameOver = False
