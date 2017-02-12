@@ -135,9 +135,9 @@ class textbox(object):
                     
         #Button actions
         if self.button[0]: #only 1 button press at a time
-            self.text[0] = "Button Pressed"
-        elif self.button[1]:
             pass
+        elif self.button[1]:
+            self.text[1] = "Hint: 'W' is UP!"
         elif self.button[2]:
             pass
         elif self.button[3]:
