@@ -39,6 +39,8 @@ done = False
 # Start Title Menu
 if not TitleScreen.TitleScreen(pygame, screen):
     done = True
+    pygame.quit()
+    sys.exit()
 
 font25 = pygame.font.SysFont('Calibri', 25, True, False)
 
