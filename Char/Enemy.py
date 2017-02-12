@@ -53,6 +53,7 @@ class Enemy(object):
         self.Incapacitated = False
         self.IncapacitatedTimer = 0
         self.Alertness = 0
+        self.currentpicture = pygame.image.load('Art/Player_Portrait.png')
         #self.Alerted = 0
 
     def update(self,tick,current_level,char_x,char_y, ghosted, newAlertnessLevel):
@@ -196,7 +197,7 @@ class Enemy(object):
 
     def move(self,tick,current_level):
         current_room = current_level.get_current_room()
-
+        
         #Turn Cartesian Direction Vector[4] to Python directional Vector[2]
         deltamove = [0,0];
         for i in range(4):
@@ -210,21 +211,21 @@ class Enemy(object):
         #Compensate for diagonal movement
         if deltamove[0] !=0 or deltamove[1]!=0:
             self.setOrientation(deltamove)
-
+        
         if deltamove[0] != 0 and deltamove[1] != 0:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
         else:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
-
+        
         self.Pos_x,self.Pos_y = Char.Movement.tryMoveTo(self.Pos_x,self.Pos_y,
             future_Pos_x,future_Pos_y,
             self.size[0],self.size[1],
             current_level,False,self.Name)
 
-        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
-
+        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])        
+    
     def setOrientation(self,deltamove):
         if deltamove[0]==1:
             if deltamove[1]==0:
@@ -245,7 +246,7 @@ class Enemy(object):
                 self.Orientation = 5;
             else:
                 self.Orientation = 3;
-
+    
     def getCommand(self,command):
         if command.ctype == "keypress":
             if command.spec == "DOWN":
@@ -269,7 +270,7 @@ class Enemy(object):
                 self.Direction[2] = 0;
             elif command.spec == "LEFT":
                 self.Direction[3] = 0;
-
+    
     def getTile(self):
         return [int(math.floor(self.Pos_x/30)),int(math.floor(self.Pos_y/30))]
 
@@ -306,6 +307,7 @@ class Guard(Enemy):
         self.Name = "Guard"
         self.securityClearance = "Medium"
         self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Pistol.png')]
+        self.currentpicture = pygame.image.load('Art/Red_Guard_Portrait.png')
 
 class Scientist(Enemy):
     def __init__(self,newX,newY):
@@ -319,6 +321,8 @@ class Scientist(Enemy):
         self.Name = "Scientist"
         self.securityClearance = "Low"
         self.images = [pygame.image.load('Art/Scientist.png'),pygame.image.load('Art/Arms.png')]
+        self.currentpicture = pygame.image.load('Art/Green_hat_portrait.png')
+        #Enemy.images = #NEED TO ADD ENEMY IMAGES#
 
 class Soldier(Enemy):
     def __init__(self,newX,newY):

@@ -142,7 +142,7 @@ while not done:
         Command.makeFromEvent(event);
         Chardude.getCommand(Command);
         textbox.txt_getcmd(Command)
-        
+
 
     if shooting:
         current_bullets.append(Core.Bullet.Bullet(Chardude.Pos_x + Chardude.size[0]/2, Chardude.Pos_y + Chardude.size[1]/2, click_pos[0], click_pos[1], True))
@@ -173,7 +173,7 @@ while not done:
         gameOver = True
     ## SOUND STUFF ##
     Sound.charsoundhandler.update(Chardude, tick)
-    
+
     # --- Screen-clearing code goes here
 
     # Here, we clear the screen to white. Don't put other drawing commands
@@ -208,13 +208,19 @@ while not done:
         bullet.draw(tick,screen)
 
     #Stuff to insert in main() mainloop here (for textboxthatworks):
-    
+
     #render text calls
     textbox.line1()
     textbox.line2()
     textbox.line3()
     textbox.line4()
     textbox.line5()
+<<<<<<< HEAD
+
+    #switch text
+    textbox.text[0] = "Press WASD to move!"
+
+=======
     #change textbox.shadow_percentage to change bar
     
     #switch text
@@ -222,6 +228,7 @@ while not done:
     textbox.shadow_percentage = Chardude.ghostTimer/10000
     #textbox.shadow_bar(35)
     
+>>>>>>> 26afc9a65072d317371d5064daf80f6c3284f542
     #Actual draws and loop mechs
     textbox.create_textbox()
     textbox.blitz()
