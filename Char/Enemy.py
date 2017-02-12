@@ -278,7 +278,7 @@ class Enemy(object):
         angle = 0
         angle += 45*self.Orientation
         head = pygame.transform.rotate(drawimages[0],angle)
-        if self.moving:
+        if self.Moving:
             angle += 15*math.sin(2*math.pi*self.timer/1000)
         arms = pygame.transform.rotate(drawimages[1],angle)
         arect = arms.get_rect();
