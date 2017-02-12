@@ -104,8 +104,8 @@ class Character(pygame.sprite.Sprite):
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
 
-        gridpos_x = int(math.floor(future_Pos_x/30))
-        gridpos_y = int(math.floor(future_Pos_y/30))
+        gridpos_x = int(future_Pos_x//30)
+        gridpos_y = int(future_Pos_y//30)
         canmovex = True
         xrect = pygame.Rect(  future_Pos_x,  self.Pos_y,  self.size[0],  self.size[1])
         for x in (0,1,2):
@@ -139,10 +139,6 @@ class Character(pygame.sprite.Sprite):
             
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
 
-        if current_room[int(math.floor(self.Pos_x/30))][int(math.floor(future_Pos_y/30))] != 1 and current_room[int(math.floor((self.Pos_x+30)/30))][int(math.floor((future_Pos_y+30)/30))] != 1:
-            self.Pos_y = future_Pos_y
-
-        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
 
     def getCommand(self,command):
         if command.ctype == "go_dir":
@@ -161,7 +157,7 @@ class Character(pygame.sprite.Sprite):
 
 
     def getTile(self):
-        return [int(math.floor(self.Pos_x/30 + 0.5)),int(math.floor(self.Pos_y/30 + 0.5))]
+        return [int(math.floor((self.Pos_x+self.size[0]/2)/30)),int(math.floor((self.Pos_y + self.size[1]/2)/30))]
 
 
 

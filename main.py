@@ -148,13 +148,13 @@ while not done:
 
     # --- Game logic should go here
     current_tile = Chardude.getTile()
-    print(current_tile)
+    #print(current_tile)
     if current_tile[0] % 35 == 0 or current_tile[1] % 23 == 0:
         current_level.enter_door(current_tile, Chardude)
         current_room = current_level.get_current_room()
         current_entities = current_level.get_current_entities()
     for enemy in current_entities:
-        enemy.update(tick)
+        enemy.update(tick,current_room)
     Chardude.update(tick,current_room,current_entities)
 
 
