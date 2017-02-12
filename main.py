@@ -219,16 +219,8 @@ while not done:
     #Actual draws and loop mechs
     textbox.create_textbox()
     textbox.blitz()
-    #textbox.button_trigger()
-    
-    '''
-    if click:
-        #print( textbox.callbacks(click_pos))
-        if textbox.callbacks(click_pos) != "none":
-            #print( "made it here" )
-            gameOver =  True
-    '''
-    
+    screen.blit(Chardude.currentpicture, (1230,670,40,40))
+
     Core.Cursor.DrawCursor(pygame, screen, Chardude.Ghoststate, Chardude.hasGun )
 
     # --- Go ahead and update the screen with what we've drawn.
