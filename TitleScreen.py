@@ -1,5 +1,5 @@
 
-def TitleScreen(screen):
+def TitleScreen(pygame, screen):
     lul = pygame.image.load("TitleScreen/escape.png")
     screen.blit(lul, (0,0,1280,720))
     lul = pygame.image.load("TitleScreen/escapefilter.png")
@@ -69,11 +69,69 @@ def TitleScreen(screen):
         screen.blit(title2, (w/2 +90, h/4)) 
         
         if pygame.Rect(butrects[0]).collidepoint(mousex, mousey):
-            return "start"
+            return True
         elif pygame.Rect(butrects[1]).collidepoint(mousex, mousey):
-            pass
+            poop = 1
+            while poop < 2:
+                lul = pygame.image.load("TitleScreen/escape.png")
+                screen.blit(lul, (0,0,1280,720))
+                lul = pygame.image.load("TitleScreen/escapefilter.png")
+                screen.blit(lul, (0,0,1280,720))
+                lul = pygame.image.load("TitleScreen/FillerRussian.png")
+                screen.blit(lul, (0,screen.get_height()/3,1280,720))#FILLer
+                MOUSE = False
+                # --- Main event loop
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        done = True
+                    #if event key down
+                    elif event.type == pygame.KEYDOWN:
+                        #if pressed space
+                        if event.key == pygame.K_SPACE:
+                            SPACE = True
+                        if event.key == pygame.K_RETURN:
+                            SPACE = True
+                        #Move keys
+                        elif event.key == pygame.K_RIGHT:
+                            RIGHT = True
+                        elif event.key == pygame.K_LEFT:
+                            LEFT = True
+                        elif event.key == pygame.K_DOWN:
+                            DOWN = True
+                        elif event.key == pygame.K_UP:
+                            UP = True
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        mousex, mousey = pygame.mouse.get_pos()
+                        MOUSE = True
+                butrects = [(600, h/2, 400, 30), (600, h/2+90, 400, 30), (600, h/2+180, 400, 30)]
+                screen.fill((20,22,20), butrects[0])
+                but1text = font25.render("Nevada Military Base", 2, sovietred)
+                screen.blit(but1text, (700, h/2+6)) 
+                screen.fill((20,22,20), butrects[1])
+                but2text = font25.render("West Germany Military Base", 2, sovietred)
+                screen.blit(but2text, (700, h/2+96))
+                screen.fill((20,22,20), butrects[2])
+                but3text = font25.render("Okinawa Military Base", 2, sovietred)
+                screen.blit(but3text, (700, h/2+186))
+                title = font40.render("Select Setting: ", 2, sovietred)
+                screen.fill((20,22,20), (10,h/8,1150,40))
+                screen.blit(title, (20, h/8)) 
+                pygame.display.flip()
+                if MOUSE:
+                    if pygame.Rect(butrects[0]).collidepoint(mousex, mousey):
+                        poop = 3
+                        mousex, mousey = 0,0
+                    elif pygame.Rect(butrects[1]).collidepoint(mousex, mousey):
+                        poop = 3
+                        mousex, mousey = 0,0
+                    elif pygame.Rect(butrects[2]).collidepoint(mousex, mousey):
+                        poop = 3
+                        mousex, mousey = 0,0
+                    
+                    
+        
         elif pygame.Rect(butrects[2]).collidepoint(mousex, mousey):
-            return "exit"
+            return False
         
         
         # --- Go ahead and update the screen with what we've drawn.

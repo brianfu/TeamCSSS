@@ -8,7 +8,9 @@ import Core.Command
 import Char.Character
 import Char.Enemy
 import Core.Level
+import TitleScreen
 import Sound.soundlib
+
 
 
 if not pygame.font: print('Warning, fonts disabled')
@@ -31,10 +33,14 @@ screen = pygame.display.set_mode(size)
 
 pygame.display.set_caption("No Swears Pls - Das Spiel")
 
-font25 = pygame.font.SysFont('Calibri', 25, True, False)
-
 # Loop until the user clicks the close button.
 done = False
+
+# Start Title Menu
+if not TitleScreen.TitleScreen(pygame, screen):
+    done = True
+
+font25 = pygame.font.SysFont('Calibri', 25, True, False)
 
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
