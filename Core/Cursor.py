@@ -10,4 +10,4 @@ def DrawCursor(pygame, SCREEN, Ghost):
     elif pygame.mouse.get_pos()[0] > 1080 - 14 and pygame.mouse.get_pos()[0] < 1280 - 5:
         pygame.draw.circle(screen, (25,25,112), pygame.mouse.get_pos(), 5)
 
-    return True
+    return
