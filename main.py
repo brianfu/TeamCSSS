@@ -4,6 +4,7 @@ from pygame.locals import *
 import Core.load_sound
 import Core.load_image
 from Core.detect_collision import detect_collision
+from Core.bullet_collisions import bullet_collisions
 import Core.Command
 import Char.Character
 import Char.Enemy
@@ -141,7 +142,7 @@ while not done:
         Command.makeFromEvent(event);
         Chardude.getCommand(Command);
         textbox.txt_getcmd(Command)
-        
+
 
     if shooting:
         current_bullets.append(Core.Bullet.Bullet(Chardude.Pos_x + Chardude.size[0]/2, Chardude.Pos_y + Chardude.size[1]/2, click_pos[0], click_pos[1], True))
@@ -163,6 +164,7 @@ while not done:
             current_bullets.append(bullet)
     for i in range(len(current_bullets)):
         current_bullets[i].update(tick,current_level,current_entities,Chardude)
+    bullet_collisions(current_bullets, current_entities, Chardude)
     for bullet in current_bullets:
         if bullet.Pos_x < 0 or bullet.Pos_x > 1080 or bullet.Pos_y < 0 or bullet.Pos_y>720 or bullet.HasHit:
             current_bullets.remove(bullet)
@@ -171,7 +173,7 @@ while not done:
         gameOver = True
     ## SOUND STUFF ##
     Sound.charsoundhandler.update(Chardude, tick)
-    
+
     # --- Screen-clearing code goes here
 
     # Here, we clear the screen to white. Don't put other drawing commands
@@ -206,17 +208,17 @@ while not done:
         bullet.draw(tick,screen)
 
     #Stuff to insert in main() mainloop here (for textboxthatworks):
-    
+
     #render text calls
     textbox.line1()
     textbox.line2()
     textbox.line3()
     textbox.line4()
     textbox.line5()
-    
+
     #switch text
     textbox.text[0] = "Press WASD to move!"
-    
+
     #Actual draws and loop mechs
     textbox.create_textbox()
     textbox.blitz()
