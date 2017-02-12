@@ -122,7 +122,7 @@ class Character(pygame.sprite.Sprite):
                         if current_room[gridpos_x+x][gridpos_y+y] == 1:
                             canmovex = False
                             break
-                        elif current_room[gridpos_x+x][gridpos_y+y] == 11 and self.Ghoststate==False:
+                        elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11) and self.Ghoststate==False:
                             canmovex = False
                             break
         if canmovex:
@@ -139,7 +139,7 @@ class Character(pygame.sprite.Sprite):
                         if current_room[gridpos_x+x][gridpos_y+y] == 1:
                             canmovey = False
                             break
-                        elif current_room[gridpos_x+x][gridpos_y+y] == 11 and self.Ghoststate==False:
+                        elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11) and self.Ghoststate==False:
                             canmovey = False
                             break
 
