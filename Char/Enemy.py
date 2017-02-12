@@ -51,6 +51,7 @@ class Enemy(object):
         self.Incapacitated = False
         self.IncapacitatedTimer = 0
         self.Alertness = 0
+        self.currentpicture = pygame.image.load('Art/Player_Portrait.png')
         #self.Alerted = 0
 
     def update(self,tick,current_level,char_x,char_y, ghosted, newAlertnessLevel):
@@ -303,6 +304,7 @@ class Guard(Enemy):
         Enemy.SpecialTraits = 0
         self.Name = "Guard"
         self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Pistol.png')]
+        self.currentpicture = pygame.image.load('Art/Red_Guard_Portrait.png')
 
 class Scientist(Enemy):
     def __init__(self,newX,newY):
@@ -315,4 +317,5 @@ class Scientist(Enemy):
         Enemy.SpecialTraits = 0
         self.Name = "Scientist"
         self.images = [pygame.image.load('Art/Scientist.png'),pygame.image.load('Art/Arms.png')]
+        self.currentpicture = pygame.image.load('Art/Green_hat_portrait.png')
         #Enemy.images = #NEED TO ADD ENEMY IMAGES#

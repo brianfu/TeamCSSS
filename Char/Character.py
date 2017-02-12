@@ -74,6 +74,7 @@ class Character(object):
         self.Possessing.IncapacitatedTimer = 120
         enemylist.append(self.Possessing)
         self.Possessing = 0
+        self.currentpicture = self.Possessing.currentpicture
         self.Ghoststate = True
         self.PlayGhostSound = True        
         self.hasGun = False
