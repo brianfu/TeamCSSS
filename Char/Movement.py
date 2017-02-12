@@ -22,7 +22,7 @@ def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_level, isAGho
                     if current_room[gridpos_x+x][gridpos_y+y] == 1:
                         canmovex = False
                         break
-                    elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11, 12) and isAGhost==False:
+                    elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11, 12, 14, 15) and isAGhost==False:
                         canmovex = False
                         break
     if canmovex:
@@ -44,7 +44,7 @@ def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_level, isAGho
                     if current_room[gridpos_x+x][gridpos_y+y] == 1:
                         canmovey = False
                         break
-                    elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11, 12) and isAGhost==False:
+                    elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11, 12, 14, 15) and isAGhost==False:
                         canmovey = False
                         break
     if canmovey:

@@ -1,5 +1,5 @@
 
-def DrawCursor(pygame, SCREEN, Ghost):
+def DrawCursor(pygame, screen, Ghost):
     if pygame.mouse.get_pos()[0] < 1080 - 14:
         if Ghost:
             pygame.draw.circle(screen, (20, 22, 20), pygame.mouse.get_pos(), 14, 4)

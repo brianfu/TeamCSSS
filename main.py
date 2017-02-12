@@ -9,6 +9,7 @@ import Char.Character
 import Char.Enemy
 import Core.Level
 import Core.Bullet
+import Core.Cursor
 import TitleScreen
 import Sound.soundlib
 import Sound.charsoundhandler
@@ -161,9 +162,9 @@ while not done:
     for i in range(len(current_bullets)):
         current_bullets[i].update(tick,current_level,current_entities,Chardude)
     for bullet in current_bullets:
-        if bullet.Pos_x < 0 or bullet.Pos_x > 1080 or bullet.Pos_y < 0 or bullet.Pos_y>720:
+        if bullet.Pos_x < 0 or bullet.Pos_x > 1080 or bullet.Pos_y < 0 or bullet.Pos_y>720 or bullet.HasHit:
             current_bullets.remove(bullet)
-    print(current_bullets)
+    #print(current_bullets)
     if not Chardude.update(tick,current_level,current_entities):
         gameOver = True
     ## SOUND STUFF ##
@@ -211,7 +212,7 @@ while not done:
     textbox.create_textbox()
     textbox.blitz()    
     
-    Core.Cursor(pygame, screen, Chardude.isghost() )
+    Core.Cursor.DrawCursor(pygame, screen, Chardude.isghost() )
     
     
     
