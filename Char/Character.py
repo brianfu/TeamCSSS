@@ -94,6 +94,9 @@ class Character(object):
 
     def update(self,tick,current_level,enemylist):
 
+        if self.checkWin(current_level):
+            return 1        
+
         current_room = current_level.get_current_room();
 
         self.move(tick,current_level)
@@ -109,9 +112,6 @@ class Character(object):
             if self.ghostTimer < 0:
                 return -1
         else:
-            if self.checkWin(current_level):
-                return 1
-            
             self.ghostTimer += 2*tick
             self.ghostTimer = min(self.ghostTimer, 10000)
         return 0
