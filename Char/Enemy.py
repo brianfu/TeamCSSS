@@ -346,4 +346,4 @@ class Janitor(Enemy):
         self.AttackDamage = 0
         self.SpecialTraits = 0
         self.Name = "Janitor"
-        self.images = [pygame.image.load('Art/Green_hat.png'),pygame.image.load('Art/Arms.png')]
+        self.images = [pygame.image.load('Art/Green_hat_portrait.png'),pygame.image.load('Art/Arms.png')]

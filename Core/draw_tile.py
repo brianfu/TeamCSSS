@@ -24,7 +24,7 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
 
     # Colours for tiles during ghost state
     if isGhoststate:
-        if int( current_room[x][y] ) in [0,3,5,8]:
+        if int( current_room[x][y] ) in [0,3,5,6,7,8]:
             curr_color = RED
         if int( current_room[x][y] ) == 1:
             curr_color = YELLOW
