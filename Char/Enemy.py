@@ -75,7 +75,7 @@ class Enemy(object):
 
         self.move(tick,current_level)
 
-        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
+        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
     
     def PatrolCycle(self):
         self.PatrolCycleLength += 1
