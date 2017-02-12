@@ -53,32 +53,32 @@ class Enemy(pygame.sprite.Sprite):
     
     def PatrolCycle():
         PatrolCycleLength += 1
-        if(PatrolCycleLength==30)
-            if(Moving==True)
+        if(PatrolCycleLength==30):
+            if(Moving==True):
                 x = randrange(0,1,1)
-                if (x==0)
+                if (x==0):
                     Moving=False
                     Direction = [0,0,0,0]
                     StopTime = 120
-            else
+            else:
                 StopTime -= 1
                 if (StopTime<=0):
                     Moving=True
                     w=0
-                    while(w<1)
+                    while(w<1):
                         i = randrange(0,2,1) #Up or Down or Neither?
-                        if(i==0)
-                            Direction[0]=1;
+                        if(i==0):
+                            Direction[0]=1
                             w+=1
-                        elif(i==1)
-                            Direction[2]=1;
+                        elif(i==1):
+                            Direction[2]=1
                             w+=1
                         j = randrange(0,2,1) #Right or Left or Neither?
-                        if(j==0)
-                            Direction[1]=1;
+                        if(j==0):
+                            Direction[1]=1
                             w+=1
-                        elif(j==1)
-                            Direction[3]=1;
+                        elif(j==1):
+                            Direction[3]=1
                             w+=1
     
     #def Chase():
