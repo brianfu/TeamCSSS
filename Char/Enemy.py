@@ -307,7 +307,7 @@ class Guard(Enemy):
         self.Name = "Guard"
         self.securityClearance = "Medium"
         self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Pistol.png')]
-        self.currentpicture = pygame.image.load('Art/Red_Guard_Portrait.png')
+        self.currentpicture = pygame.image.load('Art/Blue_hat_Portrait.png')
 
 class Scientist(Enemy):
     def __init__(self,newX,newY):
@@ -321,7 +321,7 @@ class Scientist(Enemy):
         self.Name = "Scientist"
         self.securityClearance = "Low"
         self.images = [pygame.image.load('Art/Scientist.png'),pygame.image.load('Art/Arms.png')]
-        self.currentpicture = pygame.image.load('Art/Green_hat_portrait.png')
+        self.currentpicture = pygame.image.load('Art/ScientistPortrait.png')
         #Enemy.images = #NEED TO ADD ENEMY IMAGES#
 
 class Soldier(Enemy):
