@@ -47,29 +47,9 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
                 temp_colour = RED
             else:
                 temp_colour = WHITE
-            pygame.draw.rect(screen, temp_colour, [x*30,y*30, 30, 30], 0)
-            if current_room[x+1][y] == 10 and current_room[x-1][y] == 10 and current_room[x][y+1] == 10:
-                tile_image = pygame.image.load('Art/Table-top.png')
-                imagerect = pygame.Rect(x*30, y*30, 30, 30)
-                screen.blit(tile_image, imagerect)
-            elif current_room[x+1][y] == 10 and current_room[x-1][y] == 10 and current_room[x][y-1] == 10:
-                tile_image = pygame.image.load('Art/Table-bottom.png')
-                imagerect = pygame.Rect(x*30, y*30, 30, 30)
-                screen.blit(tile_image, imagerect)
-            elif current_room[x+1][y] == 10 and current_room[x][y+1] == 10:
-                tile_image = pygame.image.load('Art/Table-top-left.png')
-                imagerect = pygame.Rect(x*30, y*30, 30, 30)
-                screen.blit(tile_image, imagerect)
-            elif current_room[x+1][y] == 10 and current_room[x][y-1] == 10:
-                tile_image = pygame.image.load('Art/Table-bottom-left.png')
-                imagerect = pygame.Rect(x*30, y*30, 30, 30)
-                screen.blit(tile_image, imagerect)
-            elif current_room[x-1][y] == 10 and current_room[x][y+1] == 10:
-                tile_image = pygame.image.load('Art/Table-top-right.png')
-                imagerect = pygame.Rect(x*30, y*30, 30, 30)
-                screen.blit(tile_image, imagerect)
-            elif current_room[x-1][y] == 10 and current_room[x][y-1] == 10:
-                tile_image = pygame.image.load('Art/Table-bottom-right.png')
+            if current_room[x+1][y] == 10 and current_room[x][y+1] == 10 and current_room[x-1][y] != 10 and current_room[x][y-1] != 10:
+                pygame.draw.rect(screen, temp_colour, [x*30,y*30, 120, 60], 0)
+                tile_image = pygame.image.load('Art/Table.png')
                 imagerect = pygame.Rect(x*30, y*30, 30, 30)
                 screen.blit(tile_image, imagerect)
             return font25.render('', True, txt_color)
