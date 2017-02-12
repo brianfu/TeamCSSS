@@ -24,7 +24,7 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
 
     # Colours for tiles during ghost state
     if isGhoststate:
-        if current_room[x][y] in [0,3,5]:
+        if current_room[x][y] in [0,3,5,8]:
             curr_color = RED
         if current_room[x][y] == 1:
             curr_color = YELLOW
@@ -69,8 +69,19 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
             screen.blit(tile_image, imagerect)
             return font25.render('', True, txt_color)
 
-    else:
+        elif current_room[x][y] == 9:
+            tile_image = pygame.image.load('Art/Control-panel-red.png')
+            imagerect = pygame.Rect(x*30, y*30, 30, 30)
+            screen.blit(tile_image, imagerect)
+            return font25.render('', True, txt_color)
 
+        elif current_room[x][y] == 13:
+            tile_image = pygame.image.load('Art/Control-panel-Green.png')
+            imagerect = pygame.Rect(x*30, y*30, 30, 30)
+            screen.blit(tile_image, imagerect)
+            return font25.render('', True, txt_color)
+
+    else:
         pygame.draw.rect(screen, curr_color, [x*30,y*30, 30, 30], 0) #col by row mat.
         if current_room[x][y] not in [-1,0,1,2,3,5,10,11]:
             text = font25.render(str(current_room[x][y]), True, txt_color)
