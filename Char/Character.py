@@ -67,6 +67,7 @@ class Character(pygame.sprite.Sprite):
         self.Possessing = 0
         self.Ghoststate = True
         self.PlayGhostSound = True
+        self.countdowntime = time.time()
         return
 
 
@@ -82,8 +83,8 @@ class Character(pygame.sprite.Sprite):
 
         if self.Ghoststate:
             self.image = self.images[1];
-            if time.time()-self.countdowntime > 18:
-                return False
+            #if time.time()-self.countdowntime > 18:
+                #return False
         else: self.image = self.images[0];
         
         return True

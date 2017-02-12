@@ -170,7 +170,9 @@ while not done:
         current_entities = current_level.get_current_entities()
     for enemy in current_entities:
         enemy.update(tick,current_room,Chardude.Pos_x,Chardude.Pos_y)
-    Chardude.update(tick,current_room,current_entities)
+    if not Chardude.update(tick,current_room,current_entities):
+        gameOver = True
+        
     Sound.charsoundhandler.update(Chardude, tick)
 
 
@@ -217,6 +219,11 @@ while not done:
     
     if gameOver:
         GOscreen.GO(pygame, screen)
+        if not TitleScreen.TitleScreen(pygame, screen):
+            done = True
+            pygame.quit()
+            sys.exit()
+        
 
 # Close the window and quit.
 pygame.quit()
