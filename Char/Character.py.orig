@@ -2,7 +2,6 @@ import pygame
 import os
 import math
 import time
-import Char.Movement
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -18,7 +17,7 @@ def load_image(name, colorkey=None):
         image.set_colorkey(colorkey, RLEACCEL)
     return image, image.get_rect()
 
-class Character(object):
+class Character(pygame.sprite.Sprite):
 
 
     def __init__(self):
@@ -35,31 +34,31 @@ class Character(object):
         self.Pos_y = 50;
         self.size = [40,40];
         self.Timecountdown = 200 #at 60fps, the number should be 60*time wanted
-        self.Orientation = 0; #can be 0-7
+        #self.Direction = 0; #can be 0-7,
+        self.Orientation = 0; #can be 0-3
         self.Velocity = 110 #pixels / second
         self.MaxVelocity = 220
         self.Direction = [0,0,0,0]
-        self.ghostimages = [pygame.image.load('Art/Player_alt_dimension_head.png'),pygame.image.load('Art/Player_arms_alt_dimension.png')]
-        self.absorbedimages = []
+        self.images = [pygame.image.load('Art/Player_original_head.png'),pygame.image.load('Art/Player_alt_dimension_head.png')]
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
-        self.timer = 0;
-        self.moving = False;
-
-    def absorb(self,enemylist,index):
-        self.Possessing = enemylist.pop(index)
-        self.Ghoststate = False
-        self.Pos_x = self.Possessing.Pos_x
-        self.Pos_y = self.Possessing.Pos_y
-        self.absorbedimages = self.Possessing.images
         
+        self.countdownsfx = pygame.mixer.Sound("Sound/SFX/ghostdimentioncountdown.wav")
+        self.countdownend = pygame.mixer.Sound("Sound/SFX/ghostdimentioncountdownEnding.wav")
+
+
     def unGhost(self,current_room,enemylist):
         self.AttemptUnghost = False
         for i in range(len(enemylist)):
             if enemylist[i].Possessable and self.rect.colliderect(enemylist[i].rect):
-                self.absorb(enemylist,i);
+                self.Possessing = enemylist.pop(i)
+                self.Ghoststate = False
+                self.Pos_x = self.Possessing.Pos_x
+                self.Pos_y = self.Possessing.Pos_y
+                self.images[0] = self.Possessing.images[0]
                 self.PlayGhostSound = True
                 return
         return
+
 
     def goGhost(self,current_room,enemylist):
         self.AttemptGhost = False
@@ -70,15 +69,14 @@ class Character(object):
         enemylist.append(self.Possessing)
         self.Possessing = 0
         self.Ghoststate = True
+        self.countdowntime = time.time() # 18 seconds
         self.PlayGhostSound = True
-        self.countdowntime = time.time()
         return
 
-    def update(self,tick,current_level,enemylist):
-        
-        current_room = current_level.get_current_room();
 
-        self.move(tick,current_level)
+    def update(self,tick,current_room,enemylist):
+
+        self.move(tick,current_room)
 
         if self.AttemptGhost:
             self.goGhost(current_room,enemylist);
@@ -87,35 +85,15 @@ class Character(object):
             self.unGhost(current_room, enemylist);
 
         if self.Ghoststate:
+            self.image = self.images[1];
             if time.time()-self.countdowntime > 18:
-                self.Ghoststate = False
                 return False
+        else: self.image = self.images[0];
         
         return True
 
-    def setOrientation(self,deltamove):
-        if deltamove[0]==1:
-            if deltamove[1]==0:
-                self.Orientation = 0;
-            elif deltamove[1]==-1:
-                self.Orientation = 7;
-            elif deltamove[1]==1:
-                self.Orientation = 1;
-        elif deltamove[0]==0:
-            if deltamove[1]==-1:
-                self.Orientation = 6;
-            elif deltamove[1]==1:
-                self.Orientation = 2;
-        else:
-            if deltamove[1]==0:
-                self.Orientation = 4;
-            elif deltamove[1]==-1:
-                self.Orientation = 5;
-            else:
-                self.Orientation = 3;
 
-    def move(self,tick,current_level):
-        current_room = current_level.get_current_room()
+    def move(self,tick,current_room):
         deltamove = [0,0];
         for i in range(4):
             if i==3 or i==2:
@@ -128,12 +106,9 @@ class Character(object):
         if deltamove[0]!=0 or deltamove[1]!=0:
             self.Velocity += (3*tick)//5
             self.Velocity = min(self.Velocity,self.MaxVelocity)
-            self.setOrientation(deltamove)
-            self.moving = True
         else:
             self.Velocity -= (3*tick)//5
             self.Velocity = max(self.Velocity,self.MaxVelocity/2)
-            self.moving = False
 
         if deltamove[0] != 0 and deltamove[1] != 0:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
@@ -142,12 +117,48 @@ class Character(object):
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
 
-        self.Pos_x,self.Pos_y = Char.Movement.tryMoveTo(self.Pos_x,self.Pos_y,
-            future_Pos_x,future_Pos_y,
-            self.size[0],self.size[1],
-            current_level,self.Ghoststate)
-        
+        gridpos_x = int(future_Pos_x//30)
+        gridpos_y = int(future_Pos_y//30)
+        canmovex = True
+        if future_Pos_x > 1075 - self.size[0] or future_Pos_x < 0:
+            canmovex = False
+        else:
+            xrect = pygame.Rect(  future_Pos_x,  self.Pos_y,  self.size[0],  self.size[1])
+            for x in (0,1,2):
+                for y in (0,1,2):
+                    if xrect.colliderect(
+                    pygame.Rect( (gridpos_x+x)*30,  (gridpos_y+y)*30,  30,  30) ):
+                        if current_room[gridpos_x+x][gridpos_y+y] == 1:
+                            canmovex = False
+                            break
+                        elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11) and self.Ghoststate==False:
+                            canmovex = False
+                            break
+        if canmovex:
+            self.Pos_x = future_Pos_x
+        canmovey = True
+        if future_Pos_y > 715 - self.size[1] or future_Pos_y < 0:
+            canmovey = False
+        else:
+            yrect = pygame.Rect(  self.Pos_x,  future_Pos_y,  self.size[0],  self.size[1])
+            for x in (0,1,2):
+                for y in (0,1,2):
+                    if yrect.colliderect(
+                    pygame.Rect( (gridpos_x+x)*30,  (gridpos_y+y)*30,  30,  30) ):
+                        if current_room[gridpos_x+x][gridpos_y+y] == 1:
+                            canmovey = False
+                            break
+                        elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11) and self.Ghoststate==False:
+                            canmovey = False
+                            break
+
+        if canmovey:
+            self.Pos_y = future_Pos_y
+
+
+
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
+
 
     def getCommand(self,command):
         if command.ctype == "go_dir":
@@ -164,29 +175,11 @@ class Character(object):
                 else:
                     self.AttemptGhost = True;
 
+
     def getTile(self):
         return [int(math.floor((self.Pos_x+self.size[0]/2)/30)),int(math.floor((self.Pos_y + self.size[1]/2)/30))]
 
-    def draw(self,tick,screen):
-        if self.Ghoststate:
-            drawimages = self.ghostimages
-        else:
-            drawimages = self.absorbedimages
-        self.timer += tick;
-        self.timer %= 1000
-        angle = 0
-        angle += 45*self.Orientation
-        head = pygame.transform.rotate(drawimages[0],angle)
-        if self.moving:
-            angle += 15*math.sin(2*math.pi*self.timer/1000)
-        arms = pygame.transform.rotate(drawimages[1],angle)
-        arect = arms.get_rect();
-        hrect = head.get_rect();
-        armcenter = [arect.width/2,arect.height/2]
-        headcenter =[hrect.width/2,hrect.height/2]
-        screen.blit(arms,[self.Pos_x + 20 - armcenter[0],self.Pos_y + 20 - armcenter[1]])
-        screen.blit(head,[self.Pos_x + 20 - headcenter[0],self.Pos_y + 20 - headcenter[1]])
-    
+
     def shoot(self):
         print("Hi")
 

@@ -19,7 +19,7 @@ def load_image(name, colorkey=None):
         image.set_colorkey(colorkey, RLEACCEL)
     return image, image.get_rect()
 
-class Enemy(pygame.sprite.Sprite):
+class Enemy(object):
 
     def __init__(self,newX,newY):
         pygame.sprite.Sprite.__init__(self)
@@ -34,12 +34,11 @@ class Enemy(pygame.sprite.Sprite):
         self.AttackDamage = 0
         self.SpecialTraits = 0 #Special Traits are stored as integers and checked for as integers.
         self.Alerted = 1
-        self.Direction = 0; #can be 0-7,
-        self.Orientation = 0 #can be 0-3
+        self.Orientation = 0 #can be 0-7
         self.Velocity = 216 #pixels / second
         self.Direction = [0,0,0,0]
-        self.images = [pygame.image.load('Art/Char_0.jpg'),pygame.image.load('Art/Char_1.png')]
-        self.image = self.images[0]
+        self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Arms.png')]
+        #self.image = self.images[0]
         self.size = [40,40]
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
         self.PatrolCycleLength = 0
@@ -47,6 +46,8 @@ class Enemy(pygame.sprite.Sprite):
         self.StopTime = 0
         self.FireCooldown = 0
         self.Name = "Giorgio"
+        self.timer = 0;
+        self.CurrentBullets = []
 
     def update(self,tick,current_level,char_x,char_y):
         current_room = current_level.get_current_room()
@@ -99,10 +100,8 @@ class Enemy(pygame.sprite.Sprite):
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
         B=target_x-self.Pos_x
         C=A*A + B*B
-        
-        if(self.Moving==False):
-            self.StopTime -= 1    
-        if(C>=20000 and self.StopTime<=0): #More than 200 pixels away, C>200^2
+        clip_size = 2
+        if(C>=20000 and self.StopTime==0): #More than 200 pixels away, C>200^2
             self.Moving = True
             A_neg = False
             if(A<0):    #Only dealing with directional vector above X-axis (cartesian quardinate plane with Enemy at origin)
@@ -124,11 +123,22 @@ class Enemy(pygame.sprite.Sprite):
                     self.Direction[0]=1 #Down
                 else:
                     self.Direction[2]=1 #Up
-        elif(C<=20000):
+        elif(C<20000):
             self.Moving = False
             self.Direction = [0,0,0,0]
-            Core.Bullet.Bullet(self.Pos_x, self.Pos_y, target_x, target_y+0.0001, False)
-    
+            self.StopTime = 30 #1/2 secs
+        if(self.StopTime==30 or self.StopTime==15):
+            Core.Bullet.Bullet(self.Pos_x, self.Pos_y, target_x, target_y, False)
+            if(self.StopTime==0):
+                self.StopTime = 60
+        if(self.StopTime>0):
+            if(self.StopTime%(60/clip_size)==0):
+                self.CurrentBullets.append(Core.Bullet.Bullet(self.Pos_x, self.Pos_y, target_x, target_y+0.0001, False))
+                print("Fire! BULLETS!!!")
+        if(self.Moving==False and self.StopTime>0):
+            self.StopTime -= 1     
+        print (self.StopTime)      
+                
     def Flee(self, target_x, target_y): #target_x should be Character.Pos_x, target_y should be Character.Pos_y
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
         B=target_x-self.Pos_x
@@ -167,6 +177,9 @@ class Enemy(pygame.sprite.Sprite):
         future_Pos_x = self.Pos_x
         future_Pos_y = self.Pos_y
         #Compensate for diagonal movement
+        if deltamove[0] !=0 or deltamove[1]!=0:
+            self.setOrientation(deltamove)
+        
         if deltamove[0] != 0 and deltamove[1] != 0:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
@@ -180,6 +193,27 @@ class Enemy(pygame.sprite.Sprite):
             current_level,False)
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])        
+    
+    def setOrientation(self,deltamove):
+        if deltamove[0]==1:
+            if deltamove[1]==0:
+                self.Orientation = 0;
+            elif deltamove[1]==-1:
+                self.Orientation = 7;
+            elif deltamove[1]==1:
+                self.Orientation = 1;
+        elif deltamove[0]==0:
+            if deltamove[1]==-1:
+                self.Orientation = 6;
+            elif deltamove[1]==1:
+                self.Orientation = 2;
+        else:
+            if deltamove[1]==0:
+                self.Orientation = 4;
+            elif deltamove[1]==-1:
+                self.Orientation = 5;
+            else:
+                self.Orientation = 3;
     
     def getCommand(self,command):
         if command.ctype == "keypress":
@@ -204,12 +238,27 @@ class Enemy(pygame.sprite.Sprite):
                 self.Direction[2] = 0;
             elif command.spec == "LEFT":
                 self.Direction[3] = 0;
+    
     def getTile(self):
         return [int(math.floor(self.Pos_x/30)),int(math.floor(self.Pos_y/30))]
-'''
-    def draw(self,screen):
-        self.image.draw(screen);
-        return 0; #Update later with drawing stuff'''
+
+    def draw(self,tick,screen):
+        drawimages = self.images
+        self.timer += tick;
+        self.timer %= 1000
+        angle = 0
+        angle += 45*self.Orientation
+        head = pygame.transform.rotate(drawimages[0],angle)
+        if self.Moving:
+            angle += 15*math.sin(2*math.pi*self.timer/1000)
+        arms = pygame.transform.rotate(drawimages[1],angle)
+        arect = arms.get_rect();
+        hrect = head.get_rect();
+        armcenter = [arect.width/2,arect.height/2]
+        headcenter =[hrect.width/2,hrect.height/2]
+        screen.blit(arms,[self.Pos_x + 20 - armcenter[0],self.Pos_y + 20 - armcenter[1]])
+        screen.blit(head,[self.Pos_x + 20 - headcenter[0],self.Pos_y + 20 - headcenter[1]])
+
 class Guard(Enemy):
     def __init__(self,newX,newY):
         Enemy.__init__(self,newX,newY)
@@ -218,7 +267,7 @@ class Guard(Enemy):
         Enemy.Armour = 1
         Enemy.AttackDamage = 2
         Enemy.SpecialTraits = 0
-        Enemy.images = [pygame.image.load('Art/Blue_hat_guard.png')]
+        self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Arms.png')]
 
 class Scientist(Enemy):
     def __init__(self,newX,newY):

@@ -61,13 +61,13 @@ keys_pressed = []
 
 ## CHANGE THIS BECAUSE IT IS ARCHAIC ##
 Chardude = Char.Character.Character();
-group = pygame.sprite.Group(Chardude)
+#group = pygame.sprite.Group(Chardude)
 
 Command = Core.Command.Command();
 tick = 0;
 
-oldbody = Char.Enemy.Enemy(50,50);
-Chardude.Possessing = oldbody;
+oldbody = [Char.Enemy.Enemy(50,50)];
+Chardude.absorb(oldbody,0);
 
 current_level = Core.Level.Level()
 current_level.load_level(1)
@@ -189,10 +189,10 @@ while not done:
             if text != None:
                 screen.blit(text, [m*30,n*30])
 
-    group2 = pygame.sprite.Group(current_entities)
+    for entity in current_entities:
+        entity.draw(tick,screen)
+    Chardude.draw(tick,screen)
 
-    group.draw(screen);
-    group2.draw(screen);
 
     for bullet in current_bullets:
         pygame.draw.rect(screen, BLACK, bullet.rect, 2)
@@ -222,10 +222,9 @@ while not done:
         GOscreen.GO(pygame, screen) #Game over screen
         gameOver = False #start resetting all values
         Chardude = Char.Character.Character();
-        group = pygame.sprite.Group(Chardude)
 
-        oldbody = Char.Enemy.Enemy(50,50);
-        Chardude.Possessing = oldbody;
+        oldbody = [Char.Enemy.Enemy(50,50)];
+        Chardude.absorb(oldbody,0);
 
         room_grid_position = [0,0]
 
