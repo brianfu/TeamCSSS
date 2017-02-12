@@ -35,21 +35,22 @@ class Character(object):
         self.Pos_y = 50;
         self.size = [40,40];
         self.Timecountdown = 200 #at 60fps, the number should be 60*time wanted
-        #self.Direction = 0; #can be 0-7,
-        self.Orientation = 0; #can be 0-3
+        self.Orientation = 0; #can be 0-7
         self.Velocity = 110 #pixels / second
         self.MaxVelocity = 220
         self.Direction = [0,0,0,0]
         self.ghostimages = [pygame.image.load('Art/Player_alt_dimension_head.png'),pygame.image.load('Art/Player_arms_alt_dimension.png')]
         self.absorbedimages = []
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
+        self.timer = 0;
+        self.moving = False;
 
     def absorb(self,enemylist,index):
         self.Possessing = enemylist.pop(index)
         self.Ghoststate = False
         self.Pos_x = self.Possessing.Pos_x
         self.Pos_y = self.Possessing.Pos_y
-        self.absorbedimages = self.Possessing.images[0]
+        self.absorbedimages = self.Possessing.images
         
     def unGhost(self,current_room,enemylist):
         self.AttemptUnghost = False
@@ -59,7 +60,6 @@ class Character(object):
                 self.PlayGhostSound = True
                 return
         return
-
 
     def goGhost(self,current_room,enemylist):
         self.AttemptGhost = False
@@ -73,7 +73,6 @@ class Character(object):
         self.PlayGhostSound = True
         self.countdowntime = time.time()
         return
-
 
     def update(self,tick,current_level,enemylist):
         
@@ -96,6 +95,26 @@ class Character(object):
         
         return True
 
+    def setOrientation(self,deltamove):
+        if deltamove[0]==1:
+            if deltamove[1]==0:
+                self.Orientation = 0;
+            elif deltamove[1]==-1:
+                self.Orientation = 7;
+            elif deltamove[1]==1:
+                self.Orientation = 1;
+        elif deltamove[0]==0:
+            if deltamove[1]==-1:
+                self.Orientation = 6;
+            elif deltamove[1]==1:
+                self.Orientation = 2;
+        else:
+            if deltamove[1]==0:
+                self.Orientation = 4;
+            elif deltamove[1]==-1:
+                self.Orientation = 5;
+            else:
+                self.Orientation = 3;
 
     def move(self,tick,current_level):
         current_room = current_level.get_current_room()
@@ -111,9 +130,12 @@ class Character(object):
         if deltamove[0]!=0 or deltamove[1]!=0:
             self.Velocity += (3*tick)//5
             self.Velocity = min(self.Velocity,self.MaxVelocity)
+            self.setOrientation(deltamove)
+            self.moving = True
         else:
             self.Velocity -= (3*tick)//5
             self.Velocity = max(self.Velocity,self.MaxVelocity/2)
+            self.moving = False
 
         if deltamove[0] != 0 and deltamove[1] != 0:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
@@ -126,9 +148,8 @@ class Character(object):
             future_Pos_x,future_Pos_y,
             self.size[0],self.size[1],
             current_level,self.Ghoststate)
-
+        
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
-
 
     def getCommand(self,command):
         if command.ctype == "go_dir":
@@ -145,11 +166,25 @@ class Character(object):
                 else:
                     self.AttemptGhost = True;
 
-
     def getTile(self):
         return [int(math.floor((self.Pos_x+self.size[0]/2)/30)),int(math.floor((self.Pos_y + self.size[1]/2)/30))]
 
-
+    def draw(self,tick,screen):
+        if self.Ghoststate:
+            drawimages = self.ghostimages
+        else:
+            drawimages = self.absorbedimages
+        self.timer += tick;
+        self.timer %= 1000
+        angle = 0
+        angle += 45*self.Orientation
+        head = pygame.transform.rotate(drawimages[0],angle)
+        if self.moving:
+            angl += 15*math.sin(2*math.pi*self.timer/1000)
+        arms = pygame.transform.rotate(drawimages[1],angle)
+        screen.blit(arms,[Pos_x,Pos_y])
+        screen.blit(head,[Pos_x,Pos_y])
+    
     def shoot(self):
         print("Hi")
 
