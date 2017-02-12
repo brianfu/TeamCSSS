@@ -1,6 +1,7 @@
 import pygame
 import os
-import random
+from random import randrange
+import math
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -43,7 +44,7 @@ class Enemy(pygame.sprite.Sprite):
         self.StopTime = 0
 
     def update(self,tick, current_room):
-        if (Alerted==0):
+        if (self.Alerted==0):
             self.PatrolCycle()
         #else
 
@@ -51,34 +52,35 @@ class Enemy(pygame.sprite.Sprite):
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
     
-    def PatrolCycle():
-        PatrolCycleLength += 1
-        if(PatrolCycleLength==30):
-            if(Moving==True):
-                x = randrange(0,1,1)
+    def PatrolCycle(self):
+        self.PatrolCycleLength += 1
+        if(self.PatrolCycleLength>=30):
+            self.PatrolCycleLength = 0;
+            if(self.Moving==True):
+                x = randrange(0,2)
                 if (x==0):
-                    Moving=False
-                    Direction = [0,0,0,0]
-                    StopTime = 120
+                    self.Moving=False
+                    self.Direction = [0,0,0,0]
+                    self.StopTime = 2
             else:
-                StopTime -= 1
-                if (StopTime<=0):
-                    Moving=True
+                self.StopTime -= 1
+                if (self.StopTime<=0):
+                    self.Moving=True
                     w=0
                     while(w<1):
-                        i = randrange(0,2,1) #Up or Down or Neither?
+                        i = randrange(0,3) #Up or Down or Neither?
                         if(i==0):
-                            Direction[0]=1
+                            self.Direction[0]=1
                             w+=1
                         elif(i==1):
-                            Direction[2]=1
+                            self.Direction[2]=1
                             w+=1
-                        j = randrange(0,2,1) #Right or Left or Neither?
+                        j = randrange(0,3) #Right or Left or Neither?
                         if(j==0):
-                            Direction[1]=1
+                            self.Direction[1]=1
                             w+=1
                         elif(j==1):
-                            Direction[3]=1
+                            self.Direction[3]=1
                             w+=1
     
     #def Chase():
