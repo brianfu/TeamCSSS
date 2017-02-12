@@ -220,6 +220,42 @@ while not done:
     if gameOver:
         GOscreen.GO(pygame, screen)
         gameOver = False
+        Chardude = Char.Character.Character();
+        group = pygame.sprite.Group(Chardude)
+
+        Command = Core.Command.Command();
+        tick = 0;
+
+
+        enemylist = []; # this is a temp thing
+        enemylist.append(Char.Enemy.Scientist(50,50));
+
+        oldbody = Char.Enemy.Enemy(50,50);
+        Chardude.Possessing = oldbody;
+
+        current_room = []
+        '''
+        In a room, currently the values for stuff are:
+        0 - empty air, no interaction
+        1 - wall, Char cannot move there
+        '''
+
+        room_grid_position = [0,0]
+
+        current_level = Core.Level.Level()
+        current_level.load_level(1)
+        current_room = current_level.get_current_room()
+
+        for m in range(len(current_room)):
+            for n in range(len(current_room[m])):
+                if current_room[m][n] == 3:
+                    Chardude.Pos_x = 30 * m
+                    Chardude.Pos_y = 30 * n
+                elif current_room[m][n] == 5:
+                    current_level.get_current_entities().append(Char.Enemy.Guard(m*30,n*30));
+
+        current_entities = current_level.get_current_entities()
+        Sound.soundlib.play_music("Ambi.ogg", -1)
         if not TitleScreen.TitleScreen(pygame, screen):
             done = True
             pygame.quit()
