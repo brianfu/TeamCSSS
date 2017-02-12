@@ -151,7 +151,7 @@ while not done:
         enemy.update(tick,current_room,Chardude.Pos_x,Chardude.Pos_y)
     for bullet in current_bullets:
         bullet.update(tick,current_room,current_entities,Chardude)
-    if not Chardude.update(tick,current_level,current_entities):
+    if not Chardude.update(tick,current_room,current_entities):
         gameOver = True
     ## SOUND STUFF ##
     Sound.charsoundhandler.update(Chardude, tick)
@@ -179,7 +179,7 @@ while not done:
             text = Core.draw_tile.draw_tile(m, n, current_room, txt_color, screen, font25, Chardude.Ghoststate)
 
             #Blit in words here
-            text != None:
+            if text != None:
                 screen.blit(text, [m*30,n*30])
 
     group2 = pygame.sprite.Group(current_entities)
