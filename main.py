@@ -214,13 +214,14 @@ while not done:
     textbox.line2()
     textbox.line3()
     textbox.line4()
-    textbox.line5()
+    #textbox.line5()
     #change textbox.shadow_percentage to change bar
     
     #switch text
     textbox.text[0] = "                                    "
     textbox.shadow_percentage = Chardude.ghostTimer/10000
     textbox.text[1] = "Press WASD to move!"
+    textbox.text[2] = "Press 'E' to interact!"
     
     #Actual draws and loop mechs
     textbox.create_textbox()
