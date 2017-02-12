@@ -19,8 +19,8 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
         curr_color = BLACK
     if current_room[x][y] == 2:
         curr_color = [70,55,30]
-    if current_room[x][y] == 10:
-        curr_color = [140,100,80]
+    #if current_room[x][y] == 10:
+        #curr_color = [140,100,80]
 
     # Colours for tiles during ghost state
     if isGhoststate:
@@ -42,25 +42,37 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
 
     if curr_color == "null":
 
-        '''
         if current_room[x][y] == 10:
-
+            if isGhoststate:
+                temp_colour = RED
+            else:
+                temp_colour = WHITE
+            pygame.draw.rect(screen, temp_colour, [x*30,y*30, 30, 30], 0)
             if current_room[x+1][y] == 10 and current_room[x-1][y] == 10 and current_room[x][y+1] == 10:
-                tile_image = pygame.image.load('Art/Table, top.png')
-            elif current_room[x+1][y] == 10 and current_room[x-1][y] == 10 and current_room[x][y+1] == 10:
-                tile_image = pygame.image.load('Art/Table, bottom.png')
-            elif current_room[x+1][y] == 10 and current_room[x][y+1] == 8:
-                tile_image = pygame.image.load('Art/Table, top left.png')
-            elif current_room[x+1][y] == 10 and current_room[x][y-1] == 8:
-                tile_image = pygame.image.load('Art/Table, bottom left.png')
-            elif current_room[x-1][y] == 8 and current_room[x][y+1] == 8:
-                tile_image = pygame.image.load('Art/Table, top right.png')
-            elif current_room[x-1][y] == 8 and current_room[x][y-1] == 8:
-                tile_image = pygame.image.load('Art/Table, bottom right.png')
-            imagerect = pygame.Rect(x*30, y*30, 30, 30)
-            screen.blit(tile_image, imagerect)
+                tile_image = pygame.image.load('Art/Table-top.png')
+                imagerect = pygame.Rect(x*30, y*30, 30, 30)
+                screen.blit(tile_image, imagerect)
+            elif current_room[x+1][y] == 10 and current_room[x-1][y] == 10 and current_room[x][y-1] == 10:
+                tile_image = pygame.image.load('Art/Table-bottom.png')
+                imagerect = pygame.Rect(x*30, y*30, 30, 30)
+                screen.blit(tile_image, imagerect)
+            elif current_room[x+1][y] == 10 and current_room[x][y+1] == 10:
+                tile_image = pygame.image.load('Art/Table-top-left.png')
+                imagerect = pygame.Rect(x*30, y*30, 30, 30)
+                screen.blit(tile_image, imagerect)
+            elif current_room[x+1][y] == 10 and current_room[x][y-1] == 10:
+                tile_image = pygame.image.load('Art/Table-bottom-left.png')
+                imagerect = pygame.Rect(x*30, y*30, 30, 30)
+                screen.blit(tile_image, imagerect)
+            elif current_room[x-1][y] == 10 and current_room[x][y+1] == 10:
+                tile_image = pygame.image.load('Art/Table-top-right.png')
+                imagerect = pygame.Rect(x*30, y*30, 30, 30)
+                screen.blit(tile_image, imagerect)
+            elif current_room[x-1][y] == 10 and current_room[x][y-1] == 10:
+                tile_image = pygame.image.load('Art/Table-bottom-right.png')
+                imagerect = pygame.Rect(x*30, y*30, 30, 30)
+                screen.blit(tile_image, imagerect)
             return font25.render('', True, txt_color)
-        '''
 
         # Image tiles
         if current_room[x][y] == 12:
