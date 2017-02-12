@@ -146,8 +146,11 @@ class Character(object):
         else:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
-            
-        PlayerType = Player.Possessing.Name if Player.Ghoststate else "Player"
+        
+        if not self.Ghoststate:
+            PlayerType = self.Possessing.Name
+        else:
+            PlayerType = "Player"
 
         self.Pos_x,self.Pos_y = Char.Movement.tryMoveTo(self.Pos_x,self.Pos_y,
             future_Pos_x,future_Pos_y,
