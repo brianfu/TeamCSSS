@@ -28,8 +28,8 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
             #curr_color = RED
         #if int( current_room[x][y] ) == 1:
             #curr_color = YELLOW
-        if int( current_room[x][y] )== 14:
-            curr_color = (235, 200, 0)
+        #if int( current_room[x][y] )== 14:
+            #curr_color = (235, 200, 0)
         #if int( current_room[x][y] )== 11:
             #curr_color = [150,150,0]
 
@@ -39,8 +39,8 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
             #curr_color = WHITE
         #if int( current_room[x][y] ) == 1:
             #curr_color = GREY
-        if int( current_room[x][y] ) == 14:
-            curr_color = (120, 120, 120)
+        #if int( current_room[x][y] ) == 14:
+            #curr_color = (120, 120, 120)
         #if int( current_room[x][y] )== 11:
             #curr_color = [150,150,150]
 
