@@ -78,8 +78,6 @@ class Character(object):
             return
         self.Possessing.Pos_x = self.Pos_x
         self.Possessing.Pos_y = self.Pos_y
-        self.Possessing.Incapacitated = True
-        self.Possessing.IncapacitatedTimer = 120
         enemylist.append(self.Possessing)
         
         self.Possessing = 0
