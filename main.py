@@ -8,6 +8,9 @@ import Core.Command
 import Char.Character
 import Char.Enemy
 import Core.Level
+import TitleScreen
+import Sound.soundlib
+import Sound.charsoundhandler
 
 
 if not pygame.font: print('Warning, fonts disabled')
@@ -33,6 +36,12 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("No Swears Pls - Das Spiel")
 
 font25 = pygame.font.SysFont('Calibri', 25, True, False)
+
+# Start Title Menu
+if not TitleScreen.TitleScreen(pygame, screen):
+    done = True
+    pygame.quit()
+    sys.exit()
 
 # Loop until the user clicks the close button.
 done = False
@@ -132,6 +141,8 @@ def door():
     print('Door Tile')
 tiles = {0: empty, 1: wall, 2: exit}
 
+# Start the tunes
+Sound.soundlib.play_music("Ambi.ogg", -1)
 
 # -------- Main Program Loop -----------
 while not done:
@@ -158,6 +169,7 @@ while not done:
     for enemy in current_entities:
         enemy.update(tick,current_room)
     Chardude.update(tick,current_room,current_entities)
+    Sound.charsoundhandler.update(Chardude, tick)
 
 
     # --- Screen-clearing code goes here
