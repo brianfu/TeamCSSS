@@ -133,7 +133,8 @@ while not done:
             keys_pressed.remove(event.key);
         if event.type == pygame.MOUSEBUTTONUP:
             click_pos = pygame.mouse.get_pos()
-            shooting = True
+            if Chardude.hasGun:
+                shooting = True
             click = True
         else:
             click = False
