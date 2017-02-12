@@ -8,6 +8,7 @@ import Core.Command
 import Char.Character
 import Char.Enemy
 import Core.Level
+import Sound.soundlib
 
 
 if not pygame.font: print('Warning, fonts disabled')
@@ -130,6 +131,8 @@ def door():
     print('Door Tile')
 tiles = {0: empty, 1: wall, 2: exit}
 
+# Start the tunes
+Sound.soundlib.play_music("Ambi.ogg", -1)
 
 # -------- Main Program Loop -----------
 while not done:
