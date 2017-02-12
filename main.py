@@ -28,7 +28,7 @@ size = (1280, 720)
 
 screen = pygame.display.set_mode(size)
 
-pygame.display.set_caption("Ghost in the fuck you")
+pygame.display.set_caption("No Swears Pls - Das Spiel")
 
 font25 = pygame.font.SysFont('Calibri', 25, True, False)
 
