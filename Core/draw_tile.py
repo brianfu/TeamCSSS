@@ -19,11 +19,15 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
         curr_color = [140,100,80]
 
     if isGhoststate:
+        if current_room[x][y] in [0,3,5]:
+            curr_color = RED
         if current_room[x][y] == 1:
             curr_color = YELLOW
         if current_room[x][y] == 11:
             curr_color = [150,150,0]
     else:
+        if current_room[x][y] in [0,3,5]:
+            curr_color = WHITE
         if current_room[x][y] == 1:
             curr_color = GREY
         if current_room[x][y] == 11:
