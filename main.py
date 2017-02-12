@@ -255,12 +255,12 @@ while not done:
                     current_level.get_current_entities().append(Char.Enemy.Guard(m*30,n*30));
 
         current_entities = current_level.get_current_entities()
-        Sound.soundlib.play_music("Ambi.ogg", -1)
         if not TitleScreen.TitleScreen(pygame, screen):
             done = True
             pygame.quit()
             sys.exit()
-        
+        Sound.soundlib.play_music("Ambi.ogg", -1)
+
 
 # Close the window and quit.
 pygame.quit()
