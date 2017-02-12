@@ -211,11 +211,7 @@ while not done:
     textbox.create_textbox()
     textbox.blitz()    
     
-    if pygame.mouse.get_pos()[0] < 1080 - 14:
-        pygame.draw.circle(screen, RED, pygame.mouse.get_pos(), 14, 4)
-        pygame.draw.circle(screen, RED, pygame.mouse.get_pos(), 7, 4)
-    elif pygame.mouse.get_pos()[0] > 1080 - 14 and pygame.mouse.get_pos()[0] < 1280 - 5:
-        pygame.draw.circle(screen, NAVY_BLUE, pygame.mouse.get_pos(), 5)
+    Core.Cursor(pygame, screen, Chardude.isghost() )
     
     
     
