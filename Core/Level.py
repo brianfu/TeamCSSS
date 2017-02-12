@@ -10,20 +10,23 @@ class Level():
         self.room_grid_position = 0 # position, integer from 0 to 8
         self.entities = [[[] for x in range(3)] for y in range(3)] # list of entities: enemies, objects, boolets, weapons, puddings, manifestos, etc.
         self.start_position = [0,0] # x val, y val
+        self.roomButtons = []
 
     def load_level(self, level_num):
         for m in range(3):
             self.rooms.append([])
             self.roomLevers.append([])
+            self.roomButtons.append([])
             for n in range(3):
                 roomName = 'Core/Levels/' + str(level_num) + "-" + str(m) + "_" + str(n)
                 self.rooms[m].append(pickle.load(open(roomName,"rb")))
                 self.roomLevers[m].append(0)
+                self.roomButtons[m].append([0,0])
         for i in range(3):
             for j in range(3):
                 for m in range(len(self.rooms[i][j])):
                     for n in range(len(self.rooms[i][j][m])):
-                        if int(self.rooms[i][j][m][n] ) == 3:
+                        if int( self.rooms[i][j][m][n] ) == 3:
                             self.room_grid_position = i*3 + j
                             self.start_position[0] = 30 * m
                             self.start_position[1] = 30 * n
@@ -63,3 +66,45 @@ class Level():
 
     def get_room_lever_state(self):
         return self.roomLevers[int(math.floor(self.room_grid_position/3))][self.room_grid_position%3]
+    
+    def activate_room_ether_button(self):
+        self.roomButtons[int(math.floor(self.room_grid_position/3))][self.room_grid_position%3][0] = 1
+        current_room = self.get_current_room()
+        for m in range(len(current_room)):
+            for n in range(len(current_room[m])):
+                if current_room[m][n] == 16:
+                    current_room[m][n] = 17 
+                    
+    def deactivate_room_ether_button(self):
+        self.roomButtons[int(math.floor(self.room_grid_position/3))][self.room_grid_position%3][0] = 0
+        current_room = self.get_current_room()
+        for m in range(len(current_room)):
+            for n in range(len(current_room[m])):
+                if current_room[m][n] == 17:
+                    current_room[m][n] = 16  
+                    
+    def get_room_ether_b_state(self):
+        return self.roomButtons[int(math.floor(self.room_grid_position/3))][self.room_grid_position%3][0]
+                    
+    def activate_room_regular_button(self):
+        self.roomButtons[int(math.floor(self.room_grid_position/3))][self.room_grid_position%3][1] = 1
+        current_room = self.get_current_room()
+        for m in range(len(current_room)):
+            for n in range(len(current_room[m])):
+                if current_room[m][n] == 18:
+                    current_room[m][n] = 19 
+                    
+    def deactivate_room_regular_button(self):
+        self.roomButtons[int(math.floor(self.room_grid_position/3))][self.room_grid_position%3][1] = 0
+        current_room = self.get_current_room()
+        for m in range(len(current_room)):
+            for n in range(len(current_room[m])):
+                if current_room[m][n] == 19:
+                    current_room[m][n] = 18 
+                    
+    def get_room_reg_b_state(self):
+        return self.roomButtons[int(math.floor(self.room_grid_position/3))][self.room_grid_position%3][1]    
+    
+    def check_room_buttons(self):
+        if (self.get_room_ether_b_state() == 1 and self.get_room_reg_b_state() == 1):
+            self.activate_room_lever()
