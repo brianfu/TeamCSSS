@@ -72,9 +72,11 @@ class Character(pygame.sprite.Sprite):
         return
 
 
-    def update(self,tick,current_room,enemylist):
+    def update(self,tick,current_level,enemylist):
+        
+        current_room = current_level.get_current_room();
 
-        self.move(tick,current_room)
+        self.move(tick,current_level)
 
         if self.AttemptGhost:
             self.goGhost(current_room,enemylist);
@@ -92,7 +94,8 @@ class Character(pygame.sprite.Sprite):
         return True
 
 
-    def move(self,tick,current_room):
+    def move(self,tick,current_level):
+        current_room = current_level.get_current_room()
         deltamove = [0,0];
         for i in range(4):
             if i==3 or i==2:
@@ -119,7 +122,7 @@ class Character(pygame.sprite.Sprite):
         self.Pos_x,self.Pos_y = Char.Movement.tryMoveTo(self.Pos_x,self.Pos_y,
             future_Pos_x,future_Pos_y,
             self.size[0],self.size[1],
-            current_room,self.Ghoststate)
+            current_level,self.Ghoststate)
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
 

@@ -46,7 +46,9 @@ class Enemy(pygame.sprite.Sprite):
         self.StopTime = 0
         self.Name = "Giorgio"
 
-    def update(self,tick,current_room,char_x,char_y):
+    def update(self,tick,current_level,char_x,char_y):
+        current_room = current_level.get_current_room()
+        
         self.Direction = [0,0,0,0]
         if (self.Alerted==0):
             self.PatrolCycle()
@@ -55,7 +57,7 @@ class Enemy(pygame.sprite.Sprite):
         elif(self.Alerted==2):
             self.Flee(char_x, char_y)
 
-        self.move(tick,current_room)
+        self.move(tick,current_level)
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
     
@@ -138,7 +140,9 @@ class Enemy(pygame.sprite.Sprite):
             else:
                 self.Direction[0]=1 #Down
                           
-    def move(self,tick,current_room):
+    def move(self,tick,current_level):
+        current_room = current_level.get_current_room()
+        
         #Turn Cartesian Direction Vector[4] to Python directional Vector[2]
         deltamove = [0,0];
         for i in range(4):
@@ -160,7 +164,7 @@ class Enemy(pygame.sprite.Sprite):
         self.Pos_x,self.Pos_y = Char.Movement.tryMoveTo(self.Pos_x,self.Pos_y,
             future_Pos_x,future_Pos_y,
             self.size[0],self.size[1],
-            current_room,False)
+            current_level,False)
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])        
     

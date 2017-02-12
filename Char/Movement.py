@@ -1,8 +1,10 @@
 import pygame
 
-def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_room, isAGhost):
+def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_level, isAGhost):
     gridpos_x = int(fut_x//30)
     gridpos_y = int(fut_y//30)
+    
+    current_room = current_level.get_current_room()
     
     ## TRY MOVING X FIRST ##
     canmovex = True
