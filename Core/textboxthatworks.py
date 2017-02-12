@@ -100,7 +100,7 @@ class textbox(object):
                 if i == 0: #For shadow
                     final_mat_temp[2] *= self.shadow_percentage
                     pygame.draw.rect(self.screen, PURPLE, final_mat_temp)
-                    final_mat_temp[2] /= self.shadow_percentage
+                    if self.shadow_percentage != 0 : final_mat_temp[2] /= self.shadow_percentage
                     pygame.draw.rect(self.screen, self.color[i], final_mat_temp, self.draw_border)
                 else:
                     pygame.draw.rect(self.screen, self.color[i], final_mat_temp)
