@@ -219,6 +219,12 @@ while not done:
     textbox.line2()
     textbox.line3()
     textbox.line4()
+    if Chardude.Possessing is not 0:
+        textbox.text[3] = Chardude.Possessing.Name + " | " + "HP: " + str(Chardude.Possessing.Hitpoints)
+        if Chardude.hasGun:
+            textbox.text[3] += "| Gun"
+    else:
+        textbox.text[3] = "Ghost Form | Losing Sanity"
     #textbox.line5()
     #change textbox.shadow_percentage to change bar
     
