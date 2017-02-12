@@ -205,19 +205,30 @@ while not done:
         bullet.draw(tick,screen)
 
     #Stuff to insert in main() mainloop here (for textboxthatworks):
+    
+    #render text calls
     textbox.line1()
     textbox.line2()
     textbox.line3()
     textbox.line4()
     textbox.line5()
+    
+    #switch text
+    textbox.text[0] = "Press WASD to move!"
+    
+    #Actual draws and loop mechs
     textbox.create_textbox()
     textbox.blitz()
+    #textbox.button_trigger()
+    
+    '''
     if click:
         #print( textbox.callbacks(click_pos))
         if textbox.callbacks(click_pos) != "none":
             #print( "made it here" )
             gameOver =  True
-
+    '''
+    
     Core.Cursor.DrawCursor(pygame, screen, Chardude.Ghoststate, Chardude.hasGun )
 
     # --- Go ahead and update the screen with what we've drawn.
