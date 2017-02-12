@@ -49,12 +49,13 @@ class Enemy(pygame.sprite.Sprite):
     def update(self,tick,current_level,char_x,char_y):
         current_room = current_level.get_current_room()
         
-        self.Direction = [0,0,0,0]
         if (self.Alerted==0):
             self.PatrolCycle()
         elif(self.Alerted==1):
+            self.Direction = [0,0,0,0]
             self.Chase(char_x, char_y)
         elif(self.Alerted==2):
+            self.Direction = [0,0,0,0]
             self.Flee(char_x, char_y)
 
         self.move(tick,current_level)
