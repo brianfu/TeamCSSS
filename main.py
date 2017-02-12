@@ -205,11 +205,18 @@ while not done:
         bullet.draw(tick,screen)
 
     #Stuff to insert in main() mainloop here (for textboxthatworks):
+    
+    #render text calls
     textbox.line1()
     textbox.line2()
     textbox.line3()
     textbox.line4()
     textbox.line5()
+    
+    #switch text
+    textbox.text[0] = "Press WASD to move!"
+    
+    #Actual draws and loop mechs
     textbox.create_textbox()
     textbox.blitz()
     screen.blit(Chardude.currentpicture, (1230,670,40,40))
