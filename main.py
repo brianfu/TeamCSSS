@@ -8,6 +8,7 @@ import Core.Command
 import Char.Character
 import Char.Enemy
 import Core.Level
+import Core.Bullet
 import TitleScreen
 import Sound.soundlib
 import Sound.charsoundhandler
@@ -90,6 +91,10 @@ for m in range(len(current_room)):
             current_level.get_current_entities().append(Char.Enemy.Guard(m*30,n*30));
 
 current_entities = current_level.get_current_entities()
+current_bullets = []; # List of bullets in a room, reset on room change
+
+shooting = False
+click_pos = [0,0]
 
 #make 36 x 24 matrix
 #temporary, will eventually pickle
@@ -156,8 +161,15 @@ while not done:
             keys_pressed.append(event.key);
         elif event.type == pygame.KEYUP:
             keys_pressed.remove(event.key);
+        if event.type == pygame.MOUSEBUTTONUP:
+            click_pos = pygame.mouse.get_pos()
+            shooting = True
         Command.makeFromEvent(event);
         Chardude.getCommand(Command);
+
+    if shooting:
+        current_bullets.append(Core.Bullet.Bullet(Chardude.Pos_x + Chardude.size[0]/2, Chardude.Pos_y + Chardude.size[1]/2, click_pos[0], click_pos[1]))
+        shooting = False
 
     # --- Game logic should go here
     current_tile = Chardude.getTile()
@@ -168,6 +180,8 @@ while not done:
         current_entities = current_level.get_current_entities()
     for enemy in current_entities:
         enemy.update(tick,current_room)
+    for bullet in current_bullets:
+        bullet.update(tick,current_room,current_entities,Chardude)
     Chardude.update(tick,current_room,current_entities)
     Sound.charsoundhandler.update(Chardude, tick)
 
@@ -206,6 +220,9 @@ while not done:
 
     group.draw(screen);
     group2.draw(screen);
+
+    for bullet in current_bullets:
+        pygame.draw.rect(screen, BLACK, bullet.rect, 2)
 
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()

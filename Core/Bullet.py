@@ -9,21 +9,23 @@ class Bullet():
         self.Origin_y = origin_y
         self.Aim_x = aim_x
         self.Aim_y = aim_y
-        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.Pos_x+1,self.Pos_x+1)
-        self.speed = 30
-        self.m = (Aim_y - Origin_y)/(Aim_x - Origin_x)
+        self.size = 2
+        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size,self.size)
+        self.speed = 10
+        self.m = (self.Aim_y - self.Origin_y)/(self.Aim_x - self.Origin_x)
 
     def update(self,tick,current_room,enemylist,char):
-        self.move(tick,current_room)
+        self.move(tick,current_room,enemylist,char)
+        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size,self.size)
 
     def get_y(self,x):
-        y = self.m*(x - Origin_x) + Origin_y
+        y = self.m*(x - self.Origin_x) + self.Origin_y
         return x
 
     def get_x(self,y):
-        x = (1/self.m)*(y - Origin_y) + Origin_x
+        x = (1/self.m)*(y - self.Origin_y) + self.Origin_x
         return y
 
-    def move(self,tick,current_room):
-        if m > 0:
-            print("test")
+    def move(self,tick,current_room,enemylist,char):
+        self.Pos_y += (self.Aim_y - self.Origin_y)*(self.speed/(math.sqrt(math.pow(self.Aim_x - self.Origin_x, 2) + math.pow(self.Aim_y - self.Origin_y, 2))))
+        self.Pos_x += (self.Aim_x - self.Origin_x)*(self.speed/(math.sqrt(math.pow(self.Aim_x - self.Origin_x, 2) + math.pow(self.Aim_y - self.Origin_y, 2))))
