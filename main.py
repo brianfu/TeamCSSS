@@ -91,8 +91,8 @@ shooting = False
 click = False
 click_pos = [0,0]
 
-#Function for tile draw
-
+#
+enemyAlertness = 0.0
 
 #Define textbox
 textbox = Core.textboxthatworks.textbox(screen)
@@ -160,7 +160,7 @@ while not done:
         current_bullets.clear();
     ## CODE UPDATING ##
     for enemy in current_entities:
-        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y, Chardude.Ghoststate)
+        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y, Chardude.Ghoststate, enemyAlertness)
         for bullet in enemy.CurrentBullets:
             current_bullets.append(bullet)
     for i in range(len(current_bullets)):
