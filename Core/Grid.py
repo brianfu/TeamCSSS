@@ -51,7 +51,7 @@ clock = pygame.time.Clock()
 space_pressed = False
 position = [0,0] #0-35, 0-23, col by row, increment row until 23, then reset and increment col
 current_pos = [0,0]
-state_counter = 0 #0-3, increment if spacebar
+state_counter = 0.0 #0-3, increment if spacebar
 s_c_list = []
 n_list = []
 
@@ -106,6 +106,10 @@ while not done:
                 s_c_list[current_pos[0]][current_pos[1]] = 1
             elif event.key == pygame.K_l:
                 s_c_list[current_pos[0]][current_pos[1]] = 12
+            elif event.key == pygame.K_p:
+                s_c_list[current_pos[0]][current_pos[1]] += 0.1
+            elif event.key == pygame.K_LEFTBRACKET:
+                s_c_list[current_pos[0]][current_pos[1]] -= 0.1
             
             # Quick numbers
             elif event.key == pygame.K_1:
