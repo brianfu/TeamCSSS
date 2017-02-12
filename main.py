@@ -212,6 +212,7 @@ while not done:
     textbox.create_textbox()
     textbox.blitz()    
     
+    print(Chardude.Ghoststate)
     Core.Cursor(pygame, screen, Chardude.Ghoststate )
     
     
