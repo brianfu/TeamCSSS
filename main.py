@@ -159,18 +159,22 @@ while not done:
         current_entities = current_level.get_current_entities()
     ## CODE UPDATING ##
     for enemy in current_entities:
-        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y, Chardude.Ghoststate, enemyAlertness)
+        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y, Chardude.Ghoststate, enemyAlertness, current_bullets)
         for bullet in enemy.CurrentBullets:
             current_bullets.append(bullet)
+    
     for i in range(len(current_bullets)):
         current_bullets[i].update(tick,current_level,current_entities,Chardude)
     bullet_collisions(current_bullets, current_entities, Chardude)
+    
     for bullet in current_bullets:
         if bullet.Pos_x < 0 or bullet.Pos_x > 1080 or bullet.Pos_y < 0 or bullet.Pos_y>720 or bullet.HasHit:
             current_bullets.remove(bullet)
+    
     #print(current_bullets)
     if not Chardude.update(tick,current_level,current_entities):
         gameOver = True
+    
     ## SOUND STUFF ##
     Sound.charsoundhandler.update(Chardude, tick)
     

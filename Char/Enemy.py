@@ -56,7 +56,7 @@ class Enemy(object):
         self.currentpicture = pygame.image.load('Art/Player_Portrait.png')
         #self.Alerted = 0
 
-    def update(self,tick,current_level,char_x,char_y, ghosted, newAlertnessLevel):
+    def update(self,tick,current_level,char_x,char_y, ghosted, newAlertnessLevel, current_bullets):
         current_room = current_level.get_current_room()
         self.Alertness = newAlertnessLevel
 
