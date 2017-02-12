@@ -10,6 +10,7 @@ GREY = (220,220,220)
 BLUE = (0, 32, 255)
 ORANGE = (255,160,16)
 CYAN = (0,255,255)
+VIOLET = (125,0,255)
 
 
 #Shadow bar
@@ -24,11 +25,11 @@ class textbox(object):
         self.y_pos = 0
         self.x_offset = 30
         self.y_offset = 30
-        self.font = pygame.font.SysFont('Arial', 12,True, False)
+        self.font = pygame.font.SysFont('Arial', 12, True, False)
         self.rendered_text = ['','','','','']
         self.text = ['','','','','']
         self.textsize = []
-        self.color = [BLUE, ORANGE, CYAN, GREEN, GREY]
+        self.color = [BLUE, ORANGE, CYAN, GREEN, VIOLET]
         self.rec_area_mat = []
         self.mouse_pos = pygame.mouse.get_pos()
         self.draw_border = 2
@@ -72,7 +73,9 @@ class textbox(object):
         
         
     def line5(self):
+        self.font = pygame.font.SysFont('Arial', 11, True, False) #make font smaller
         self.rendered_text[4] = self.font.render(str(self.text[4]), True, BLACK)
+        self.font = pygame.font.SysFont('Arial', 12, True, False)
     
     def blitz(self):
         self.y_gap = 0

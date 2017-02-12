@@ -225,6 +225,7 @@ while not done:
     textbox.line2()
     textbox.line3()
     textbox.line4()
+    textbox.line5()
     if Chardude.Possessing is not 0:
         textbox.text[3] = Chardude.Possessing.Name + " | " + "HP: " + str(Chardude.Possessing.Hitpoints)
         if Chardude.hasGun:
@@ -239,6 +240,7 @@ while not done:
     textbox.shadow_percentage = Chardude.ghostTimer/10000
     textbox.text[1] = "Press WASD to move!"
     textbox.text[2] = "Press 'E' to interact!"
+    textbox.text[4] = "Use 'Space' to switch dimensions!"
     
     #Actual draws and loop mechs
     textbox.create_textbox(menubar_photo)
