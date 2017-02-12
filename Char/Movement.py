@@ -25,6 +25,24 @@ def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_level, isAGho
                     elif int(current_room[gridpos_x+x][gridpos_y+y]) in (10, 11, 12, 14, 15) and isAGhost==False:
                         canmovex = False
                         break
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) ==  16 and isAGhost == True:
+                        current_level.activate_room_ether_button()
+                        current_level.check_room_buttons()
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) ==  18 and isAGhost == False:
+                        current_level.activate_room_regular_button()
+                        current_level.check_room_buttons()
+                        
+                    if int(current_room[gridpos_x+x][gridpos_y+y]) not in (16, 17) and current_level.get_room_ether_b_state() == 1:
+                        current_level.deactivate_room_ether_button()
+                    if int(current_room[gridpos_x+x][gridpos_y+y]) not in (18, 19) and current_level.get_room_reg_b_state() == 1:
+                        button_held = False
+                        for enemy in current_level.get_current_entities():
+                            e_gridpos_x = int((enemy.Pos_x+10)//30)
+                            e_gridpos_y = int((enemy.Pos_y+10)//30)
+                            if int(current_room[e_gridpos_x][e_gridpos_y]) in (18, 19):
+                                button_held = True
+                        if not button_held:
+                            current_level.deactivate_room_regular_button()                  
     if canmovex:
             curr_x = fut_x
             
@@ -47,6 +65,24 @@ def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_level, isAGho
                     elif int(current_room[gridpos_x+x][gridpos_y+y]) in (10, 11, 12, 14, 15) and isAGhost==False:
                         canmovey = False
                         break
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) ==  16 and isAGhost == True:
+                        current_level.activate_room_ether_button()
+                        current_level.check_room_buttons()
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) ==  18 and isAGhost == False:
+                        current_level.activate_room_regular_button()
+                        current_level.check_room_buttons()
+                        
+                    if int(current_room[gridpos_x+x][gridpos_y+y]) not in (16, 17) and current_level.get_room_ether_b_state() == 1:
+                        current_level.deactivate_room_ether_button()
+                    if int(current_room[gridpos_x+x][gridpos_y+y]) not in (18, 19) and current_level.get_room_reg_b_state() == 1:
+                        button_held = False
+                        for enemy in current_level.get_current_entities():
+                            e_gridpos_x = int((enemy.Pos_x+10)//30)
+                            e_gridpos_y = int((enemy.Pos_y+10)//30)
+                            if int(current_room[e_gridpos_x][e_gridpos_y]) in (18, 19):
+                                button_held = True
+                        if not button_held:
+                            current_level.deactivate_room_regular_button()                     
     if canmovey:
         curr_y = fut_y
     
