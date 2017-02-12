@@ -28,7 +28,7 @@ class Enemy(object):
         self.Pos_y = newY;
         self.EnemyType = 0
         self.Possessable = True
-        self.EnemyType = 0
+        self.hasGun = True
         self.Hitpoints = 1
         self.Armour = 0
         self.AttackDamage = 0
@@ -270,6 +270,7 @@ class Guard(Enemy):
     def __init__(self,newX,newY):
         Enemy.__init__(self,newX,newY)
         Enemy.EnemyType = 1
+        self.hasGun = True
         Enemy.Hitpoints = 100
         Enemy.Armour = 1
         Enemy.AttackDamage = 2
@@ -280,6 +281,7 @@ class Scientist(Enemy):
     def __init__(self,newX,newY):
         Enemy.__init__(self,newX,newY)
         self.EnemyType = 2
+        self.hasGun = False
         Enemy.Hitpoints = 50
         Enemy.Armour = 0
         Enemy.AttackDamage = 0

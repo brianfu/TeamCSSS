@@ -214,7 +214,7 @@ while not done:
             print( "made it here" )
             gameOver =  True
 
-    Core.Cursor.DrawCursor(pygame, screen, Chardude.Ghoststate )
+    Core.Cursor.DrawCursor(pygame, screen, Chardude.Ghoststate, Chardude.hasGun )
 
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
