@@ -19,10 +19,10 @@ def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_level, isAGho
                 if xrect.colliderect(
                 pygame.Rect( (gridpos_x+x)*30,  (gridpos_y+y)*30,  30,  30)#rect of a tile
                 ):
-                    if current_room[gridpos_x+x][gridpos_y+y] == 1:
+                    if int(current_room[gridpos_x+x][gridpos_y+y]) == 1:
                         canmovex = False
                         break
-                    elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11, 12, 14, 15) and isAGhost==False:
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) in (10, 11, 12, 14, 15) and isAGhost==False:
                         canmovex = False
                         break
     if canmovex:
@@ -41,10 +41,10 @@ def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_level, isAGho
                 if yrect.colliderect(
                 pygame.Rect( (gridpos_x+x)*30,  (gridpos_y+y)*30,  30,  30)#rect of a tile
                 ):
-                    if current_room[gridpos_x+x][gridpos_y+y] == 1:
+                    if int(current_room[gridpos_x+x][gridpos_y+y]) == 1:
                         canmovey = False
                         break
-                    elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11, 12, 14, 15) and isAGhost==False:
+                    elif int(current_room[gridpos_x+x][gridpos_y+y]) in (10, 11, 12, 14, 15) and isAGhost==False:
                         canmovey = False
                         break
     if canmovey:

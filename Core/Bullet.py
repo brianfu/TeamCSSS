@@ -42,9 +42,9 @@ class Bullet():
         current_room = current_level.get_current_room()
         
         if (gridpos_x >= 0 and gridpos_x <= 35 and gridpos_y >= 0 and gridpos_y <= 23):
-            if (current_room[gridpos_x][gridpos_y] in (-1, 1, 2, 4, 9, 12, 13, 15, 20, 21, 22)):
+            if ( int( current_room[gridpos_x][gridpos_y] ) in (-1, 1, 2, 4, 9, 12, 13, 15, 20, 21, 22)):
                 self.HasHit = True
-            elif (current_room[gridpos_x][gridpos_y] == 14):
+            elif ( int( current_room[gridpos_x][gridpos_y] ) == 14):
                 self.HasHit = True
                 current_room[gridpos_x][gridpos_y] = 0
 

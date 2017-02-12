@@ -28,7 +28,11 @@ class Enemy(object):
         self.Pos_y = newY;
         self.EnemyType = 0
         self.Possessable = True
+<<<<<<< HEAD
         self.hasGun = True
+=======
+        self.EnemyType = 0 
+>>>>>>> dfdff28393eb461066f3b39ffbfa543949db51f2
         self.Hitpoints = 1
         self.Armour = 0
         self.AttackDamage = 0
