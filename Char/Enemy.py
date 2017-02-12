@@ -51,7 +51,7 @@ class Enemy(object):
         self.Incapacitated = False
         self.IncapacitatedTimer = 0
 
-    def update(self,tick,current_level,char_x,char_y):
+    def update(self,tick,current_level,char_x,char_y, ghosted):
         current_room = current_level.get_current_room()
         
         if (self.Incapacitated):

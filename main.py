@@ -16,6 +16,7 @@ import Sound.charsoundhandler
 import GOscreen
 import Core.draw_tile
 import Core.textboxthatworks
+import Core.Cursor
 
 if not pygame.font: print('Warning, fonts disabled')
 if not pygame.mixer: print('Warning, sound disabled')
@@ -88,6 +89,7 @@ current_entities = current_level.get_current_entities()
 current_bullets = []; # List of bullets in a room, reset on room change
 
 shooting = False
+click = False
 click_pos = [0,0]
 
 #Function for tile draw
@@ -137,6 +139,9 @@ while not done:
         if event.type == pygame.MOUSEBUTTONUP:
             click_pos = pygame.mouse.get_pos()
             shooting = True
+            click = True
+        else:
+            click = False
         Command.makeFromEvent(event);
         Chardude.getCommand(Command);
         textbox.txt_getcmd(Command)
@@ -156,7 +161,7 @@ while not done:
         current_bullets.clear();
     ## CODE UPDATING ##
     for enemy in current_entities:
-        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y)
+        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y, Chardude.Ghoststate)
         for bullet in enemy.CurrentBullets:
             current_bullets.append(bullet)
     for i in range(len(current_bullets)):
@@ -210,9 +215,19 @@ while not done:
     textbox.line4()
     textbox.line5()
     textbox.create_textbox()
-    textbox.blitz()    
+    textbox.blitz()
+    if click:
+        print( textbox.callbacks(click_pos))
+        if textbox.callbacks(click_pos) != "none":
+            print( "made it here" )
+            gameOver =  True
+        
     
+<<<<<<< HEAD
     Core.Cursor.DrawCursor(pygame, screen, Chardude.isghost() )
+=======
+    Core.Cursor.DrawCursor(pygame, screen, Chardude.Ghoststate )
+>>>>>>> origin/master
     
     
     
