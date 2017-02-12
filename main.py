@@ -12,7 +12,7 @@ import Core.Bullet
 import TitleScreen
 import Sound.soundlib
 import Sound.charsoundhandler
-
+import GOscreen
 
 if not pygame.font: print('Warning, fonts disabled')
 if not pygame.mixer: print('Warning, sound disabled')
@@ -21,8 +21,8 @@ if not pygame.mixer: print('Warning, sound disabled')
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
-RED = (255, 0, 0)
-YELLOW = (200, 200, 0)
+RED = (204, 0, 0)
+YELLOW = (255, 215, 0)
 GREY = (100,100,100)
 
 pygame.init()
@@ -46,6 +46,8 @@ pygame.mouse.set_visible(False)
 
 # Loop until the user clicks the close button.
 done = False
+
+gameOver = False
 
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
@@ -179,10 +181,17 @@ while not done:
         current_room = current_level.get_current_room()
         current_entities = current_level.get_current_entities()
     for enemy in current_entities:
+<<<<<<< HEAD
         enemy.update(tick,current_room)
     for bullet in current_bullets:
         bullet.update(tick,current_room,current_entities,Chardude)
     Chardude.update(tick,current_room,current_entities)
+=======
+        enemy.update(tick,current_room,Chardude.Pos_x,Chardude.Pos_y)
+    if not Chardude.update(tick,current_room,current_entities):
+        gameOver = True
+        
+>>>>>>> 5d1255c7d7d68f1bb340d5119d55b345cd682f8f
     Sound.charsoundhandler.update(Chardude, tick)
 
 
@@ -229,6 +238,51 @@ while not done:
 
     # --- Limit to 60 frames per second
     tick = clock.tick(60)
+    
+    if gameOver:
+        GOscreen.GO(pygame, screen)
+        gameOver = False
+        Chardude = Char.Character.Character();
+        group = pygame.sprite.Group(Chardude)
+
+        Command = Core.Command.Command();
+        tick = 0;
+
+
+        enemylist = []; # this is a temp thing
+        enemylist.append(Char.Enemy.Scientist(50,50));
+
+        oldbody = Char.Enemy.Enemy(50,50);
+        Chardude.Possessing = oldbody;
+
+        current_room = []
+        '''
+        In a room, currently the values for stuff are:
+        0 - empty air, no interaction
+        1 - wall, Char cannot move there
+        '''
+
+        room_grid_position = [0,0]
+
+        current_level = Core.Level.Level()
+        current_level.load_level(1)
+        current_room = current_level.get_current_room()
+
+        for m in range(len(current_room)):
+            for n in range(len(current_room[m])):
+                if current_room[m][n] == 3:
+                    Chardude.Pos_x = 30 * m
+                    Chardude.Pos_y = 30 * n
+                elif current_room[m][n] == 5:
+                    current_level.get_current_entities().append(Char.Enemy.Guard(m*30,n*30));
+
+        current_entities = current_level.get_current_entities()
+        if not TitleScreen.TitleScreen(pygame, screen):
+            done = True
+            pygame.quit()
+            sys.exit()
+        Sound.soundlib.play_music("Ambi.ogg", -1)
+
 
 # Close the window and quit.
 pygame.quit()

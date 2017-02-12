@@ -1,6 +1,7 @@
 import pygame
 import os
 import math
+import time
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -66,6 +67,7 @@ class Character(pygame.sprite.Sprite):
         self.Possessing = 0
         self.Ghoststate = True
         self.PlayGhostSound = True
+        self.countdowntime = time.time()
         return
 
 
@@ -81,7 +83,12 @@ class Character(pygame.sprite.Sprite):
 
         if self.Ghoststate:
             self.image = self.images[1];
+            if time.time()-self.countdowntime > 18:
+                self.Ghoststate = False
+                return False
         else: self.image = self.images[0];
+        
+        return True
 
 
     def move(self,tick,current_room):
@@ -122,7 +129,7 @@ class Character(pygame.sprite.Sprite):
                         if current_room[gridpos_x+x][gridpos_y+y] == 1:
                             canmovex = False
                             break
-                        elif current_room[gridpos_x+x][gridpos_y+y] == 11 and self.Ghoststate==False:
+                        elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11) and self.Ghoststate==False:
                             canmovex = False
                             break
         if canmovex:
@@ -139,14 +146,12 @@ class Character(pygame.sprite.Sprite):
                         if current_room[gridpos_x+x][gridpos_y+y] == 1:
                             canmovey = False
                             break
-                        elif current_room[gridpos_x+x][gridpos_y+y] == 11 and self.Ghoststate==False:
+                        elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11) and self.Ghoststate==False:
                             canmovey = False
                             break
 
         if canmovey:
             self.Pos_y = future_Pos_y
-
-
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
 
