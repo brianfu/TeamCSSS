@@ -65,7 +65,7 @@ class Enemy(object):
                 self.Incapacitated = False
         
         if (self.Alertness < 1):
-            self.PatrolCycle()
+            self.PatrolCycle(current_room)
         elif(self.Alertness>1):
             self.Direction = [0,0,0,0]
             self.Chase(char_x, char_y)
@@ -77,8 +77,11 @@ class Enemy(object):
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
     
-    def PatrolCycle(self):
-        self.PatrolCycleLength += 1
+    def PatrolCycle(self, current_room):
+        gridPos = self.getTile()
+        currentPath = str( current_room[gridPos[0]][gridPos[1]] ) -int( current_room[gridPos[0]][gridPos[1]] )[-1]
+        print( currentPath )
+        '''self.PatrolCycleLength += 1
         if(self.PatrolCycleLength>=30):
             self.PatrolCycleLength = 0;
             if(self.Moving==True):
@@ -106,7 +109,7 @@ class Enemy(object):
                             w+=1
                         elif(j==1):
                             self.Direction[3]=1
-                            w+=1
+                            w+=1'''
     
     def Chase(self, target_x, target_y): #target_x should be Character.Pos_x, target_y should be Character.Pos_y
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
