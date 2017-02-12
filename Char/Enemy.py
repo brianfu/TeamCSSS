@@ -78,9 +78,9 @@ class Enemy(object):
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
     
     def PatrolCycle(self, current_room):
-        gridPos = self.getTile()
-        currentPath = str( current_room[gridPos[0]][gridPos[1]] ) -int( current_room[gridPos[0]][gridPos[1]] )[-1]
-        print( currentPath )
+        #gridPos = self.getTile()
+        #currentPath = str( current_room[gridPos[0]][gridPos[1]] ) - int( current_room[gridPos[0]][gridPos[1]] )[-1]
+        #print( currentPath )
         self.PatrolCycleLength += 1
         if(self.PatrolCycleLength>=30):
             self.PatrolCycleLength = 0;

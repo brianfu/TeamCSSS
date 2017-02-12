@@ -26,7 +26,7 @@ class Level():
             for j in range(3):
                 for m in range(len(self.rooms[i][j])):
                     for n in range(len(self.rooms[i][j][m])):
-                        if int( elf.rooms[i][j][m][n] ) == 3:
+                        if int( self.rooms[i][j][m][n] ) == 3:
                             self.room_grid_position = i*3 + j
                             self.start_position[0] = 30 * m
                             self.start_position[1] = 30 * n
