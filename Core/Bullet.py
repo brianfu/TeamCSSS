@@ -15,6 +15,10 @@ class Bullet():
         self.m = (self.Aim_y - self.Origin_y)/(self.Aim_x - self.Origin_x)
         self.char_bullet = new_owner# is true if it belongs to the main character, false otherwise
 
+        # BULLETS SHOULD DISAPEAR AT THE EDGE OF THE SCREEN, ON ENEMY OR PLAYER HIT, WALL OR DOOR HIT
+
+        # ADD AMMO and RELOAD, and ROTATING GUN SPRITE
+
     def update(self,tick,current_room,enemylist,char):
         self.move(tick,current_room,enemylist,char)
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size,self.size)
