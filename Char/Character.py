@@ -44,6 +44,7 @@ class Character(object):
         self.timer = 0;
         self.moving = False;
         self.hasGun = False;
+        self.currentpicture = pygame.image.load('Art/Player_Portrait.png')
 
     def absorb(self,enemylist,index):
         self.Possessing = enemylist.pop(index)
