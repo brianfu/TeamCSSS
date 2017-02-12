@@ -48,9 +48,18 @@ class Enemy(object):
         self.Name = "Giorgio"
         self.timer = 0;
         self.CurrentBullets = []
+        self.Incapacitated = False
+        self.IncapacitatedTimer = 0
 
     def update(self,tick,current_level,char_x,char_y):
         current_room = current_level.get_current_room()
+        
+        if (self.Incapacitated):
+            if (self.IncapacitatedTimer > 0):
+                self.IncapacitatedTimer -= 1
+                return
+            else:
+                self.Incapacitated = False
         
         if (self.Alerted==0):
             self.PatrolCycle()
