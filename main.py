@@ -93,6 +93,9 @@ enemyAlertness = 0.0
 
 #Define textbox
 textbox = Core.textboxthatworks.textbox(screen)
+os.chdir("./Art")
+menubar_photo = pygame.image.load("Menubar.png").convert() 
+os.chdir("./..")
 
 # Start the tunes
 Sound.soundlib.play_music("Ambi.ogg", -1)
@@ -151,7 +154,7 @@ while not done:
     # --- Game logic should go here
     current_tile = Chardude.getTile()
     ## CODE FOR MOVING ROOMS ##
-    if (current_tile[0] % 35 == 0 or current_tile[1] % 23 == 0) and not Chardude.Ghoststate:
+    if (current_tile[0] % 35 == 0 or current_tile[1] % 23 == 0):
         current_level.enter_door(current_tile, Chardude)
         current_room = current_level.get_current_room()
         current_entities = current_level.get_current_entities()
@@ -159,18 +162,25 @@ while not done:
         current_entities = current_level.get_current_entities()
     ## CODE UPDATING ##
     for enemy in current_entities:
-        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y, Chardude.Ghoststate, enemyAlertness)
+        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y, Chardude.Ghoststate, enemyAlertness, current_bullets)
         for bullet in enemy.CurrentBullets:
             current_bullets.append(bullet)
+    
     for i in range(len(current_bullets)):
         current_bullets[i].update(tick,current_level,current_entities,Chardude)
     bullet_collisions(current_bullets, current_entities, Chardude)
+    
     for bullet in current_bullets:
         if bullet.Pos_x < 0 or bullet.Pos_x > 1080 or bullet.Pos_y < 0 or bullet.Pos_y>720 or bullet.HasHit:
             current_bullets.remove(bullet)
+    
     #print(current_bullets)
-    if not Chardude.update(tick,current_level,current_entities):
+    gameUpdateResult = Chardude.update(tick,current_level,current_entities)
+    if gameUpdateResult == -1:
         gameOver = True
+    elif gameUpdateResult == 1:
+        gameWin = True
+
     ## SOUND STUFF ##
     Sound.charsoundhandler.update(Chardude, tick)
     
@@ -215,6 +225,12 @@ while not done:
     textbox.line2()
     textbox.line3()
     textbox.line4()
+    if Chardude.Possessing is not 0:
+        textbox.text[3] = Chardude.Possessing.Name + " | " + "HP: " + str(Chardude.Possessing.Hitpoints)
+        if Chardude.hasGun:
+            textbox.text[3] += "| Gun"
+    else:
+        textbox.text[3] = "Ghost Form | Losing Sanity"
     #textbox.line5()
     #change textbox.shadow_percentage to change bar
     
@@ -225,7 +241,7 @@ while not done:
     textbox.text[2] = "Press 'E' to interact!"
     
     #Actual draws and loop mechs
-    textbox.create_textbox()
+    textbox.create_textbox(menubar_photo)
     textbox.blitz()
     textbox.button_trigger()
     
