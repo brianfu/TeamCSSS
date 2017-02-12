@@ -26,6 +26,7 @@ GREEN = (0, 255, 0)
 RED = (204, 0, 0)
 YELLOW = (255, 215, 0)
 GREY = (100,100,100)
+NAVY_BLUE = (25,25,112)
 
 pygame.init()
 
@@ -184,10 +185,6 @@ while not done:
 
     group2 = pygame.sprite.Group(current_entities)
 
-    if pygame.mouse.get_pos()[0] < 1080 - 14:
-        pygame.draw.circle(screen, RED, pygame.mouse.get_pos(), 14, 4)
-        pygame.draw.circle(screen, RED, pygame.mouse.get_pos(), 7, 4)
-
     group.draw(screen);
     group2.draw(screen);
 
@@ -200,6 +197,12 @@ while not done:
     textbox.create_textbox()
     textbox.blitz()
 
+    if pygame.mouse.get_pos()[0] < 1080 - 14:
+        pygame.draw.circle(screen, RED, pygame.mouse.get_pos(), 14, 4)
+        pygame.draw.circle(screen, RED, pygame.mouse.get_pos(), 7, 4)
+    if pygame.mouse.get_pos()[0] > 1080 - 14 and pygame.mouse.get_pos()[0] < 1280 - 5:
+        pygame.draw.circle(screen, NAVY_BLUE, pygame.mouse.get_pos(), 5)
+        
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
 
