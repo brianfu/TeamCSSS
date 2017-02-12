@@ -32,6 +32,10 @@ class Level():
                             self.start_position[1] = 30 * n
                         elif int( self.rooms[i][j][m][n] )== 5:
                             self.entities[i][j].append(Char.Enemy.Guard(m*30,n*30));
+                        elif int( self.rooms[i][j][m][n] )== 6:
+                            self.entities[i][j].append(Char.Enemy.Soldier(m*30,n*30));
+                        elif int( self.rooms[i][j][m][n] )== 7:
+                            self.entities[i][j].append(Char.Enemy.Janitor(m*30,n*30));                        
                         elif int( self.rooms[i][j][m][n] )== 8:
                             self.entities[i][j].append(Char.Enemy.Scientist(m*30,n*30));
 

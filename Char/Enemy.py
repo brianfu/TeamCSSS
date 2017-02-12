@@ -46,6 +46,7 @@ class Enemy(object):
         self.StopTime = 0
         self.FireCooldown = 0
         self.Name = "Giorgio"
+        self.securityClearance = "None"
         self.timer = 0;
         self.CurrentBullets = []
         self.Incapacitated = False
@@ -115,19 +116,19 @@ class Enemy(object):
         gridpos_y=int((self.Pos_y+20)//30)
         if(self.Moving==True):
             if(self.Direction[0]==1):
-                if(current_room[gridpos_x][gridpos_y+1]!=0):
+                if((gridpos_y+1) <= 23 and current_room[gridpos_x][gridpos_y+1]!=0):
                     self.Direction[0]=0
                     self.Direction[2]=1
             if(self.Direction[1]==1):
-                if(current_room[gridpos_x+1][gridpos_y]!=0):
+                if((gridpos_x+1) <= 35 and current_room[gridpos_x+1][gridpos_y]!=0):
                     self.Direction[1]=0
                     self.Direction[3]=1
             if(self.Direction[2]==1):
-                if(current_room[gridpos_x][gridpos_y-1]!=0):
+                if((gridpos_y-1) >= 0 and current_room[gridpos_x][gridpos_y-1]!=0):
                     self.Direction[2]=0
                     self.Direction[0]=1
             if(self.Direction[3]==1):
-                if(current_room[gridpos_x-1][gridpos_y]!=0):
+                if((gridpos_x-1) >= 0 and current_room[gridpos_x-1][gridpos_y]!=0):
                     self.Direction[3]=0
                     self.Direction[1]=1
     
@@ -303,6 +304,7 @@ class Guard(Enemy):
         Enemy.AttackDamage = 2
         Enemy.SpecialTraits = 0
         self.Name = "Guard"
+        self.securityClearance = "Medium"
         self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Pistol.png')]
         self.currentpicture = pygame.image.load('Art/Red_Guard_Portrait.png')
 
@@ -316,6 +318,23 @@ class Scientist(Enemy):
         Enemy.AttackDamage = 0
         Enemy.SpecialTraits = 0
         self.Name = "Scientist"
+        self.securityClearance = "Low"
         self.images = [pygame.image.load('Art/Scientist.png'),pygame.image.load('Art/Arms.png')]
         self.currentpicture = pygame.image.load('Art/Green_hat_portrait.png')
         #Enemy.images = #NEED TO ADD ENEMY IMAGES#
+
+class Soldier(Enemy):
+    def __init__(self,newX,newY):
+        Enemy.__init__(self,newX,newY)
+        self.hasGun = True
+        self.EnemyType = 3
+        self.Name = "Soldier"
+        self.images = [pygame.image.load('Art/Red_hat_guard.png'),pygame.image.load('Art/Pistol.png')]
+
+class Janitor(Enemy):
+    def __init__(self,newX,newY):
+        Enemy.__init__(self,newX,newY)
+        self.hasGun = False
+        self.EnemyType = 4
+        self.Name = "Janitor"
+        self.images = [pygame.image.load('Art/Green_hat.png'),pygame.image.load('Art/Arms.png')]
