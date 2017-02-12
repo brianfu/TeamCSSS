@@ -138,7 +138,7 @@ while not done:
             shooting = True
         Command.makeFromEvent(event);
         Chardude.getCommand(Command);
-        #textbox.text_getcmd(Command);
+        textbox.txt_getcmd(Command)
         
 
     if shooting:
@@ -199,6 +199,14 @@ while not done:
     for bullet in current_bullets:
         pygame.draw.rect(screen, BLACK, bullet.rect, 2)
 
+   
+
+    if pygame.mouse.get_pos()[0] < 1080 - 14:
+        pygame.draw.circle(screen, RED, pygame.mouse.get_pos(), 14, 4)
+        pygame.draw.circle(screen, RED, pygame.mouse.get_pos(), 7, 4)
+    if pygame.mouse.get_pos()[0] > 1080 - 14 and pygame.mouse.get_pos()[0] < 1280 - 5:
+        pygame.draw.circle(screen, NAVY_BLUE, pygame.mouse.get_pos(), 5)
+        
     #Stuff to insert in main() mainloop here (for textboxthatworks):
     textbox.line1()
     textbox.line2()
@@ -207,13 +215,8 @@ while not done:
     textbox.line5()
     textbox.create_textbox()
     textbox.blitz()
-
-    if pygame.mouse.get_pos()[0] < 1080 - 14:
-        pygame.draw.circle(screen, RED, pygame.mouse.get_pos(), 14, 4)
-        pygame.draw.circle(screen, RED, pygame.mouse.get_pos(), 7, 4)
-    if pygame.mouse.get_pos()[0] > 1080 - 14 and pygame.mouse.get_pos()[0] < 1280 - 5:
-        pygame.draw.circle(screen, NAVY_BLUE, pygame.mouse.get_pos(), 5)
-
+    
+    
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
 
