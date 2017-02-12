@@ -41,6 +41,7 @@ class Level():
             
     def activate_room_lever(self):
         self.roomLevers[int(math.floor(self.room_grid_position/3))][self.room_grid_position%3] = 1
+        current_room = self.get_current_room()
         for m in range(len(current_room)):
             for n in range(len(current_room[m])):
                 if current_room[m][n] == 12:
