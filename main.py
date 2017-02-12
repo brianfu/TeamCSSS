@@ -99,14 +99,14 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-            
+
         # Check for Action E
         elif event.type == KEYDOWN and event.key == K_e:
             keys_pressed.append(event.key);
-            
+
             gridpos_x = int((Chardude.Pos_x+20)//30)
-            gridpos_y = int((Chardude.Pos_y+20)//30)       
-            
+            gridpos_y = int((Chardude.Pos_y+20)//30)
+
             if (current_room[gridpos_x][gridpos_y] == 9 and Chardude.Ghoststate==False):
                 current_room[gridpos_x][gridpos_y] = 13
                 current_level.activate_room_lever()
@@ -179,7 +179,8 @@ while not done:
             text = Core.draw_tile.draw_tile(m, n, current_room, txt_color, screen, font25, Chardude.Ghoststate)
 
             #Blit in words here
-            screen.blit(text, [m*30,n*30])
+            text != None:
+                screen.blit(text, [m*30,n*30])
 
     group2 = pygame.sprite.Group(current_entities)
 
@@ -192,12 +193,12 @@ while not done:
 
     for bullet in current_bullets:
         pygame.draw.rect(screen, BLACK, bullet.rect, 2)
-        
+
     #Stuff to insert in main() mainloop here (for textboxthatworks):
     textbox = Core.textboxthatworks.textbox(screen)
     textbox.line1("Test")
     textbox.create_textbox()
-    textbox.blitz()    
+    textbox.blitz()
 
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
