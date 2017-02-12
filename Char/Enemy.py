@@ -45,6 +45,7 @@ class Enemy(pygame.sprite.Sprite):
         self.PatrolCycleLength = 0
         self.Moving = False
         self.StopTime = 0
+        self.FireCooldown = 0
         self.Name = "Giorgio"
 
     def update(self,tick,current_level,char_x,char_y):
@@ -98,10 +99,11 @@ class Enemy(pygame.sprite.Sprite):
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
         B=target_x-self.Pos_x
         C=A*A + B*B
+        
         if(self.Moving==False):
-            self.StopTime -= 1
-        if(C>=10000 and self.StopTime<=0): #More than 200 pixels away, C>200^2
-            self.Moving= True
+            self.StopTime -= 1    
+        if(C>=20000 and self.StopTime<=0): #More than 200 pixels away, C>200^2
+            self.Moving = True
             A_neg = False
             if(A<0):    #Only dealing with directional vector above X-axis (cartesian quardinate plane with Enemy at origin)
                 A_neg = True
@@ -122,13 +124,10 @@ class Enemy(pygame.sprite.Sprite):
                     self.Direction[0]=1 #Down
                 else:
                     self.Direction[2]=1 #Up
-        elif(self.Moving==True and C<=10000): #Less than 200 pixels away
+        elif(C<=20000):
             self.Moving = False
             self.Direction = [0,0,0,0]
-            self.StopTime = 30 #1/2 secs
-        if(self.StopTime==30 or self.StopTime==15):
-            Core.Bullet.Bullet(self.Pos_x, self.Pos_y, target_x, target_y, False)
-
+            Core.Bullet.Bullet(self.Pos_x, self.Pos_y, target_x, target_y+0.0001, False)
     
     def Flee(self, target_x, target_y): #target_x should be Character.Pos_x, target_y should be Character.Pos_y
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
