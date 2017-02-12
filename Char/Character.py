@@ -18,7 +18,7 @@ def load_image(name, colorkey=None):
         image.set_colorkey(colorkey, RLEACCEL)
     return image, image.get_rect()
 
-class Character(pygame.sprite.Sprite):
+class Character(object):
 
 
     def __init__(self):
@@ -40,19 +40,22 @@ class Character(pygame.sprite.Sprite):
         self.Velocity = 110 #pixels / second
         self.MaxVelocity = 220
         self.Direction = [0,0,0,0]
-        self.images = [pygame.image.load('Art/Player_original_head.png'),pygame.image.load('Art/Player_alt_dimension_head.png')]
+        self.ghostimages = [pygame.image.load('Art/Player_alt_dimension_head.png'),pygame.image.load('Art/Player_arms_alt_dimension.png')]
+        self.absorbedimages = []
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
 
-
+    def absorb(self,enemylist,index):
+        self.Possessing = enemylist.pop(index)
+        self.Ghoststate = False
+        self.Pos_x = self.Possessing.Pos_x
+        self.Pos_y = self.Possessing.Pos_y
+        self.absorbedimages = self.Possessing.images[0]
+        
     def unGhost(self,current_room,enemylist):
         self.AttemptUnghost = False
         for i in range(len(enemylist)):
             if enemylist[i].Possessable and self.rect.colliderect(enemylist[i].rect):
-                self.Possessing = enemylist.pop(i)
-                self.Ghoststate = False
-                self.Pos_x = self.Possessing.Pos_x
-                self.Pos_y = self.Possessing.Pos_y
-                self.images[0] = self.Possessing.images[0]
+                self.absorb(enemylist,i);
                 self.PlayGhostSound = True
                 return
         return
