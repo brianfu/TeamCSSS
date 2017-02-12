@@ -38,7 +38,7 @@ size = (1280, 720)
 
 screen = pygame.display.set_mode(size)
 
-pygame.display.set_caption("No Swears Pls - Das Spiel")
+pygame.display.set_caption("Escape! by TEAM CSSSSS")
 
 font25 = pygame.font.SysFont('Calibri', 25, True, False)
 
