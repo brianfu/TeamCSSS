@@ -13,6 +13,7 @@ import TitleScreen
 import Sound.soundlib
 import Sound.charsoundhandler
 import GOscreen
+import Core.draw_tile
 
 if not pygame.font: print('Warning, fonts disabled')
 if not pygame.mixer: print('Warning, sound disabled')
@@ -56,29 +57,15 @@ clock = pygame.time.Clock()
 keys_pressed = []
 
 
-objects = []
-
+## CHANGE THIS BECAUSE IT IS ARCHAIC ##
 Chardude = Char.Character.Character();
 group = pygame.sprite.Group(Chardude)
 
 Command = Core.Command.Command();
 tick = 0;
 
-
-enemylist = []; # this is a temp thing
-enemylist.append(Char.Enemy.Scientist(50,50));
-
 oldbody = Char.Enemy.Enemy(50,50);
 Chardude.Possessing = oldbody;
-
-current_room = []
-'''
-In a room, currently the values for stuff are:
-0 - empty air, no interaction
-1 - wall, Char cannot move there
-'''
-
-room_grid_position = [0,0]
 
 current_level = Core.Level.Level()
 current_level.load_level(1)
@@ -98,55 +85,9 @@ current_bullets = []; # List of bullets in a room, reset on room change
 shooting = False
 click_pos = [0,0]
 
-#make 36 x 24 matrix
-#temporary, will eventually pickle
-#for now, walls around outside
-'''
-for m in range (36):
-    current_room.append([])
-    for n in range (24):
-        if m==0 or m==35 or n==0 or n==23:
-            current_room[m].append(1)
-        else:
-            current_room[m].append(0)
-'''
-
-#30x30 px, 36 x 24 grid
-#Function for square draw
-def draw_tile(x, y, state_counter, curr_color, txt_color):
-
-    if current_room[x][y] == -1:
-        curr_color = BLACK
-    if current_room[x][y] == 2:
-        curr_color = [70,55,30]
-    if current_room[x][y] == 10:
-        curr_color = [140,100,80]
-
-    if Chardude.Ghoststate:
-        if current_room[x][y] == 1:
-            curr_color = YELLOW
-        if current_room[x][y] == 11:
-            curr_color = [150,150,0]
-    else:
-        if current_room[x][y] == 1:
-            curr_color = GREY
-        if current_room[x][y] == 11:
-            curr_color = [150,150,150]
-
-    pygame.draw.rect(screen, curr_color, [x*30,y*30, 30, 30], 0) #col by row mat.
-    if current_room[x][y] not in [-1,0,1,2,3,5,10,11]:
-        text = font25.render(str(state_counter), True, txt_color)
-        return text
-    return font25.render(str(""), True, txt_color)
+#Function for tile draw
 
 
-def empty():
-    print('Empty Floor Tile')
-def wall():
-    print('Wall Tile')
-def door():
-    print('Door Tile')
-tiles = {0: empty, 1: wall, 2: exit}
 
 # Start the tunes
 Sound.soundlib.play_music("Ambi.ogg", -1)
@@ -175,19 +116,20 @@ while not done:
 
     # --- Game logic should go here
     current_tile = Chardude.getTile()
-    #print(current_tile)
+    ## CODE FOR MOVING ROOMS ##
     if (current_tile[0] % 35 == 0 or current_tile[1] % 23 == 0) and not Chardude.Ghoststate:
         current_level.enter_door(current_tile, Chardude)
         current_room = current_level.get_current_room()
         current_entities = current_level.get_current_entities()
+        current_bullets.clear();
+    ## CODE UPDATING ##
     for enemy in current_entities:
         enemy.update(tick,current_room,Chardude.Pos_x,Chardude.Pos_y)
     for bullet in current_bullets:
         bullet.update(tick,current_room,current_entities,Chardude)
-    Chardude.update(tick,current_room,current_entities)
     if not Chardude.update(tick,current_room,current_entities):
         gameOver = True
-
+    ## SOUND STUFF ##
     Sound.charsoundhandler.update(Chardude, tick)
 
 
@@ -210,12 +152,10 @@ while not done:
 
     for m in range(len(current_room)): #36
         for n in range(len(current_room[0])): #24
-            xVal = m
-            yVal = n
-            text = draw_tile(xVal, yVal, current_room[m][n], curr_color, txt_color)
+            text = Core.draw_tile.draw_tile(m, n, current_room, txt_color, screen, font25, Chardude.Ghoststate)
 
             #Blit in words here
-            screen.blit(text, [xVal*30,yVal*30])
+            screen.blit(text, [m*30,n*30])
 
     group2 = pygame.sprite.Group(current_entities)
 
@@ -235,28 +175,14 @@ while not done:
     # --- Limit to 60 frames per second
     tick = clock.tick(60)
 
-    if gameOver:
-        GOscreen.GO(pygame, screen)
-        gameOver = False
+    if gameOver: #manually reset gamemode
+        GOscreen.GO(pygame, screen) #Game over screen
+        gameOver = False #start resetting all values
         Chardude = Char.Character.Character();
         group = pygame.sprite.Group(Chardude)
 
-        Command = Core.Command.Command();
-        tick = 0;
-
-
-        enemylist = []; # this is a temp thing
-        enemylist.append(Char.Enemy.Scientist(50,50));
-
         oldbody = Char.Enemy.Enemy(50,50);
         Chardude.Possessing = oldbody;
-
-        current_room = []
-        '''
-        In a room, currently the values for stuff are:
-        0 - empty air, no interaction
-        1 - wall, Char cannot move there
-        '''
 
         room_grid_position = [0,0]
 
@@ -273,7 +199,7 @@ while not done:
                     current_level.get_current_entities().append(Char.Enemy.Guard(m*30,n*30));
 
         current_entities = current_level.get_current_entities()
-        if not TitleScreen.TitleScreen(pygame, screen):
+        if not TitleScreen.TitleScreen(pygame, screen): #launch title screen
             done = True
             pygame.quit()
             sys.exit()
