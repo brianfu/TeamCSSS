@@ -1,6 +1,7 @@
 import pygame
 import os
 import math
+import time
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -38,6 +39,9 @@ class Character(pygame.sprite.Sprite):
         self.Direction = [0,0,0,0]
         self.images = [pygame.image.load('Art/Player_original_head.png'),pygame.image.load('Art/Player_alt_dimension_head.png')]
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
+        
+        self.countdownsfx = pygame.mixer.Sound("Sound/SFX/ghostdimentioncountdown.wav")
+        self.countdownend = pygame.mixer.Sound("Sound/SFX/ghostdimentioncountdownEnding.wav")
 
 
     def unGhost(self,current_room,enemylist):
@@ -49,6 +53,8 @@ class Character(pygame.sprite.Sprite):
                 self.Pos_x = self.Possessing.Pos_x
                 self.Pos_y = self.Possessing.Pos_y
                 self.images[0] = self.Possessing.images[0]
+                self.countdownsfx.stop()
+                self.countdownend.play()
                 return
         return
 
@@ -62,6 +68,8 @@ class Character(pygame.sprite.Sprite):
         enemylist.append(self.Possessing)
         self.Possessing = 0
         self.Ghoststate = True
+        self.countdownsfx.play()
+        self.countdowntime = time.time() # 18 seconds
         return
 
 
@@ -77,7 +85,11 @@ class Character(pygame.sprite.Sprite):
 
         if self.Ghoststate:
             self.image = self.images[1];
+            if time.time()-self.countdowntime > 18:
+                return False
         else: self.image = self.images[0];
+        
+        return True
 
 
     def move(self,tick,current_room):
