@@ -83,8 +83,8 @@ class Character(pygame.sprite.Sprite):
 
         if self.Ghoststate:
             self.image = self.images[1];
-            if time.time()-self.countdowntime > 18:
-                return False
+            #if time.time()-self.countdowntime > 18:
+                #return False
         else: self.image = self.images[0];
         
         return True
@@ -151,8 +151,6 @@ class Character(pygame.sprite.Sprite):
 
         if canmovey:
             self.Pos_y = future_Pos_y
-
-
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
 
