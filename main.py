@@ -11,7 +11,7 @@ import Core.Level
 import TitleScreen
 import Sound.soundlib
 import Sound.charsoundhandler
-
+import GOscreen
 
 if not pygame.font: print('Warning, fonts disabled')
 if not pygame.mixer: print('Warning, sound disabled')
@@ -219,6 +219,7 @@ while not done:
     
     if gameOver:
         GOscreen.GO(pygame, screen)
+        gameOver = False
         if not TitleScreen.TitleScreen(pygame, screen):
             done = True
             pygame.quit()
