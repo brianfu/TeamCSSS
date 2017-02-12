@@ -6,7 +6,12 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 PURPLE = (128,0,128)
+GREY = (220,220,220)
 
+#Shadow bar
+#Controls
+#Portriat
+#Health
 
 class textbox(object):
     def __init__(self, screen):
@@ -15,13 +20,15 @@ class textbox(object):
         self.y_pos = 0
         self.x_offset = 30
         self.y_offset = 30
-        self.font = pygame.font.SysFont('Calibri', 25, False, False)
+        self.font = pygame.font.SysFont('Arial', 12,True, False)
         self.rendered_text = ['','','','','']
         self.text = ['','','','','']
         self.textsize = []
         self.color = [WHITE, RED, PURPLE, RED, WHITE]
         self.rec_area_mat = []
         self.mouse_pos = pygame.mouse.get_pos()
+        self.draw_border = 2
+        self.shadow_percentage = 0.50 #between 0 and 1
         
         #init text declares
         for i in range (5):
@@ -30,13 +37,19 @@ class textbox(object):
         #Trigger Booleans
         self.mBdown = False        
         #self.x_pos += 2.5*self.x_offset #Constant offsets
-        #self.y_pos += 3.5*self.y_offset        
+        #self.y_pos += 3.5*self.y_offset
+       
+    ''' 
+    def shadow_bar(self, shadow_remaining):
+        pygame.draw.rect(self.screen, GREY, [918, 120, 4*30, 30], 2)
+        pygame.draw.rect(self.screen, GREY, [918, 120, 4*30 - shadow_remaining, 30])
+    '''
         
     def create_textbox(self):
-        pygame.draw.rect(self.screen, GREEN, [self.x_pos*self.x_offset, self.y_pos*self.y_offset, 10*self.x_offset, 24*self.y_offset]) 
+        pygame.draw.rect(self.screen, BLACK, [self.x_pos*self.x_offset, self.y_pos*self.y_offset, 10*self.x_offset, 24*self.y_offset]) 
         
     def line1(self):
-        self.rendered_text[0] = self.font.render(str(self.text[0]), True, BLACK)
+        self.rendered_text[0] = self.font.render(str(self.text[0]), True, GREY)
     
     def line2(self):
         self.rendered_text[1] = self.font.render(str(self.text[1]), True, BLACK)
@@ -66,14 +79,21 @@ class textbox(object):
                 pygame.draw.rect(self.screen, self.color[i], boxrect)
                 '''
                 #temp declares for mat
-                x_temp = ((self.x_pos*self.x_offset)+self.x_gap)- (1/2)*self.textsize[i][0]
+                x_temp = ((self.x_pos*self.x_offset)+self.x_gap)- (1/3)*self.textsize[i][0]
                 y_temp = ((self.y_pos*self.y_offset)+self.y_gap)- (1/2)*self.textsize[i][1]
-                width_temp = self.textsize[i][0]
-                height_temp = self.textsize[i][1]
-                final_mat_temp = [x_temp, y_temp, width_temp, height_temp]
+                width_temp = self.textsize[i][0] + 20
+                height_temp = self.textsize[i][1] + 20
+                final_mat_temp = [x_temp -10, y_temp -10, width_temp, height_temp]
                 
                 #draw dynamic box
-                pygame.draw.rect(self.screen, self.color[i], final_mat_temp)
+                if i == 0: #For shadow
+                    final_mat_temp[2] *= self.shadow_percentage
+                    pygame.draw.rect(self.screen, PURPLE, final_mat_temp)
+                    final_mat_temp[2] /= self.shadow_percentage
+                    pygame.draw.rect(self.screen, self.color[i], final_mat_temp, self.draw_border)
+                else:
+                    pygame.draw.rect(self.screen, self.color[i], final_mat_temp)
+                
                 #get rect values here, put into 5 x 4 mat, call by seeing if mouse pos in that area and if something pressed
                 
                 #if list in matrix, pass, else add to mat
@@ -128,6 +148,7 @@ class textbox(object):
                 
                 
     def txt_getcmd(self, command):
+        self.mBdown = False
         if command.ctype == "go_dir":
             if command.spec == 2:
                 pass #forward, 'w'

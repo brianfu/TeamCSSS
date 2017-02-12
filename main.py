@@ -213,9 +213,11 @@ while not done:
     textbox.line3()
     textbox.line4()
     textbox.line5()
+    #change textbox.shadow_percentage to change bar
     
     #switch text
-    textbox.text[0] = "Press WASD to move!"
+    textbox.text[0] = "Shadow Bar," + str(textbox.shadow_percentage) + "% remaining"
+    #textbox.shadow_bar(35)
     
     #Actual draws and loop mechs
     textbox.create_textbox()
