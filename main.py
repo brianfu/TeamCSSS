@@ -154,7 +154,7 @@ while not done:
     # --- Game logic should go here
     current_tile = Chardude.getTile()
     ## CODE FOR MOVING ROOMS ##
-    if (current_tile[0] % 35 == 0 or current_tile[1] % 23 == 0) and not Chardude.Ghoststate:
+    if (current_tile[0] % 35 == 0 or current_tile[1] % 23 == 0):
         current_level.enter_door(current_tile, Chardude)
         current_room = current_level.get_current_room()
         current_entities = current_level.get_current_entities()
