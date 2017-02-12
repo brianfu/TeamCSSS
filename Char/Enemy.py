@@ -44,6 +44,7 @@ class Enemy(pygame.sprite.Sprite):
         self.PatrolCycleLength = 0
         self.Moving = False
         self.StopTime = 0
+        self.Name = "Giorgio"
 
     def update(self,tick,current_room,char_x,char_y):
         self.Direction = [0,0,0,0]
