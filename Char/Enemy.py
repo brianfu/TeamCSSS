@@ -78,7 +78,6 @@ class Enemy(object):
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
     
     def PatrolCycle(self):
-        '''
         self.PatrolCycleLength += 1
         if(self.PatrolCycleLength>=30):
             self.PatrolCycleLength = 0;
@@ -108,7 +107,6 @@ class Enemy(object):
                         elif(j==1):
                             self.Direction[3]=1
                             w+=1
-            '''
     
     def Chase(self, target_x, target_y): #target_x should be Character.Pos_x, target_y should be Character.Pos_y
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
