@@ -23,6 +23,7 @@ class Enemy(object):
 
     def __init__(self,newX,newY):
         pygame.sprite.Sprite.__init__(self)
+        self.Dead = False
         self.Possessedstate = False
         self.Pos_x = newX;
         self.Pos_y = newY;
@@ -58,14 +59,14 @@ class Enemy(object):
     def update(self,tick,current_level,char_x,char_y, ghosted, newAlertnessLevel):
         current_room = current_level.get_current_room()
         self.Alertness = newAlertnessLevel
-        
+
         if (self.Incapacitated):
             if (self.IncapacitatedTimer > 0):
                 self.IncapacitatedTimer -= 1
                 return
             else:
                 self.Incapacitated = False
-        
+
         if (self.Alertness < 1):
             self.PatrolCycle(current_room)
         elif(self.Alertness>1):
@@ -78,7 +79,7 @@ class Enemy(object):
         self.move(tick,current_level)
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
-    
+
     def PatrolCycle(self, current_room):
         #gridPos = self.getTile()
         #currentPath = str( current_room[gridPos[0]][gridPos[1]] ) - int( current_room[gridPos[0]][gridPos[1]] )[-1]
@@ -131,7 +132,7 @@ class Enemy(object):
                 if((gridpos_x-1) >= 0 and current_room[gridpos_x-1][gridpos_y]!=0):
                     self.Direction[3]=0
                     self.Direction[1]=1
-    
+
     def Chase(self, target_x, target_y): #target_x should be Character.Pos_x, target_y should be Character.Pos_y
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
         B=target_x-self.Pos_x
@@ -193,7 +194,7 @@ class Enemy(object):
                 self.Direction[2]=1 #Up
             else:
                 self.Direction[0]=1 #Down
-                          
+
     def move(self,tick,current_level):
         current_room = current_level.get_current_room()
         
@@ -297,12 +298,12 @@ class Enemy(object):
 class Guard(Enemy):
     def __init__(self,newX,newY):
         Enemy.__init__(self,newX,newY)
-        Enemy.EnemyType = 1
+        self.EnemyType = 1
         self.hasGun = True
-        Enemy.Hitpoints = 100
-        Enemy.Armour = 1
-        Enemy.AttackDamage = 2
-        Enemy.SpecialTraits = 0
+        self.Hitpoints = 100
+        self.Armour = 1
+        self.AttackDamage = 2
+        self.SpecialTraits = 0
         self.Name = "Guard"
         self.securityClearance = "Medium"
         self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Pistol.png')]
@@ -313,10 +314,10 @@ class Scientist(Enemy):
         Enemy.__init__(self,newX,newY)
         self.EnemyType = 2
         self.hasGun = False
-        Enemy.Hitpoints = 50
-        Enemy.Armour = 0
-        Enemy.AttackDamage = 0
-        Enemy.SpecialTraits = 0
+        self.Hitpoints = 50
+        self.Armour = 0
+        self.AttackDamage = 0
+        self.SpecialTraits = 0
         self.Name = "Scientist"
         self.securityClearance = "Low"
         self.images = [pygame.image.load('Art/Scientist.png'),pygame.image.load('Art/Arms.png')]
@@ -328,6 +329,10 @@ class Soldier(Enemy):
         Enemy.__init__(self,newX,newY)
         self.hasGun = True
         self.EnemyType = 3
+        self.Hitpoints = 150
+        self.Armour = 0
+        self.AttackDamage = 0
+        self.SpecialTraits = 0
         self.Name = "Soldier"
         self.images = [pygame.image.load('Art/Red_hat_guard.png'),pygame.image.load('Art/Pistol.png')]
 
@@ -336,5 +341,9 @@ class Janitor(Enemy):
         Enemy.__init__(self,newX,newY)
         self.hasGun = False
         self.EnemyType = 4
+        self.Hitpoints = 50
+        self.Armour = 0
+        self.AttackDamage = 0
+        self.SpecialTraits = 0
         self.Name = "Janitor"
         self.images = [pygame.image.load('Art/Green_hat_portrait.png'),pygame.image.load('Art/Arms.png')]
