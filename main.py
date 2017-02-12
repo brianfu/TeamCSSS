@@ -156,6 +156,8 @@ while not done:
     ## CODE UPDATING ##
     for enemy in current_entities:
         enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y)
+        for bullet in enemy.CurrentBullets:
+            current_bullets.append(bullet)
     for bullet in current_bullets:
         bullet.update(tick,current_level,current_entities,Chardude)
     if not Chardude.update(tick,current_level,current_entities):
