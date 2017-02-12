@@ -1,6 +1,6 @@
 import pygame
 
-def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_level, isAGhost):
+def tryMoveTo(curr_x, curr_y, fut_x, fut_y, width, height, current_level, isAGhost, chartype):
     gridpos_x = int(fut_x//30)
     gridpos_y = int(fut_y//30)
     
