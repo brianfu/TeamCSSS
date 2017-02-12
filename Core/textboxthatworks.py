@@ -41,7 +41,8 @@ class textbox(object):
             else:
                 self.screen.blit(self.rendered_text[i], [self.x_pos*self.x_offset, self.y_pos*self.y_offset])
             self.y_pos += 1
-
+            #Probably bigger offset than 2, and prob x offset as well (5 ish)
+            #draw a rect around the words after for buttons
 '''
     textbox = Core.textboxthatworks.textbox(screen)
     textbox.line1("Test")
