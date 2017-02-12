@@ -92,6 +92,8 @@ click_pos = [0,0]
 #Function for tile draw
 
 
+#Define textbox
+textbox = Core.textboxthatworks.textbox(screen)
 
 # Start the tunes
 Sound.soundlib.play_music("Ambi.ogg", -1)
@@ -136,6 +138,8 @@ while not done:
             shooting = True
         Command.makeFromEvent(event);
         Chardude.getCommand(Command);
+        #textbox.text_getcmd(Command);
+        
 
     if shooting:
         current_bullets.append(Core.Bullet.Bullet(Chardude.Pos_x + Chardude.size[0]/2, Chardude.Pos_y + Chardude.size[1]/2, click_pos[0], click_pos[1], True))
@@ -194,8 +198,11 @@ while not done:
         pygame.draw.rect(screen, BLACK, bullet.rect, 2)
 
     #Stuff to insert in main() mainloop here (for textboxthatworks):
-    textbox = Core.textboxthatworks.textbox(screen)
-    textbox.line1("Test")
+    textbox.line1()
+    textbox.line2()
+    textbox.line3()
+    textbox.line4()
+    textbox.line5()
     textbox.create_textbox()
     textbox.blitz()
 
