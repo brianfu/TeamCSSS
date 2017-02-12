@@ -1,5 +1,5 @@
 
-def TitleScreen(screen):
+def TitleScreen(pygame, screen):
     lul = pygame.image.load("TitleScreen/escape.png")
     screen.blit(lul, (0,0,1280,720))
     lul = pygame.image.load("TitleScreen/escapefilter.png")
@@ -69,7 +69,7 @@ def TitleScreen(screen):
         screen.blit(title2, (w/2 +90, h/4)) 
         
         if pygame.Rect(butrects[0]).collidepoint(mousex, mousey):
-            return "start"
+            return True
         elif pygame.Rect(butrects[1]).collidepoint(mousex, mousey):
             poop = 1
             while poop < 2:
@@ -131,7 +131,7 @@ def TitleScreen(screen):
                     
         
         elif pygame.Rect(butrects[2]).collidepoint(mousex, mousey):
-            return "exit"
+            return False
         
         
         # --- Go ahead and update the screen with what we've drawn.
