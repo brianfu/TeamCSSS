@@ -13,6 +13,7 @@ def WIN(pygame, screen):
     #Sound.soundlib.play_music("Tema.ogg", 1)
     sovietred = (204,0,0)
     sovietgold = (255,215,0)
+    Sound.soundlib.play_music("sun(titlescreen).mp3")
     w,h = screen.get_width(), screen.get_height()
     mousex, mousey = 0,0
     # -------- Main Program Loop -----------
