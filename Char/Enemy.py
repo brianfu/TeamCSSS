@@ -28,7 +28,7 @@ class Enemy(object):
         self.Pos_y = newY;
         self.EnemyType = 0
         self.Possessable = True
-        self.EnemyType = 0 
+        self.EnemyType = 0
         self.Hitpoints = 1
         self.Armour = 0
         self.AttackDamage = 0
@@ -56,14 +56,14 @@ class Enemy(object):
     def update(self,tick,current_level,char_x,char_y, ghosted, newAlertnessLevel):
         current_room = current_level.get_current_room()
         self.Alertness = newAlertnessLevel
-        
+
         if (self.Incapacitated):
             if (self.IncapacitatedTimer > 0):
                 self.IncapacitatedTimer -= 1
                 return
             else:
                 self.Incapacitated = False
-        
+
         if (self.Alertness < 1):
             self.PatrolCycle()
         elif(self.Alertness>1):
@@ -76,7 +76,7 @@ class Enemy(object):
         self.move(tick,current_level)
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
-    
+
     def PatrolCycle(self):
         self.PatrolCycleLength += 1
         if(self.PatrolCycleLength>=30):
@@ -107,7 +107,7 @@ class Enemy(object):
                         elif(j==1):
                             self.Direction[3]=1
                             w+=1
-    
+
     def Chase(self, target_x, target_y): #target_x should be Character.Pos_x, target_y should be Character.Pos_y
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
         B=target_x-self.Pos_x
@@ -144,8 +144,8 @@ class Enemy(object):
             if(self.StopTime%(60/clip_size)==0):
                 self.CurrentBullets.append(Core.Bullet.Bullet(self.Pos_x, self.Pos_y, target_x, target_y+0.0001, False))
         if(self.Moving==False and self.StopTime>0):
-            self.StopTime -= 1        
-                
+            self.StopTime -= 1
+
     def Flee(self, target_x, target_y): #target_x should be Character.Pos_x, target_y should be Character.Pos_y
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
         B=target_x-self.Pos_x
@@ -169,10 +169,10 @@ class Enemy(object):
                 self.Direction[2]=1 #Up
             else:
                 self.Direction[0]=1 #Down
-                          
+
     def move(self,tick,current_level):
         current_room = current_level.get_current_room()
-        
+
         #Turn Cartesian Direction Vector[4] to Python directional Vector[2]
         deltamove = [0,0];
         for i in range(4):
@@ -186,21 +186,21 @@ class Enemy(object):
         #Compensate for diagonal movement
         if deltamove[0] !=0 or deltamove[1]!=0:
             self.setOrientation(deltamove)
-        
+
         if deltamove[0] != 0 and deltamove[1] != 0:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
         else:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
-        
+
         self.Pos_x,self.Pos_y = Char.Movement.tryMoveTo(self.Pos_x,self.Pos_y,
             future_Pos_x,future_Pos_y,
             self.size[0],self.size[1],
             current_level,False)
 
-        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])        
-    
+        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
+
     def setOrientation(self,deltamove):
         if deltamove[0]==1:
             if deltamove[1]==0:
@@ -221,7 +221,7 @@ class Enemy(object):
                 self.Orientation = 5;
             else:
                 self.Orientation = 3;
-    
+
     def getCommand(self,command):
         if command.ctype == "keypress":
             if command.spec == "DOWN":
@@ -245,7 +245,7 @@ class Enemy(object):
                 self.Direction[2] = 0;
             elif command.spec == "LEFT":
                 self.Direction[3] = 0;
-    
+
     def getTile(self):
         return [int(math.floor(self.Pos_x/30)),int(math.floor(self.Pos_y/30))]
 
@@ -284,4 +284,5 @@ class Scientist(Enemy):
         Enemy.Armour = 0
         Enemy.AttackDamage = 0
         Enemy.SpecialTraits = 0
+        self.images = [pygame.image.load('Art/Scientist.png'),pygame.image.load('Art/Arms.png')]
         #Enemy.images = #NEED TO ADD ENEMY IMAGES#
