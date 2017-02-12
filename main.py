@@ -169,8 +169,11 @@ while not done:
         if bullet.Pos_x < 0 or bullet.Pos_x > 1080 or bullet.Pos_y < 0 or bullet.Pos_y>720 or bullet.HasHit:
             current_bullets.remove(bullet)
     #print(current_bullets)
-    if not Chardude.update(tick,current_level,current_entities):
+    gameUpdateResult = Chardude.update(tick,current_level,current_entities)
+    if gameUpdateResult == -1:
         gameOver = True
+    elif gameUpdateResult == 1:
+        gameWin = True
     ## SOUND STUFF ##
     Sound.charsoundhandler.update(Chardude, tick)
     
