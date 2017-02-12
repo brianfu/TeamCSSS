@@ -65,6 +65,13 @@ class textbox(object):
             #Probably bigger offset than 2, and prob x offset as well (5 ish)
             #draw a rect around the words after for buttons
             
+    def callbacks(self, click_pos):
+        for i in range (len(self.rendered_text)): #have to def 5 lines to work
+            boxrect = pygame.Rect([((self.x_pos*self.x_offset)+self.x_gap)- (1/2)*self.textsize[i][0], ((self.y_pos*self.y_offset)+self.y_gap)-(1/2)*self.textsize[i][1], 2*self.textsize[i][0], 2*self.textsize[i][1]])
+            if boxrect.collidepoint(click_pos):
+                return i
+                
+                
     def txt_getcmd(self, command):
         if command.ctype == "go_dir":
             if command.spec == 2:

@@ -210,7 +210,9 @@ while not done:
     textbox.line4()
     textbox.line5()
     textbox.create_textbox()
-    textbox.blitz()    
+    textbox.blitz()
+    if shooting:
+        print(textbox.callbacks(click_pos))
     
     Core.Cursor.DrawCursor(pygame, screen, Chardude.Ghoststate )
     
