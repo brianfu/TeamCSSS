@@ -12,7 +12,7 @@ class Bullet():
         self.size = 2
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size,self.size)
         self.speed = 10
-        iself.m = (self.Aim_y - self.Origin_y)/(self.Aim_x - self.Origin_x) if (self.Aim_x - self.Origin_x) != 0 else 0 
+        self.m = (self.Aim_y - self.Origin_y)/(self.Aim_x - self.Origin_x) if (self.Aim_x - self.Origin_x) != 0 else 0 
         self.char_bullet = new_owner# is true if it belongs to the main character, false otherwise
 
         # BULLETS SHOULD DISAPEAR AT THE EDGE OF THE SCREEN, ON ENEMY OR PLAYER HIT, WALL OR DOOR HIT
