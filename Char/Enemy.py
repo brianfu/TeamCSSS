@@ -126,9 +126,6 @@ class Enemy(object):
         elif(C<20000):
             self.Moving = False
             self.Direction = [0,0,0,0]
-            self.StopTime = 30 #1/2 secs
-        if(self.StopTime==30 or self.StopTime==15):
-            Core.Bullet.Bullet(self.Pos_x, self.Pos_y, target_x, target_y, False)
             if(self.StopTime==0):
                 self.StopTime = 60
         if(self.StopTime>0):
