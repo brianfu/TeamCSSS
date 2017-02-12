@@ -78,10 +78,11 @@ class Enemy(object):
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
     
     def PatrolCycle(self, current_room):
-        gridPos = self.getTile()
-        currentPath = str( current_room[gridPos[0]][gridPos[1]] ) -int( current_room[gridPos[0]][gridPos[1]] )[-1]
-        print( currentPath )
-        '''self.PatrolCycleLength += 1
+        '''gridPos = self.getTile()
+        #currentPath = str( current_room[gridPos[0]][gridPos[1]] ) -int( current_room[gridPos[0]][gridPos[1]] )[-1]
+        for x in current_room:'''
+            
+        self.PatrolCycleLength += 1
         if(self.PatrolCycleLength>=30):
             self.PatrolCycleLength = 0;
             if(self.Moving==True):
@@ -109,7 +110,7 @@ class Enemy(object):
                             w+=1
                         elif(j==1):
                             self.Direction[3]=1
-                            w+=1'''
+                            w+=1
     
     def Chase(self, target_x, target_y): #target_x should be Character.Pos_x, target_y should be Character.Pos_y
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
@@ -250,7 +251,7 @@ class Enemy(object):
                 self.Direction[3] = 0;
     
     def getTile(self):
-        return [int(math.floor(self.Pos_x/30)),int(math.floor(self.Pos_y/30))]
+        return [int(math.floor((self.Pos_x+self.size[0]/2)/30)),int(math.floor((self.Pos_y + self.size[1]/2)/30))]
 
     def draw(self,tick,screen):
         drawimages = self.images
