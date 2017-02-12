@@ -73,7 +73,7 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
             return font25.render('', True, txt_color)
 
         elif int( current_room[x][y] ) == 12:
-            tile_image = pygame.image.load('Art/Locked.png')
+            tile_image = pygame.image.load('Art/Locked-Door.png')
             imagerect = pygame.Rect(x*30, y*30, 30, 30)
             screen.blit(tile_image, imagerect)
             return font25.render('', True, txt_color)
