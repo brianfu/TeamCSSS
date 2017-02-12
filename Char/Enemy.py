@@ -131,10 +131,8 @@ class Enemy(object):
         if(self.StopTime>0):
             if(self.StopTime%(60/clip_size)==0):
                 self.CurrentBullets.append(Core.Bullet.Bullet(self.Pos_x, self.Pos_y, target_x, target_y+0.0001, False))
-                print("Fire! BULLETS!!!")
         if(self.Moving==False and self.StopTime>0):
-            self.StopTime -= 1     
-        print (self.StopTime)      
+            self.StopTime -= 1        
                 
     def Flee(self, target_x, target_y): #target_x should be Character.Pos_x, target_y should be Character.Pos_y
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
