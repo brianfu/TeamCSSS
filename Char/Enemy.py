@@ -50,8 +50,8 @@ class Enemy(object):
         self.CurrentBullets = []
         self.Incapacitated = False
         self.IncapacitatedTimer = 0
-		self.Alertness = 0
-		#self.Alerted = 0
+        self.Alertness = 0
+        #self.Alerted = 0
 
     def update(self,tick,current_level,char_x,char_y, ghosted, newAlertnessLevel):
         current_room = current_level.get_current_room()
