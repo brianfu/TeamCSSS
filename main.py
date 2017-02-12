@@ -159,7 +159,7 @@ while not done:
         current_entities = current_level.get_current_entities()
     ## CODE UPDATING ##
     for enemy in current_entities:
-        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y, Chardude.Ghoststate, enemyAlertness)
+        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y, Chardude.Ghoststate, enemyAlertness,current_bullets)
         for bullet in enemy.CurrentBullets:
             current_bullets.append(bullet)
     for i in range(len(current_bullets)):
@@ -200,7 +200,8 @@ while not done:
                 screen.blit(text, [m*30,n*30])
 
     for entity in current_entities:
-        entity.draw(tick,screen)
+        if(entity.Hitpoints>0):
+            entity.draw(tick,screen)
     Chardude.draw(tick,screen)
 
 
