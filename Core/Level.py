@@ -5,7 +5,7 @@ class Level():
 
     def __init__(self):
         self.rooms = [] # [xval room, yval room, xval roomtile, yval roomtile]
-        self.room_grid_position = 2 # position
+        self.room_grid_position = 0 # position
         self.entities = [[[] for x in range(3)] for y in range(3)] # list of entities: enemies, objects, boolets, weapons, puddings, manifestos, etc.
 
     def load_level(self, level_num):

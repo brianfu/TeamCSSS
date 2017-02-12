@@ -43,9 +43,6 @@ keys_pressed = []
 objects = []
 
 Chardude = Char.Character.Character();
-
-
-aRect = pygame.Rect(100,100,100,100)
 group = pygame.sprite.Group(Chardude)
 
 Command = Core.Command.Command();
@@ -53,9 +50,9 @@ tick = 0;
 
 
 enemylist = []; # this is a temp thing
-enemylist.append(Char.Enemy.Scientist());
+enemylist.append(Char.Enemy.Scientist(50,50));
 
-oldbody = Char.Enemy.Enemy();
+oldbody = Char.Enemy.Enemy(50,50);
 Chardude.Possessing = oldbody;
 
 current_room = []
@@ -70,6 +67,15 @@ room_grid_position = [0,0]
 current_level = Core.Level.Level()
 current_level.load_level(1)
 current_room = current_level.get_current_room()
+
+for m in range(len(current_room)):
+    for n in range(len(current_room[m])):
+        if current_room[m][n] == 3:
+            Chardude.Pos_x = 30 * m
+            Chardude.Pos_y = 30 * n
+        elif current_room[m][n] == 5:
+            current_level.get_current_entities().append(Char.Enemy.Scientist(m*30,n*30));
+
 current_entities = current_level.get_current_entities()
 
 #make 36 x 24 matrix
@@ -118,15 +124,15 @@ while not done:
 
     # --- Game logic should go here
     current_tile = Chardude.getTile()
-    #print(current_tile)
+    print(current_tile)
     if current_room[current_tile[0]][current_tile[1]] == 2:
-        current_level.enter_door(current_tile, Char)
+        current_level.enter_door(current_tile, Chardude)
         current_room = current_level.get_current_room()
         current_entities = current_level.get_current_entities()
     for enemy in current_entities:
         enemy.update(tick)
     Chardude.update(tick,current_room,current_entities)
-    
+
 
     # --- Screen-clearing code goes here
 
@@ -144,7 +150,7 @@ while not done:
     else:
         curr_color = WHITE
         txt_color = BLACK
-    
+
     for m in range(len(current_room)): #36
         for n in range(len(current_room[0])): #24
             xVal = m
@@ -153,13 +159,13 @@ while not done:
 
             #Blit in words here
             screen.blit(text, [xVal*30,yVal*30])
-    
+
     group2 = pygame.sprite.Group(current_entities)
-   
-    
+
+
     group.draw(screen);
     group2.draw(screen);
-    
+
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
 
