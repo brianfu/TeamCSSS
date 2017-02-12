@@ -93,6 +93,9 @@ enemyAlertness = 0.0
 
 #Define textbox
 textbox = Core.textboxthatworks.textbox(screen)
+os.chdir("./Art")
+menubar_photo = pygame.image.load("Menubar.png").convert() 
+os.chdir("./..")
 
 # Start the tunes
 Sound.soundlib.play_music("Ambi.ogg", -1)
@@ -172,9 +175,12 @@ while not done:
             current_bullets.remove(bullet)
     
     #print(current_bullets)
-    if not Chardude.update(tick,current_level,current_entities):
+    gameUpdateResult = Chardude.update(tick,current_level,current_entities)
+    if gameUpdateResult == -1:
         gameOver = True
-    
+    elif gameUpdateResult == 1:
+        gameWin = True
+
     ## SOUND STUFF ##
     Sound.charsoundhandler.update(Chardude, tick)
     
@@ -235,7 +241,7 @@ while not done:
     textbox.text[2] = "Press 'E' to interact!"
     
     #Actual draws and loop mechs
-    textbox.create_textbox()
+    textbox.create_textbox(menubar_photo)
     textbox.blitz()
     textbox.button_trigger()
     

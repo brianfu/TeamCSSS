@@ -107,11 +107,14 @@ class Character(object):
         if self.Ghoststate:
             self.ghostTimer -= tick
             if self.ghostTimer < 0:
-                return False
+                return -1
         else:
+            if self.checkWin(current_level):
+                return 1
+            
             self.ghostTimer += 2*tick
             self.ghostTimer = min(self.ghostTimer, 10000)
-        return True
+        return 0
 
     def setOrientation(self,deltamove):
         if deltamove[0]==1:
@@ -233,7 +236,16 @@ class Character(object):
     def shoot(self):
         print("Hi")
 
-
+    def checkWin(self, current_level):
+        gridpos_x = int(self.Pos_x//30)
+        gridpos_y = int(self.Pos_y//30)
+        
+        current_room = current_level.get_current_room()
+        
+        if current_room[gridpos_x][gridpos_y] == 4:
+            return True
+        else:
+            return False
 
 
 
