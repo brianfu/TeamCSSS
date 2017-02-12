@@ -67,9 +67,9 @@ class textbox(object):
                 '''
                 #temp declares for mat
                 x_temp = ((self.x_pos*self.x_offset)+self.x_gap)- (1/2)*self.textsize[i][0]
-                y_temp = ((self.y_pos*self.y_offset)+self.y_gap)-(1/2)*self.textsize[i][1]
-                width_temp = 2*self.textsize[i][0]
-                height_temp = 2*self.textsize[i][1]
+                y_temp = ((self.y_pos*self.y_offset)+self.y_gap)- (1/2)*self.textsize[i][1]
+                width_temp = self.textsize[i][0]
+                height_temp = self.textsize[i][1]
                 final_mat_temp = [x_temp, y_temp, width_temp, height_temp]
                 
                 #draw dynamic box
@@ -81,7 +81,7 @@ class textbox(object):
                     self.rec_area_mat.append(final_mat_temp) 
                     
                 #Do blit after!
-                self.screen.blit(self.rendered_text[i], [((self.x_pos*self.x_offset)+self.x_gap), ((self.y_pos*self.y_offset)+ self.y_gap)])
+                self.screen.blit(self.rendered_text[i], [x_temp, y_temp])
             self.y_gap += 4*self.y_offset
             #Probably bigger offset than 2, and prob x offset as well (5 ish)
             #draw a rect around the words after for buttons
@@ -104,21 +104,25 @@ class textbox(object):
         
         #bounds declare
         for i in range(len(self.rec_area_mat)):
-            if self.mBdown and self.mouse_pos[0] in range (self.rec_area_mat[i][0],self.rec_area_mat[i][0]+self.rec_area_mat[i][2]+1) and self.mouse_pos[1] in range (self.rec_area_mat[i][1], self.rec_area_mat[i][1]+self.rec_area_mat[i][3] + 1): #if mBdown trigger and in range between x and x(not) and y and y(not)
-                    self.button.append(True)
-                else:
-                    self.button.append(False)
+            rounded_x = round(self.rec_area_mat[i][0])
+            rounded_x_0 = round(self.rec_area_mat[i][0]+self.rec_area_mat[i][2])
+            rounded_y = round(self.rec_area_mat[i][1])
+            rounded_y_0 = round(self.rec_area_mat[i][1]+self.rec_area_mat[i][3])
+            if self.mBdown and self.mouse_pos[0] in range (rounded_x,rounded_x_0+1) and self.mouse_pos[1] in range (rounded_y, rounded_y_0 + 1): #if mBdown trigger and in range between x and x(not) and y and y(not)
+                self.button.append(True)
+            else:
+                self.button.append(False)
                     
         #Button actions
-        if button[0]: #only 1 button press at a time
+        if self.button[0]: #only 1 button press at a time
             self.text[0] = "Button Pressed"
-        elif button[1]:
+        elif self.button[1]:
             pass
-        elif button[2]:
+        elif self.button[2]:
             pass
-        elif button[3]:
+        elif self.button[3]:
             pass
-        elif button[4]:
+        elif self.button[4]:
             pass
 
                 
