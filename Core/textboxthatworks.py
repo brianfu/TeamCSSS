@@ -69,7 +69,7 @@ class textbox(object):
         print( click_pos )
         for i in range (len(self.rendered_text)): #have to def 5 lines to work
             boxrect = pygame.Rect([((self.x_pos*self.x_offset)+self.x_gap)- (1/2)*self.textsize[i][0], ((self.y_pos*self.y_offset)+self.y_gap)-(1/2)*self.textsize[i][1], 2*self.textsize[i][0], 2*self.textsize[i][1]])
-            if boxrect.collidepoint(click_pos):
+            if boxrect.collidepoint(click_pos[0], click_pos[1]):
                 return i
             else:
                 return "none"
