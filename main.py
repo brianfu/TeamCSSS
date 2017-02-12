@@ -158,14 +158,17 @@ while not done:
         enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y)
         for bullet in enemy.CurrentBullets:
             current_bullets.append(bullet)
+    for i in range(len(current_bullets)):
+        current_bullets[i].update(tick,current_level,current_entities,Chardude)
     for bullet in current_bullets:
-        bullet.update(tick,current_level,current_entities,Chardude)
+        if bullet.Pos_x < 0 or bullet.Pos_x > 1080 or bullet.Pos_y < 0 or bullet.Pos_y>720:
+            current_bullets.remove(bullet)
+    print(current_bullets)
     if not Chardude.update(tick,current_level,current_entities):
         gameOver = True
     ## SOUND STUFF ##
     Sound.charsoundhandler.update(Chardude, tick)
-
-
+    
     # --- Screen-clearing code goes here
 
     # Here, we clear the screen to white. Don't put other drawing commands
