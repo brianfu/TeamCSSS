@@ -24,7 +24,7 @@ class textbox(object):
         self.rendered_text = ['','','','','']
         self.text = ['','','','','']
         self.textsize = []
-        self.color = [WHITE, RED, PURPLE, RED, WHITE]
+        self.color = [GREEN, RED, PURPLE, RED, GREY]
         self.rec_area_mat = []
         self.mouse_pos = pygame.mouse.get_pos()
         self.draw_border = 2
@@ -46,7 +46,7 @@ class textbox(object):
     '''
         
     def create_textbox(self):
-        pygame.draw.rect(self.screen, BLACK, [self.x_pos*self.x_offset, self.y_pos*self.y_offset, 10*self.x_offset, 24*self.y_offset]) 
+        pygame.draw.rect(self.screen, WHITE, [self.x_pos*self.x_offset, self.y_pos*self.y_offset, 10*self.x_offset, 24*self.y_offset]) 
         
     def line1(self):
         self.rendered_text[0] = self.font.render(str(self.text[0]), True, GREY)
@@ -134,15 +134,15 @@ class textbox(object):
                 self.button.append(False)
                     
         #Button actions
-        if self.button[0]: #only 1 button press at a time
-            self.text[0] = "Button Pressed"
-        elif self.button[1]:
+        if len(self.button) >= 1 and self.button[0]: #only 1 button press at a time
             pass
-        elif self.button[2]:
+        elif len(self.button) >= 2 and self.button[1]:
+            self.text[1] = "Hint: 'W' is UP!"
+        elif len(self.button) >= 3 and self.button[2]:
+            self.text[2] = "No hints here!"
+        elif len(self.button) >= 4 and self.button[3]:
             pass
-        elif self.button[3]:
-            pass
-        elif self.button[4]:
+        elif len(self.button) >= 5 and self.button[4]:
             pass
 
                 

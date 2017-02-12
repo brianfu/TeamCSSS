@@ -23,16 +23,13 @@ class Enemy(object):
 
     def __init__(self,newX,newY):
         pygame.sprite.Sprite.__init__(self)
+        self.Dead = False
         self.Possessedstate = False
         self.Pos_x = newX;
         self.Pos_y = newY;
         self.EnemyType = 0
         self.Possessable = True
-<<<<<<< HEAD
         self.hasGun = True
-=======
-        self.EnemyType = 0 
->>>>>>> dfdff28393eb461066f3b39ffbfa543949db51f2
         self.Hitpoints = 1
         self.Armour = 0
         self.AttackDamage = 0
@@ -43,33 +40,35 @@ class Enemy(object):
         self.Direction = [0,0,0,0]
         self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Arms.png')]
         #self.image = self.images[0]
-        self.size = [40,40]
+        self.size = [38,38]
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
         self.PatrolCycleLength = 0
         self.Moving = False
         self.StopTime = 0
         self.FireCooldown = 0
         self.Name = "Giorgio"
+        self.securityClearance = "None"
         self.timer = 0;
         self.CurrentBullets = []
         self.Incapacitated = False
         self.IncapacitatedTimer = 0
         self.Alertness = 0
+        self.currentpicture = pygame.image.load('Art/Player_Portrait.png')
         #self.Alerted = 0
 
     def update(self,tick,current_level,char_x,char_y, ghosted, newAlertnessLevel):
         current_room = current_level.get_current_room()
         self.Alertness = newAlertnessLevel
-        
+
         if (self.Incapacitated):
             if (self.IncapacitatedTimer > 0):
                 self.IncapacitatedTimer -= 1
                 return
             else:
                 self.Incapacitated = False
-        
+
         if (self.Alertness < 1):
-            self.PatrolCycle()
+            self.PatrolCycle(current_room)
         elif(self.Alertness>1):
             self.Direction = [0,0,0,0]
             self.Chase(char_x, char_y)
@@ -79,10 +78,12 @@ class Enemy(object):
 
         self.move(tick,current_level)
 
-        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,30,30)
-    
-    def PatrolCycle(self):
-        '''
+        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
+
+    def PatrolCycle(self, current_room):
+        #gridPos = self.getTile()
+        #currentPath = str( current_room[gridPos[0]][gridPos[1]] ) - int( current_room[gridPos[0]][gridPos[1]] )[-1]
+        #print( currentPath )
         self.PatrolCycleLength += 1
         if(self.PatrolCycleLength>=30):
             self.PatrolCycleLength = 0;
@@ -112,8 +113,26 @@ class Enemy(object):
                         elif(j==1):
                             self.Direction[3]=1
                             w+=1
-            '''
-    
+        gridpos_x=int((self.Pos_x+20)//30)
+        gridpos_y=int((self.Pos_y+20)//30)
+        if(self.Moving==True):
+            if(self.Direction[0]==1):
+                if((gridpos_y+1) <= 23 and current_room[gridpos_x][gridpos_y+1]!=0):
+                    self.Direction[0]=0
+                    self.Direction[2]=1
+            if(self.Direction[1]==1):
+                if((gridpos_x+1) <= 35 and current_room[gridpos_x+1][gridpos_y]!=0):
+                    self.Direction[1]=0
+                    self.Direction[3]=1
+            if(self.Direction[2]==1):
+                if((gridpos_y-1) >= 0 and current_room[gridpos_x][gridpos_y-1]!=0):
+                    self.Direction[2]=0
+                    self.Direction[0]=1
+            if(self.Direction[3]==1):
+                if((gridpos_x-1) >= 0 and current_room[gridpos_x-1][gridpos_y]!=0):
+                    self.Direction[3]=0
+                    self.Direction[1]=1
+
     def Chase(self, target_x, target_y): #target_x should be Character.Pos_x, target_y should be Character.Pos_y
         A=self.Pos_y-target_y #gives directional vectors with Enemy at point of origin
         B=target_x-self.Pos_x
@@ -148,7 +167,7 @@ class Enemy(object):
                 self.StopTime = 60
         if(self.StopTime>0):
             if(self.StopTime%(60/clip_size)==0):
-                self.CurrentBullets.append(Core.Bullet.Bullet(self.Pos_x, self.Pos_y, target_x, target_y+0.0001, False))
+                self.CurrentBullets.append(Core.Bullet.Bullet(self.Pos_x, self.Pos_y, target_x, target_y, False))
         if(self.Moving==False and self.StopTime>0):
             self.StopTime -= 1
 
@@ -175,10 +194,10 @@ class Enemy(object):
                 self.Direction[2]=1 #Up
             else:
                 self.Direction[0]=1 #Down
-                          
+
     def move(self,tick,current_level):
         current_room = current_level.get_current_room()
-        
+
         #Turn Cartesian Direction Vector[4] to Python directional Vector[2]
         deltamove = [0,0];
         for i in range(4):
@@ -192,21 +211,21 @@ class Enemy(object):
         #Compensate for diagonal movement
         if deltamove[0] !=0 or deltamove[1]!=0:
             self.setOrientation(deltamove)
-        
+
         if deltamove[0] != 0 and deltamove[1] != 0:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000) * 0.7
         else:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
-        
+
         self.Pos_x,self.Pos_y = Char.Movement.tryMoveTo(self.Pos_x,self.Pos_y,
             future_Pos_x,future_Pos_y,
             self.size[0],self.size[1],
-            current_level,False)
+            current_level,False,self.Name)
 
-        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])        
-    
+        self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
+
     def setOrientation(self,deltamove):
         if deltamove[0]==1:
             if deltamove[1]==0:
@@ -227,7 +246,7 @@ class Enemy(object):
                 self.Orientation = 5;
             else:
                 self.Orientation = 3;
-    
+
     def getCommand(self,command):
         if command.ctype == "keypress":
             if command.spec == "DOWN":
@@ -251,7 +270,7 @@ class Enemy(object):
                 self.Direction[2] = 0;
             elif command.spec == "LEFT":
                 self.Direction[3] = 0;
-    
+
     def getTile(self):
         return [int(math.floor(self.Pos_x/30)),int(math.floor(self.Pos_y/30))]
 
@@ -267,30 +286,70 @@ class Enemy(object):
         arms = pygame.transform.rotate(drawimages[1],angle)
         arect = arms.get_rect();
         hrect = head.get_rect();
-        armcenter = [arect.width/2,arect.height/2]
-        headcenter =[hrect.width/2,hrect.height/2]
-        screen.blit(arms,[self.Pos_x + 20 - armcenter[0],self.Pos_y + 20 - armcenter[1]])
-        screen.blit(head,[self.Pos_x + 20 - headcenter[0],self.Pos_y + 20 - headcenter[1]])
+        armcenter = list(arect.center)
+        headcenter =list(hrect.center)
+        angle = math.pi*self.Orientation/4
+        if self.hasGun:
+            armcenter[0]-=9*math.sin(angle)
+            armcenter[1]-=9*math.cos(angle)
+        screen.blit(arms,[self.Pos_x + 19 - armcenter[0],self.Pos_y + 19 - armcenter[1]])
+        screen.blit(head,[self.Pos_x + 19 - headcenter[0],self.Pos_y + 19 - headcenter[1]])
 
 class Guard(Enemy):
     def __init__(self,newX,newY):
         Enemy.__init__(self,newX,newY)
-        Enemy.EnemyType = 1
+        self.EnemyType = 1
         self.hasGun = True
-        Enemy.Hitpoints = 100
-        Enemy.Armour = 1
-        Enemy.AttackDamage = 2
-        Enemy.SpecialTraits = 0
-        self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Arms.png')]
+        self.Hitpoints = 100
+        self.Armour = 1
+        self.AttackDamage = 2
+        self.SpecialTraits = 0
+        self.Name = "Guard"
+        self.securityClearance = "Medium"
+        self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Pistol.png')]
+<<<<<<< HEAD
+=======
+        self.currentpicture = pygame.image.load('Art/Red_Guard_Portrait.png')
+>>>>>>> 26afc9a65072d317371d5064daf80f6c3284f542
 
 class Scientist(Enemy):
     def __init__(self,newX,newY):
         Enemy.__init__(self,newX,newY)
         self.EnemyType = 2
         self.hasGun = False
-        Enemy.Hitpoints = 50
-        Enemy.Armour = 0
-        Enemy.AttackDamage = 0
-        Enemy.SpecialTraits = 0
+        self.Hitpoints = 50
+        self.Armour = 0
+        self.AttackDamage = 0
+        self.SpecialTraits = 0
+        self.Name = "Scientist"
+        self.securityClearance = "Low"
         self.images = [pygame.image.load('Art/Scientist.png'),pygame.image.load('Art/Arms.png')]
+<<<<<<< HEAD
+=======
+        self.currentpicture = pygame.image.load('Art/Green_hat_portrait.png')
         #Enemy.images = #NEED TO ADD ENEMY IMAGES#
+>>>>>>> 26afc9a65072d317371d5064daf80f6c3284f542
+
+class Soldier(Enemy):
+    def __init__(self,newX,newY):
+        Enemy.__init__(self,newX,newY)
+        self.hasGun = True
+        self.EnemyType = 3
+        self.Hitpoints = 150
+        self.Armour = 0
+        self.AttackDamage = 0
+        self.SpecialTraits = 0
+        self.Name = "Soldier"
+        self.images = [pygame.image.load('Art/Red_hat_guard.png'),pygame.image.load('Art/Pistol.png')]
+
+class Janitor(Enemy):
+    def __init__(self,newX,newY):
+        Enemy.__init__(self,newX,newY)
+        self.hasGun = False
+        self.EnemyType = 4
+        self.Hitpoints = 50
+        self.Armour = 0
+        self.AttackDamage = 0
+        self.SpecialTraits = 0
+        self.Name = "Janitor"
+        self.images = [pygame.image.load('Art/Green_hat.png'),pygame.image.load('Art/Arms.png')]

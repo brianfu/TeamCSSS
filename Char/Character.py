@@ -29,7 +29,8 @@ class Character(object):
         self.Possessing = 0
 
         self.PlayGhostSound = False
-
+        self.Hitpoints = 50
+        self.Dead = False
         self.Pos_x = 50;
         self.Pos_y = 50;
         self.size = [38,38];
@@ -78,7 +79,7 @@ class Character(object):
         
         self.Possessing = 0
         self.Ghoststate = True
-        self.PlayGhostSound = True        
+        self.PlayGhostSound = True
         self.hasGun = False
         self.countdowntime = time.time()
         return
@@ -152,7 +153,7 @@ class Character(object):
         else:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
-        
+
         if not self.Ghoststate:
             PlayerType = self.Possessing.Name
         else:
