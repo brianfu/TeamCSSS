@@ -68,7 +68,7 @@ class Character(object):
         self.Possessing.Pos_x = 30*(math.floor(self.Pos_x/30 + .5))
         self.Possessing.Pos_y = 30*(math.floor(self.Pos_y/30 + .5))
         self.Possessing.Incapacitated = True
-        self.Possessing.IncapacitatedTimer = 300
+        self.Possessing.IncapacitatedTimer = 120
         enemylist.append(self.Possessing)
         self.Possessing = 0
         self.Ghoststate = True
