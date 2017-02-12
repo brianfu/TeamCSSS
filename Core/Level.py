@@ -23,13 +23,13 @@ class Level():
             for j in range(3):
                 for m in range(len(self.rooms[i][j])):
                     for n in range(len(self.rooms[i][j][m])):
-                        if self.rooms[i][j][m][n] == 3:
+                        if int( elf.rooms[i][j][m][n] ) == 3:
                             self.room_grid_position = i*3 + j
                             self.start_position[0] = 30 * m
                             self.start_position[1] = 30 * n
-                        elif self.rooms[i][j][m][n] == 5:
+                        elif int( self.rooms[i][j][m][n] )== 5:
                             self.entities[i][j].append(Char.Enemy.Guard(m*30,n*30));
-                        elif self.rooms[i][j][m][n] == 8:
+                        elif int( self.rooms[i][j][m][n] )== 8:
                             self.entities[i][j].append(Char.Enemy.Scientist(m*30,n*30));
 
     def get_current_room(self):
