@@ -69,6 +69,8 @@ Command = Core.Command.Command();
 tick = 0;
 
 oldbody = [Char.Enemy.Enemy(50,50)];
+oldbody[0].images = [pygame.image.load('Art/Player_original_head.png'),pygame.image.load('Art/Arms.png')]
+oldbody[0].hasGun = False
 Chardude.absorb(oldbody,0);
 
 current_level = Core.Level.Level()
@@ -209,9 +211,9 @@ while not done:
     textbox.create_textbox()
     textbox.blitz()
     if click:
-        print( textbox.callbacks(click_pos))
+        #print( textbox.callbacks(click_pos))
         if textbox.callbacks(click_pos) != "none":
-            print( "made it here" )
+            #print( "made it here" )
             gameOver =  True
 
     Core.Cursor.DrawCursor(pygame, screen, Chardude.Ghoststate, Chardude.hasGun )
@@ -228,6 +230,8 @@ while not done:
         Chardude = Char.Character.Character();
 
         oldbody = [Char.Enemy.Enemy(50,50)];
+        oldbody[0].images = [pygame.image.load('Art/Player_original_head.png'),pygame.image.load('Art/Arms.png')]
+        oldbody[0].hasGun = False
         Chardude.absorb(oldbody,0);
 
         room_grid_position = [0,0]
@@ -235,14 +239,9 @@ while not done:
         current_level = Core.Level.Level()
         current_level.load_level(1)
         current_room = current_level.get_current_room()
-
-        for m in range(len(current_room)):
-            for n in range(len(current_room[m])):
-                if int( current_room[m][n] ) == 3:
-                    Chardude.Pos_x = 30 * m
-                    Chardude.Pos_y = 30 * n
-                elif int( current_room[m][n] ) == 5:
-                    current_level.get_current_entities().append(Char.Enemy.Guard(m*30,n*30));
+        current_bullets = []; # List of bullets in a room, reset on room change
+        Chardude.Pos_x = current_level.start_position[0]
+        Chardude.Pos_y = current_level.start_position[1]
 
         current_entities = current_level.get_current_entities()
         pygame.mouse.set_visible(True)
