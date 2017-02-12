@@ -175,12 +175,9 @@ while not done:
     gameUpdateResult = Chardude.update(tick,current_level,current_entities)
     if gameUpdateResult == -1:
         gameOver = True
-<<<<<<< HEAD
     elif gameUpdateResult == 1:
         gameWin = True
-=======
-    
->>>>>>> origin/master
+
     ## SOUND STUFF ##
     Sound.charsoundhandler.update(Chardude, tick)
     
