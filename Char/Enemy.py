@@ -278,13 +278,17 @@ class Enemy(object):
         angle = 0
         angle += 45*self.Orientation
         head = pygame.transform.rotate(drawimages[0],angle)
-        if self.Moving:
+        if self.moving:
             angle += 15*math.sin(2*math.pi*self.timer/1000)
         arms = pygame.transform.rotate(drawimages[1],angle)
         arect = arms.get_rect();
         hrect = head.get_rect();
-        armcenter = [arect.width/2,arect.height/2]
-        headcenter =[hrect.width/2,hrect.height/2]
+        armcenter = list(arect.center)
+        headcenter =list(hrect.center)
+        angle = math.pi*self.Orientation/4
+        if self.hasGun:
+            armcenter[0]-=9*math.sin(angle)
+            armcenter[1]-=9*math.cos(angle)
         screen.blit(arms,[self.Pos_x + 19 - armcenter[0],self.Pos_y + 19 - armcenter[1]])
         screen.blit(head,[self.Pos_x + 19 - headcenter[0],self.Pos_y + 19 - headcenter[1]])
 
