@@ -278,7 +278,7 @@ class Guard(Enemy):
         Enemy.Armour = 1
         Enemy.AttackDamage = 2
         Enemy.SpecialTraits = 0
-        self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Arms.png')]
+        self.images = [pygame.image.load('Art/Blue_hat_guard.png'),pygame.image.load('Art/Pistol.png')]
 
 class Scientist(Enemy):
     def __init__(self,newX,newY):
