@@ -57,7 +57,8 @@ class textbox(object):
                 pass
             else:
                 self.textsize.append(self.font.size(self.text[i]))
-                pygame.draw.rect(self.screen, self.color[i], [((self.x_pos*self.x_offset)+self.x_gap)- (1/2)*self.textsize[i][0], ((self.y_pos*self.y_offset)+self.y_gap)-(1/2)*self.textsize[i][1], 2*self.textsize[i][0], 2*self.textsize[i][1]])
+                boxrect = pygame.Rect([((self.x_pos*self.x_offset)+self.x_gap)- (1/2)*self.textsize[i][0], ((self.y_pos*self.y_offset)+self.y_gap)-(1/2)*self.textsize[i][1], 2*self.textsize[i][0], 2*self.textsize[i][1]])
+                pygame.draw.rect(self.screen, self.color[i], boxrect)
                 #Do blit after!
                 self.screen.blit(self.rendered_text[i], [((self.x_pos*self.x_offset)+self.x_gap), ((self.y_pos*self.y_offset)+ self.y_gap)])
             self.y_gap += 4*self.y_offset
