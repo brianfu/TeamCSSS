@@ -87,11 +87,9 @@ class Character(object):
             self.unGhost(current_room, enemylist);
 
         if self.Ghoststate:
-            self.image = self.images[1];
             if time.time()-self.countdowntime > 18:
                 self.Ghoststate = False
                 return False
-        else: self.image = self.images[0];
         
         return True
 
@@ -180,10 +178,14 @@ class Character(object):
         angle += 45*self.Orientation
         head = pygame.transform.rotate(drawimages[0],angle)
         if self.moving:
-            angl += 15*math.sin(2*math.pi*self.timer/1000)
+            angle += 15*math.sin(2*math.pi*self.timer/1000)
         arms = pygame.transform.rotate(drawimages[1],angle)
-        screen.blit(arms,[Pos_x,Pos_y])
-        screen.blit(head,[Pos_x,Pos_y])
+        arect = arms.get_rect();
+        hrect = head.get_rect();
+        armcenter = [arect.width/2,arect.height/2]
+        headcenter =[hrect.width/2,hrect.height/2]
+        screen.blit(arms,[self.Pos_x + 20 - armcenter[0],self.Pos_y + 20 - armcenter[1]])
+        screen.blit(head,[self.Pos_x + 20 - headcenter[0],self.Pos_y + 20 - headcenter[1]])
     
     def shoot(self):
         print("Hi")
