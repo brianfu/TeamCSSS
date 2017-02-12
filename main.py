@@ -211,7 +211,9 @@ while not done:
     textbox.line5()
     textbox.create_textbox()
     textbox.blitz()
+    print( "made it here" )
     if shooting:
+        print( "made it there" )
         if textbox.callbacks(click_pos) != "none":
             gameOver =  True
         
