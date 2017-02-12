@@ -32,7 +32,7 @@ class Character(object):
 
         self.Pos_x = 50;
         self.Pos_y = 50;
-        self.size = [40,40];
+        self.size = [38,38];
         self.Timecountdown = 200 #at 60fps, the number should be 60*time wanted
         self.Orientation = 0; #can be 0-7
         self.Velocity = 110 #pixels / second
@@ -189,8 +189,8 @@ class Character(object):
         hrect = head.get_rect();
         armcenter = [arect.width/2,arect.height/2]
         headcenter =[hrect.width/2,hrect.height/2]
-        screen.blit(arms,[self.Pos_x + 20 - armcenter[0],self.Pos_y + 20 - armcenter[1]])
-        screen.blit(head,[self.Pos_x + 20 - headcenter[0],self.Pos_y + 20 - headcenter[1]])
+        screen.blit(arms,[self.Pos_x + 19 - armcenter[0],self.Pos_y + 19 - armcenter[1]])
+        screen.blit(head,[self.Pos_x + 19 - headcenter[0],self.Pos_y + 19 - headcenter[1]])
 
     def shoot(self):
         print("Hi")
