@@ -74,19 +74,10 @@ Chardude.absorb(oldbody,0);
 current_level = Core.Level.Level()
 current_level.load_level(1)
 current_room = current_level.get_current_room()
-
-for m in range(len(current_room)):
-    for n in range(len(current_room[m])):
-        if int(current_room[m][n]) == 3:
-            Chardude.Pos_x = 30 * m
-            Chardude.Pos_y = 30 * n
-        elif int(current_room[m][n]) == 5:
-            current_level.get_current_entities().append(Char.Enemy.Guard(m*30,n*30));
-        elif int(current_room[m][n]) == 8:
-            current_level.get_current_entities().append(Char.Enemy.Scientist(m*30,n*30));
-
 current_entities = current_level.get_current_entities()
 current_bullets = []; # List of bullets in a room, reset on room change
+Chardude.Pos_x = current_level.start_position[0]
+Chardude.Pos_y = current_level.start_position[1]
 
 shooting = False
 click = False
@@ -159,6 +150,7 @@ while not done:
         current_room = current_level.get_current_room()
         current_entities = current_level.get_current_entities()
         current_bullets.clear();
+        current_entities = current_level.get_current_entities()
     ## CODE UPDATING ##
     for enemy in current_entities:
         enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y, Chardude.Ghoststate, enemyAlertness)

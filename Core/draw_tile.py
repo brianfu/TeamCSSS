@@ -28,8 +28,10 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
             curr_color = RED
         if int( current_room[x][y] ) == 1:
             curr_color = YELLOW
-        if int( current_room[x][y] ) == 11:
-            curr_color = [150,150,0]
+        if int( current_room[x][y] )== 14:
+            curr_color = (235, 200, 0)
+        #if int( current_room[x][y] )== 11:
+            #curr_color = [150,150,0]
 
     # Colours for tiles not during ghost state
     else:
@@ -37,8 +39,10 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
             curr_color = WHITE
         if int( current_room[x][y] ) == 1:
             curr_color = GREY
-        if int( current_room[x][y] ) == 11:
-            curr_color = [150,150,150]
+        if int( current_room[x][y] ) == 14:
+            curr_color = (120, 120, 120)
+        #if int( current_room[x][y] )== 11:
+            #curr_color = [150,150,150]
 
     if curr_color == "null":
 
@@ -55,14 +59,27 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
             return font25.render('', True, txt_color)
 
         # Image tiles
-        if int( current_room[x][y] ) == 12:
+        if int( current_room[x][y] ) == 9:
+            tile_image = pygame.image.load('Art/Control-panel-red.png')
+            imagerect = pygame.Rect(x*30, y*30, 30, 30)
+            screen.blit(tile_image, imagerect)
+            return font25.render('', True, txt_color)
+
+        elif int( current_room[x][y] ) == 12:
             tile_image = pygame.image.load('Art/Locked.png')
             imagerect = pygame.Rect(x*30, y*30, 30, 30)
             screen.blit(tile_image, imagerect)
             return font25.render('', True, txt_color)
 
-        elif int( current_room[x][y] ) == 9:
-            tile_image = pygame.image.load('Art/Control-panel-red.png')
+        elif int( current_room[x][y] ) == 11:
+            if isGhoststate:
+                temp_colour = RED
+            else:
+                temp_colour = WHITE
+            pygame.draw.rect(screen, temp_colour, [x*30,y*30, 30, 30], 0)
+            tile_image = pygame.image.load('Art/Bars-Vertical.png')
+            if current_room[x+1][y] in [1,11] and current_room[x-1][y] in [1,11]:
+                tile_image = pygame.image.load('Art/Bars-Horizontal.png')
             imagerect = pygame.Rect(x*30, y*30, 30, 30)
             screen.blit(tile_image, imagerect)
             return font25.render('', True, txt_color)
@@ -77,7 +94,7 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
             tile_image = pygame.image.load('Art/Package.png')
             imagerect = pygame.Rect(x*30, y*30, 30, 30)
             screen.blit(tile_image, imagerect)
-            return font25.render('', True, txt_color)            
+            return font25.render('', True, txt_color)
 
     else:
         pygame.draw.rect(screen, curr_color, [x*30,y*30, 30, 30], 0) #col by row mat.
