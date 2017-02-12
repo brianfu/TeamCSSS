@@ -8,6 +8,7 @@ import Core.Command
 import Char.Character
 import Char.Enemy
 import Core.Level
+import Sound.soundlib
 
 
 if not pygame.font: print('Warning, fonts disabled')
@@ -17,8 +18,8 @@ if not pygame.mixer: print('Warning, sound disabled')
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
-RED = (255, 0, 0)
-YELLOW = (200, 200, 0)
+RED = (204, 0, 0)
+YELLOW = (255, 215, 0)
 GREY = (100,100,100)
 
 pygame.init()
@@ -34,6 +35,8 @@ font25 = pygame.font.SysFont('Calibri', 25, True, False)
 
 # Loop until the user clicks the close button.
 done = False
+
+gameOver = False
 
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
@@ -155,7 +158,9 @@ while not done:
         current_entities = current_level.get_current_entities()
     for enemy in current_entities:
         enemy.update(tick,current_room)
-    Chardude.update(tick,current_room,current_entities)
+    if not Chardude.update(tick,current_room,current_entities):
+        gameOver = True
+    print(gameOver)
 
 
     # --- Screen-clearing code goes here
@@ -195,6 +200,10 @@ while not done:
 
     # --- Limit to 60 frames per second
     tick = clock.tick(60)
+    
+    if gameOver:
+        GOscreen.GO(pygame, screen)
+        
 
 # Close the window and quit.
 pygame.quit()
