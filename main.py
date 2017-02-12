@@ -159,21 +159,28 @@ while not done:
         current_entities = current_level.get_current_entities()
     ## CODE UPDATING ##
     for enemy in current_entities:
-        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y, Chardude.Ghoststate, enemyAlertness)
+        enemy.update(tick,current_level,Chardude.Pos_x,Chardude.Pos_y, Chardude.Ghoststate, enemyAlertness, current_bullets)
         for bullet in enemy.CurrentBullets:
             current_bullets.append(bullet)
+    
     for i in range(len(current_bullets)):
         current_bullets[i].update(tick,current_level,current_entities,Chardude)
     bullet_collisions(current_bullets, current_entities, Chardude)
+    
     for bullet in current_bullets:
         if bullet.Pos_x < 0 or bullet.Pos_x > 1080 or bullet.Pos_y < 0 or bullet.Pos_y>720 or bullet.HasHit:
             current_bullets.remove(bullet)
+    
     #print(current_bullets)
     gameUpdateResult = Chardude.update(tick,current_level,current_entities)
     if gameUpdateResult == -1:
         gameOver = True
+<<<<<<< HEAD
     elif gameUpdateResult == 1:
         gameWin = True
+=======
+    
+>>>>>>> origin/master
     ## SOUND STUFF ##
     Sound.charsoundhandler.update(Chardude, tick)
     
@@ -203,7 +210,8 @@ while not done:
                 screen.blit(text, [m*30,n*30])
 
     for entity in current_entities:
-        entity.draw(tick,screen)
+        if(entity.Hitpoints>0):
+            entity.draw(tick,screen)
     Chardude.draw(tick,screen)
 
 
@@ -217,6 +225,12 @@ while not done:
     textbox.line2()
     textbox.line3()
     textbox.line4()
+    if Chardude.Possessing is not 0:
+        textbox.text[3] = Chardude.Possessing.Name + " | " + "HP: " + str(Chardude.Possessing.Hitpoints)
+        if Chardude.hasGun:
+            textbox.text[3] += "| Gun"
+    else:
+        textbox.text[3] = "Ghost Form | Losing Sanity"
     #textbox.line5()
     #change textbox.shadow_percentage to change bar
     

@@ -82,6 +82,7 @@ class Character(object):
         self.PlayGhostSound = True
         self.hasGun = False
         self.countdowntime = time.time()
+        self.currentpicture = pygame.image.load("Art/Player-Ghost-Portrait.png")
         return
 
     def update(self,tick,current_level,enemylist):
