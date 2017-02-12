@@ -5,15 +5,18 @@ class Level():
 
     def __init__(self):
         self.rooms = [] # [xval room, yval room, xval roomtile, yval roomtile]
+        self.roomLevers = []
         self.room_grid_position = 0 # position
         self.entities = [[[] for x in range(3)] for y in range(3)] # list of entities: enemies, objects, boolets, weapons, puddings, manifestos, etc.
 
     def load_level(self, level_num):
         for m in range(3):
             self.rooms.append([])
+            self.roomLevers.append([])
             for n in range(3):
                 roomName = 'Core/Levels/' + str(level_num) + "-" + str(m) + "_" + str(n)
                 self.rooms[m].append(pickle.load(open(roomName,"rb")))
+                self.roomLevers[m].append(0)                
 
     def get_current_room(self):
         #print(len(self.rooms))
@@ -35,3 +38,9 @@ class Level():
         if current_tile[1] == 23 and self.room_grid_position < 6:
             self.room_grid_position += 3
             character.Pos_y = 30
+            
+    def activate_room_lever(self):
+        self.roomLevers[int(math.floor(self.room_grid_position/3))][self.room_grid_position%3] = 1
+        
+    def get_room_lever_state(self):
+        return self.roomLevers[int(math.floor(self.room_grid_position/3))][self.room_grid_position%3]
