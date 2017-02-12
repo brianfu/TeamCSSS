@@ -197,7 +197,7 @@ while not done:
 
 
     for bullet in current_bullets:
-        pygame.draw.rect(screen, BLACK, bullet.rect, 2)
+        bullet.draw(tick,screen)
 
     #Stuff to insert in main() mainloop here (for textboxthatworks):
     textbox.line1()

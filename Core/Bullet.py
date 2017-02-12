@@ -34,3 +34,6 @@ class Bullet():
     def move(self,tick,current_room,enemylist,char):
         self.Pos_y += (self.Aim_y - self.Origin_y)*(self.speed/(math.sqrt(math.pow(self.Aim_x - self.Origin_x, 2) + math.pow(self.Aim_y - self.Origin_y, 2))))
         self.Pos_x += (self.Aim_x - self.Origin_x)*(self.speed/(math.sqrt(math.pow(self.Aim_x - self.Origin_x, 2) + math.pow(self.Aim_y - self.Origin_y, 2))))
+
+    def draw(self,tick,screen):
+        pygame.draw.rect(screen, [0,0,0], self.rect, 2)
