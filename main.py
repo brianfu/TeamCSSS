@@ -138,7 +138,7 @@ while not done:
         Chardude.getCommand(Command);
 
     if shooting:
-        current_bullets.append(Core.Bullet.Bullet(Chardude.Pos_x + Chardude.size[0]/2, Chardude.Pos_y + Chardude.size[1]/2, click_pos[0], click_pos[1]))
+        current_bullets.append(Core.Bullet.Bullet(Chardude.Pos_x + Chardude.size[0]/2, Chardude.Pos_y + Chardude.size[1]/2, click_pos[0], click_pos[1], True))
         shooting = False
 
     # --- Game logic should go here
