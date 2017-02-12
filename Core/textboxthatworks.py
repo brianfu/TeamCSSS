@@ -9,15 +9,15 @@ RED = (255, 0, 0)
 class textbox(object):
     def __init__(self, screen):
         self.screen = screen
-        self.x_pos = 0
-        self.y_pos = 19
+        self.x_pos = 36
+        self.y_pos = 0
         self.x_offset = 30
         self.y_offset = 30
         self.font = pygame.font.SysFont('Calibri', 25, False, False)
         self.rendered_text = ['','','','','']
         
     def create_textbox(self):
-        pygame.draw.rect(self.screen, RED, [self.x_pos*self.x_offset, self.y_pos*self.y_offset, 36*self.x_offset, 5*self.y_offset]) 
+        pygame.draw.rect(self.screen, RED, [self.x_pos*self.x_offset, self.y_pos*self.y_offset, 10*self.x_offset, 24*self.y_offset]) 
         
     def line1(self, text):
         self.rendered_text[0] = self.font.render(str(text), True, BLACK)
@@ -41,4 +41,11 @@ class textbox(object):
             else:
                 self.screen.blit(self.rendered_text[i], [self.x_pos*self.x_offset, self.y_pos*self.y_offset])
             self.y_pos += 1
-        
+            #Probably bigger offset than 2, and prob x offset as well (5 ish)
+            #draw a rect around the words after for buttons
+'''
+    textbox = Core.textboxthatworks.textbox(screen)
+    textbox.line1("Test")
+    textbox.create_textbox()
+    textbox.blitz()    
+'''

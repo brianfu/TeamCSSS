@@ -2,6 +2,7 @@ import pygame
 import os
 import math
 import time
+import Char.Movement
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -115,43 +116,10 @@ class Character(pygame.sprite.Sprite):
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000)
             future_Pos_y += deltamove[0]*(self.Velocity*tick/1000)
 
-        gridpos_x = int(future_Pos_x//30)
-        gridpos_y = int(future_Pos_y//30)
-        canmovex = True
-        if future_Pos_x > 1075 - self.size[0] or future_Pos_x < 0:
-            canmovex = False
-        else:
-            xrect = pygame.Rect(  future_Pos_x,  self.Pos_y,  self.size[0],  self.size[1])
-            for x in (0,1,2):
-                for y in (0,1,2):
-                    if xrect.colliderect(
-                    pygame.Rect( (gridpos_x+x)*30,  (gridpos_y+y)*30,  30,  30) ):
-                        if current_room[gridpos_x+x][gridpos_y+y] == 1:
-                            canmovex = False
-                            break
-                        elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11) and self.Ghoststate==False:
-                            canmovex = False
-                            break
-        if canmovex:
-            self.Pos_x = future_Pos_x
-        canmovey = True
-        if future_Pos_y > 715 - self.size[1] or future_Pos_y < 0:
-            canmovey = False
-        else:
-            yrect = pygame.Rect(  self.Pos_x,  future_Pos_y,  self.size[0],  self.size[1])
-            for x in (0,1,2):
-                for y in (0,1,2):
-                    if yrect.colliderect(
-                    pygame.Rect( (gridpos_x+x)*30,  (gridpos_y+y)*30,  30,  30) ):
-                        if current_room[gridpos_x+x][gridpos_y+y] == 1:
-                            canmovey = False
-                            break
-                        elif current_room[gridpos_x+x][gridpos_y+y] in (10, 11) and self.Ghoststate==False:
-                            canmovey = False
-                            break
-
-        if canmovey:
-            self.Pos_y = future_Pos_y
+        self.Pos_x,self.Pos_y = Char.Movement.tryMoveTo(self.Pos_x,self.Pos_y,
+            future_Pos_x,future_Pos_y,
+            self.size[0],self.size[1],
+            current_room,self.Ghoststate)
 
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
 
