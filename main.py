@@ -216,7 +216,8 @@ while not done:
     #change textbox.shadow_percentage to change bar
     
     #switch text
-    textbox.text[0] = "Shadow Bar," + str(textbox.shadow_percentage) + "% remaining"
+    textbox.text[0] = "                                    "
+    textbox.shadow_percentage = Chardude.ghostTimer/10000
     #textbox.shadow_bar(35)
     
     #Actual draws and loop mechs

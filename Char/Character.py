@@ -55,6 +55,7 @@ class Character(object):
         self.Orientation = self.Possessing.Orientation
         self.absorbedimages = self.Possessing.images
         self.hasGun = self.Possessing.hasGun
+        self.currentpicture = self.Possessing.currentpicture
 
     def unGhost(self,current_room,enemylist):
         self.AttemptUnghost = False
@@ -74,8 +75,8 @@ class Character(object):
         self.Possessing.Incapacitated = True
         self.Possessing.IncapacitatedTimer = 120
         enemylist.append(self.Possessing)
+        
         self.Possessing = 0
-        self.currentpicture = self.Possessing.currentpicture
         self.Ghoststate = True
         self.PlayGhostSound = True        
         self.hasGun = False
