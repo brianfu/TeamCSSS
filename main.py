@@ -14,6 +14,7 @@ import TitleScreen
 import Sound.soundlib
 import Sound.charsoundhandler
 import GOscreen
+import WINscreen
 import Core.draw_tile
 import Core.textboxthatworks
 import Core.Cursor
@@ -53,6 +54,7 @@ pygame.mouse.set_visible(False)
 done = False
 
 gameOver = False
+gameWin = False
 
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
@@ -224,9 +226,13 @@ while not done:
     # --- Limit to 60 frames per second
     tick = clock.tick(60)
 
-    if gameOver: #manually reset gamemode
-        GOscreen.GO(pygame, screen) #Game over screen
+    if gameOver or gameWin: #manually reset gamemode
+        if gameOver:
+            GOscreen.GO(pygame, screen) #Game over screen
+        else:
+            WINscreen.WIN(pygame, screen)
         gameOver = False #start resetting all values
+        gameWIN = False
         Chardude = Char.Character.Character();
 
         oldbody = [Char.Enemy.Enemy(50,50)];
@@ -250,6 +256,7 @@ while not done:
             pygame.quit()
             sys.exit()
         Sound.soundlib.play_music("Ambi.ogg", -1)
+
 
 
 # Close the window and quit.

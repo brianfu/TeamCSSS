@@ -20,6 +20,12 @@ class textbox(object):
         self.text = ['','','','','']
         self.textsize = []
         self.color = [WHITE, RED, PURPLE, RED, WHITE]
+        self.rec_area_mat = []
+        self.mouse_pos = pygame.mouse.get_pos()
+        
+        #Trigger Booleans
+        self.mBdown = False
+        
         #self.x_pos += 2.5*self.x_offset #Constant offsets
         #self.y_pos += 3.5*self.y_offset        
         
@@ -57,12 +63,37 @@ class textbox(object):
                 pass
             else:
                 self.textsize.append(self.font.size(self.text[i]))
-                pygame.draw.rect(self.screen, self.color[i], [((self.x_pos*self.x_offset)+self.x_gap)- (1/2)*self.textsize[i][0], ((self.y_pos*self.y_offset)+self.y_gap)-(1/2)*self.textsize[i][1], 2*self.textsize[i][0], 2*self.textsize[i][1]])
+                
+                #temp declares for mat
+                x_temp = ((self.x_pos*self.x_offset)+self.x_gap)- (1/2)*self.textsize[i][0]
+                y_temp = ((self.y_pos*self.y_offset)+self.y_gap)-(1/2)*self.textsize[i][1]
+                width_temp = 2*self.textsize[i][0]
+                height_temp = 2*self.textsize[i][1]
+                final_mat_temp = [x_temp, y_temp, width_temp, height_temp]
+                
+                #draw dynamic box
+                pygame.draw.rect(self.screen, self.color[i], final_mat_temp)
+                #get rect values here, put into 5 x 4 mat, call by seeing if mouse pos in that area and if something pressed
+                
+                #if list in matrix, pass, else add to mat
+                if final_mat_temp not in self.rec_area_mat:
+                    self.rec_area_mat.append(final_mat_temp)
+                
                 #Do blit after!
                 self.screen.blit(self.rendered_text[i], [((self.x_pos*self.x_offset)+self.x_gap), ((self.y_pos*self.y_offset)+ self.y_gap)])
             self.y_gap += 4*self.y_offset
             #Probably bigger offset than 2, and prob x offset as well (5 ish)
             #draw a rect around the words after for buttons
+            
+    def button_trigger(self):
+        self.mouse_pos = pygame.mouse.get_pos()
+        self.button = []
+        #bounds declare
+        for i in range(len(self.rec_area_mat)):
+            if self.mouse_pos[0] in range (self.rec_area_mat[i][0],self.rec_area_mat[i][0]+self.rec_area_mat[i][2]+1):
+                self.button.append()
+                
+        #button1
             
     def txt_getcmd(self, command):
         if command.ctype == "go_dir":
@@ -77,7 +108,7 @@ class textbox(object):
         elif command.ctype == "stop_dir":
             pass #keyup
         elif command.ctype == "fire_gun":
-            pass #mbdown
+            self.mBdown = True #mbdown
         elif command.ctype == "non_firing":
             pass #mbup    
 '''
