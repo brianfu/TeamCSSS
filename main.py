@@ -106,23 +106,21 @@ while not done:
             gridpos_x = int((Chardude.Pos_x+20)//30)
             gridpos_y = int((Chardude.Pos_y+20)//30)       
             
-            print(gridpos_x)
-            print(gridpos_y)
             if (current_room[gridpos_x][gridpos_y] == 9 and Chardude.Ghoststate==False):
                 current_room[gridpos_x][gridpos_y] = 13
-                print(True)
+                current_level.activate_room_lever()
             elif ((gridpos_x+1) <= 35 and current_room[gridpos_x+1][gridpos_y] == 9 and Chardude.Ghoststate==False):
                 current_room[gridpos_x+1][gridpos_y] = 13
-                print(True)
+                current_level.activate_room_lever()
             elif ((gridpos_x-1) >= 0 and current_room[gridpos_x-1][gridpos_y] == 9 and Chardude.Ghoststate==False):
-                current_room[gridpos_x-1][gridpos_y] = 13 
-                print(True)
+                current_room[gridpos_x-1][gridpos_y] = 13
+                current_level.activate_room_lever()
             elif ((gridpos_y+1) <= 23 and current_room[gridpos_x][gridpos_y+1] == 9 and Chardude.Ghoststate==False):
-                current_room[gridpos_x][gridpos_y+1] = 13 
-                print(True)
+                current_room[gridpos_x][gridpos_y+1] = 13
+                current_level.activate_room_lever()
             elif ((gridpos_y-1) >= 0 and current_room[gridpos_x][gridpos_y-1] == 9 and Chardude.Ghoststate==False):
                 current_room[gridpos_x][gridpos_y-1] = 13
-                print(True)
+                current_level.activate_room_lever()
 
         #if event key down
         elif event.type == pygame.KEYDOWN:
