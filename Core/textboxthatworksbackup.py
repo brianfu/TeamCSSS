@@ -59,8 +59,23 @@ class textbox(object):
             #Probably bigger offset than 2, and prob x offset as well (5 ish)
             #draw a rect around the words after for buttons
     
-    def text_getcmd(self, command):
-        pass
+    def txt_getcmd(self, command):
+        if command.ctype == "go_dir":
+            if command.spec == 2:
+                pass #forward, 'w'
+            elif command.spec == 0:
+                pass #down
+            elif command.spec == 1:
+                pass #right
+            elif command.spec == 3:
+                pass #left
+        elif command.ctype == "stop_dir":
+            pass #keyup
+        elif command.ctype == "fire_gun":
+            pass #mbdown
+        elif command.ctype == "non_firing":
+            pass #mbup
+        
 '''
     textbox = Core.textboxthatworks.textbox(screen)
     textbox.line1()

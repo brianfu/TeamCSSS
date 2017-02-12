@@ -52,13 +52,31 @@ class textbox(object):
                 pass
             else:
                 self.textsize.append(self.font.size(self.text[i]))
+                self.screen.blit(self.rendered_text[i], [self.x_pos*self.x_offset, self.y_pos*self.y_offset])
                 pygame.draw.rect(self.screen, self.color[i], [(self.x_pos*self.x_offset)- (1/2)*self.textsize[i][0], (self.y_pos*self.y_offset)-(1/2)*self.textsize[i][1], 2*self.textsize[i][0], 2*self.textsize[i][1]])
                 #Do blit after!
-                self.screen.blit(self.rendered_text[i], [self.x_pos*self.x_offset, self.y_pos*self.y_offset])
+                
             self.y_pos += 4
             
             #Probably bigger offset than 2, and prob x offset as well (5 ish)
             #draw a rect around the words after for buttons
+            
+    def txt_getcmd(self, command):
+        if command.ctype == "go_dir":
+            if command.spec == 2:
+                pass #forward, 'w'
+            elif command.spec == 0:
+                pass #down
+            elif command.spec == 1:
+                pass #right
+            elif command.spec == 3:
+                pass #left
+        elif command.ctype == "stop_dir":
+            pass #keyup
+        elif command.ctype == "fire_gun":
+            pass #mbdown
+        elif command.ctype == "non_firing":
+            pass #mbup    
 '''
     textbox = Core.textboxthatworks.textbox(screen)
     textbox.line1()
