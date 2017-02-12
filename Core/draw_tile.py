@@ -22,28 +22,6 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
     #if current_room[x][y] == 10:
         #curr_color = [140,100,80]
 
-    # Colours for tiles during ghost state
-    if isGhoststate:
-        #if int( current_room[x][y] ) in [0,3,5,6,7,8]:
-            #curr_color = RED
-        #if int( current_room[x][y] ) == 1:
-            #curr_color = YELLOW
-        if int( current_room[x][y] )== 14:
-            curr_color = (235, 200, 0)
-        #if int( current_room[x][y] )== 11:
-            #curr_color = [150,150,0]
-
-    # Colours for tiles not during ghost state
-    else:
-        #if int( current_room[x][y] ) in [0,3,5,6,7,8]:
-            #curr_color = WHITE
-        #if int( current_room[x][y] ) == 1:
-            #curr_color = GREY
-        if int( current_room[x][y] ) == 14:
-            curr_color = (120, 120, 120)
-        #if int( current_room[x][y] )== 11:
-            #curr_color = [150,150,150]
-
     if curr_color == "null":
 
         if int( current_room[x][y] ) in [0,3,5,6,7,8]:
@@ -60,6 +38,12 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
                 tile_image = pygame.image.load('Art/Wall_2_Yellow.png')
             else:
                 tile_image = pygame.image.load('Art/Wall_2_Blue.png')
+            imagerect = pygame.Rect(x*30, y*30, 30, 30)
+            screen.blit(tile_image, imagerect)
+            return font25.render('', True, txt_color)
+
+        elif int( current_room[x][y] ) == 4:
+            tile_image = pygame.image.load('Art/Portal_End.png')
             imagerect = pygame.Rect(x*30, y*30, 30, 30)
             screen.blit(tile_image, imagerect)
             return font25.render('', True, txt_color)
@@ -175,7 +159,7 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
 
     else:
         pygame.draw.rect(screen, curr_color, [x*30,y*30, 30, 30], 0) #col by row mat.
-        if current_room[x][y] not in [-1,0,1,2,3,5,6,7,8,10,11]:
+        if current_room[x][y] not in range[-1,100]:
             text = font25.render(str(current_room[x][y]), True, txt_color)
             return text
         return font25.render('', True, txt_color)
