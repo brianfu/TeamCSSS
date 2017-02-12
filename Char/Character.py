@@ -26,8 +26,6 @@ class Character(pygame.sprite.Sprite):
         self.AttemptGhost = False
 
         self.Possessing = 0
-        
-        self.PlayGhostSound = False
 
         self.Pos_x = 50;
         self.Pos_y = 50;
@@ -51,7 +49,6 @@ class Character(pygame.sprite.Sprite):
                 self.Pos_x = self.Possessing.Pos_x
                 self.Pos_y = self.Possessing.Pos_y
                 self.images[0] = self.Possessing.images[0]
-                self.PlayGhostSound = True
                 return
         return
 
@@ -65,7 +62,6 @@ class Character(pygame.sprite.Sprite):
         enemylist.append(self.Possessing)
         self.Possessing = 0
         self.Ghoststate = True
-        self.PlayGhostSound = True
         return
 
 
@@ -169,6 +165,10 @@ class Character(pygame.sprite.Sprite):
 
     def getTile(self):
         return [int(math.floor((self.Pos_x+self.size[0]/2)/30)),int(math.floor((self.Pos_y + self.size[1]/2)/30))]
+
+
+    def shoot(self):
+        print("Hi")
 
 
 

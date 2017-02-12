@@ -23,6 +23,8 @@ GREY = (100,100,100)
 
 pygame.init()
 
+pygame.mouse.set_visible(False)
+
 # Set the width and height of the screen [width, height]
 size = (1280, 720)
 
@@ -186,6 +188,9 @@ while not done:
 
     group2 = pygame.sprite.Group(current_entities)
 
+    if pygame.mouse.get_pos()[0] < 1080 - 14:
+        pygame.draw.circle(screen, RED, pygame.mouse.get_pos(), 14, 4)
+        pygame.draw.circle(screen, RED, pygame.mouse.get_pos(), 7, 4)
 
     group.draw(screen);
     group2.draw(screen);
