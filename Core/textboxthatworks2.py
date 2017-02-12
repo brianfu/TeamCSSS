@@ -20,8 +20,6 @@ class textbox(object):
         self.text = ['','','','','']
         self.textsize = []
         self.color = [WHITE, RED, PURPLE, RED, WHITE]
-        #self.x_pos += 2.5*self.x_offset #Constant offsets
-        #self.y_pos += 3.5*self.y_offset        
         
     def create_textbox(self):
         pygame.draw.rect(self.screen, GREEN, [self.x_pos*self.x_offset, self.y_pos*self.y_offset, 10*self.x_offset, 24*self.y_offset]) 
@@ -47,20 +45,20 @@ class textbox(object):
         self.rendered_text[4] = self.font.render(str(self.text[4]), True, BLACK)
     
     def blitz(self):
-        self.y_gap = 0
-        self.x_gap = 0
-        self.textsize = []
-        self.x_gap += 2.5*self.x_offset
-        self.y_gap += 3*self.y_offset
+        self.x_pos += 2.5 #Constant offsets
+        self.y_pos += 3.5
         for i in range (len(self.rendered_text)): #have to def 5 lines to work
+            '''
             if isinstance(self.rendered_text[i], str):
                 pass
             else:
-                self.textsize.append(self.font.size(self.text[i]))
-                pygame.draw.rect(self.screen, self.color[i], [((self.x_pos*self.x_offset)+self.x_gap)- (1/2)*self.textsize[i][0], ((self.y_pos*self.y_offset)+self.y_gap)-(1/2)*self.textsize[i][1], 2*self.textsize[i][0], 2*self.textsize[i][1]])
-                #Do blit after!
-                self.screen.blit(self.rendered_text[i], [((self.x_pos*self.x_offset)+self.x_gap), ((self.y_pos*self.y_offset)+ self.y_gap)])
-            self.y_gap += 4*self.y_offset
+            '''
+            self.textsize.append(self.font.size(self.text[i]))
+            pygame.draw.rect(self.screen, self.color[i], [(self.x_pos*self.x_offset)- (1/2)*self.textsize[i][0], (self.y_pos*self.y_offset)-(1/2)*self.textsize[i][1], 2*self.textsize[i][0], 2*self.textsize[i][1]])
+            #Do blit after!
+            self.screen.blit(self.rendered_text[i], [self.x_pos*self.x_offset, self.y_pos*self.y_offset])
+        self.y_pos += 4
+            
             #Probably bigger offset than 2, and prob x offset as well (5 ish)
             #draw a rect around the words after for buttons
             
