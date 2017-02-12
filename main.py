@@ -203,7 +203,6 @@ while not done:
     
     if gameOver:
         GOscreen.GO(pygame, screen)
-        
 
 # Close the window and quit.
 pygame.quit()
