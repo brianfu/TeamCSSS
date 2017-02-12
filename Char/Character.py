@@ -42,7 +42,7 @@ class Character(object):
         self.absorbedimages = []
         self.rect = pygame.Rect(self.Pos_x,self.Pos_y,self.size[0],self.size[1])
         self.timer = 0;
-        self.moving = False;
+        self.Moving = False;
         self.hasGun = False;
         self.currentpicture = pygame.image.load('Art/Player_Portrait.png')
 
@@ -135,11 +135,11 @@ class Character(object):
             self.Velocity += (3*tick)//5
             self.Velocity = min(self.Velocity,self.MaxVelocity)
             self.setOrientation(deltamove)
-            self.moving = True
+            self.Moving = True
         else:
             self.Velocity -= (3*tick)//5
             self.Velocity = max(self.Velocity,self.MaxVelocity/2)
-            self.moving = False
+            self.Moving = False
 
         if deltamove[0] != 0 and deltamove[1] != 0:
             future_Pos_x += deltamove[1]*(self.Velocity*tick/1000) * 0.7
@@ -188,13 +188,17 @@ class Character(object):
         angle = 0
         angle += 45*self.Orientation
         head = pygame.transform.rotate(drawimages[0],angle)
-        if self.moving:
+        if self.Moving:
             angle += 15*math.sin(2*math.pi*self.timer/1000)
         arms = pygame.transform.rotate(drawimages[1],angle)
         arect = arms.get_rect();
         hrect = head.get_rect();
-        armcenter = [arect.width/2,arect.height/2]
-        headcenter =[hrect.width/2,hrect.height/2]
+        armcenter = list(arect.center)
+        headcenter =list(hrect.center)
+        angle = math.pi*self.Orientation/4
+        if self.hasGun:
+            armcenter[0]-=9*math.sin(angle)
+            armcenter[1]-=9*math.cos(angle)
         screen.blit(arms,[self.Pos_x + 19 - armcenter[0],self.Pos_y + 19 - armcenter[1]])
         screen.blit(head,[self.Pos_x + 19 - headcenter[0],self.Pos_y + 19 - headcenter[1]])
 
