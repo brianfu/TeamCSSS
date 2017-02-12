@@ -262,23 +262,29 @@ while not done:
             WINscreen.WIN(pygame, screen)
         gameOver = False #start resetting all values
         gameWIN = False
+        done = False
+        gameOver = False
+        gameWin = False
+        lock = pygame.time.Clock()
+        keys_pressed = []
         Chardude = Char.Character.Character();
-
+        Command = Core.Command.Command();
+        tick = 0;
         oldbody = [Char.Enemy.Enemy(50,50)];
         oldbody[0].images = [pygame.image.load('Art/Player_original_head.png'),pygame.image.load('Art/Arms.png')]
         oldbody[0].hasGun = False
         Chardude.absorb(oldbody,0);
-
-        room_grid_position = [0,0]
-
         current_level = Core.Level.Level()
         current_level.load_level(1)
         current_room = current_level.get_current_room()
+        current_entities = current_level.get_current_entities()
         current_bullets = []; # List of bullets in a room, reset on room change
         Chardude.Pos_x = current_level.start_position[0]
         Chardude.Pos_y = current_level.start_position[1]
-
-        current_entities = current_level.get_current_entities()
+        shooting = False
+        click = False
+        click_pos = [0,0]
+        enemyAlertness = 0.0
         pygame.mouse.set_visible(True)
         if not TitleScreen.TitleScreen(pygame, screen): #launch title screen
             done = True
