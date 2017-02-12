@@ -220,11 +220,13 @@ while not done:
     #switch text
     textbox.text[0] = "                                    "
     textbox.shadow_percentage = Chardude.ghostTimer/10000
-    #textbox.shadow_bar(35)
+    textbox.text[1] = "Press WASD to move!"
     
     #Actual draws and loop mechs
     textbox.create_textbox()
     textbox.blitz()
+    textbox.button_trigger()
+    
     screen.blit(Chardude.currentpicture, (1150,590,124,120))
 
     Core.Cursor.DrawCursor(pygame, screen, Chardude.Ghoststate, Chardude.hasGun )
