@@ -164,7 +164,7 @@ while not done:
     for bullet in current_bullets:
         if bullet.Pos_x < 0 or bullet.Pos_x > 1080 or bullet.Pos_y < 0 or bullet.Pos_y>720:
             current_bullets.remove(bullet)
-    print(current_bullets)
+    #print(current_bullets)
     if not Chardude.update(tick,current_level,current_entities):
         gameOver = True
     ## SOUND STUFF ##
