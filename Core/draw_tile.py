@@ -33,7 +33,7 @@ def draw_tile(x, y, current_room, txt_color, screen, font25, isGhoststate):
 
     # Colours for tiles not during ghost state
     else:
-        if current_room[x][y] in [0,3,5]:
+        if current_room[x][y] in [0,3,5,8]:
             curr_color = WHITE
         if current_room[x][y] == 1:
             curr_color = GREY
