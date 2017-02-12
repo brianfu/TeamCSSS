@@ -77,12 +77,12 @@ current_room = current_level.get_current_room()
 
 for m in range(len(current_room)):
     for n in range(len(current_room[m])):
-        if current_room[m][n] == 3:
+        if int(current_room[m][n]) == 3:
             Chardude.Pos_x = 30 * m
             Chardude.Pos_y = 30 * n
-        elif current_room[m][n] == 5:
+        elif int(current_room[m][n]) == 5:
             current_level.get_current_entities().append(Char.Enemy.Guard(m*30,n*30));
-        elif current_room[m][n] == 8:
+        elif int(current_room[m][n]) == 8:
             current_level.get_current_entities().append(Char.Enemy.Scientist(m*30,n*30));
 
 current_entities = current_level.get_current_entities()
@@ -115,19 +115,19 @@ while not done:
             gridpos_x = int((Chardude.Pos_x+20)//30)
             gridpos_y = int((Chardude.Pos_y+20)//30)
 
-            if (current_room[gridpos_x][gridpos_y] == 9 and Chardude.Ghoststate==False):
+            if (int(current_room[gridpos_x][gridpos_y]) == 9 and Chardude.Ghoststate==False):
                 current_room[gridpos_x][gridpos_y] = 13
                 current_level.activate_room_lever()
-            elif ((gridpos_x+1) <= 35 and current_room[gridpos_x+1][gridpos_y] == 9 and Chardude.Ghoststate==False):
+            elif ((gridpos_x+1) <= 35 and int(current_room[gridpos_x+1][gridpos_y]) == 9 and Chardude.Ghoststate==False):
                 current_room[gridpos_x+1][gridpos_y] = 13
                 current_level.activate_room_lever()
-            elif ((gridpos_x-1) >= 0 and current_room[gridpos_x-1][gridpos_y] == 9 and Chardude.Ghoststate==False):
+            elif ((gridpos_x-1) >= 0 and int(current_room[gridpos_x-1][gridpos_y]) == 9 and Chardude.Ghoststate==False):
                 current_room[gridpos_x-1][gridpos_y] = 13
                 current_level.activate_room_lever()
-            elif ((gridpos_y+1) <= 23 and current_room[gridpos_x][gridpos_y+1] == 9 and Chardude.Ghoststate==False):
+            elif ((gridpos_y+1) <= 23 and int(current_room[gridpos_x][gridpos_y+1]) == 9 and Chardude.Ghoststate==False):
                 current_room[gridpos_x][gridpos_y+1] = 13
                 current_level.activate_room_lever()
-            elif ((gridpos_y-1) >= 0 and current_room[gridpos_x][gridpos_y-1] == 9 and Chardude.Ghoststate==False):
+            elif ((gridpos_y-1) >= 0 and int(current_room[gridpos_x][gridpos_y-1]) == 9 and Chardude.Ghoststate==False):
                 current_room[gridpos_x][gridpos_y-1] = 13
                 current_level.activate_room_lever()
 
@@ -246,10 +246,10 @@ while not done:
 
         for m in range(len(current_room)):
             for n in range(len(current_room[m])):
-                if current_room[m][n] == 3:
+                if int( current_room[m][n] ) == 3:
                     Chardude.Pos_x = 30 * m
                     Chardude.Pos_y = 30 * n
-                elif current_room[m][n] == 5:
+                elif int( current_room[m][n] ) == 5:
                     current_level.get_current_entities().append(Char.Enemy.Guard(m*30,n*30));
 
         current_entities = current_level.get_current_entities()
