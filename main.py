@@ -80,6 +80,8 @@ for m in range(len(current_room)):
             Chardude.Pos_y = 30 * n
         elif current_room[m][n] == 5:
             current_level.get_current_entities().append(Char.Enemy.Guard(m*30,n*30));
+        elif current_room[m][n] == 8:
+            current_level.get_current_entities().append(Char.Enemy.Scientist(m*30,n*30));
 
 current_entities = current_level.get_current_entities()
 current_bullets = []; # List of bullets in a room, reset on room change
