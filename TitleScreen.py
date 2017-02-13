@@ -104,16 +104,16 @@ def TitleScreen(pygame, screen):
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         mousex, mousey = pygame.mouse.get_pos()
                         MOUSE = True
-                butrects = [(600, h/2, 400, 30), (600, h/2+90, 400, 30), (600, h/2+180, 400, 30)]
+                butrects = [(800, h/2, 400, 30), (800, h/2+90, 400, 30), (800, h/2+180, 400, 30)]
                 screen.fill((20,22,20), butrects[0])
                 but1text = font25.render("Nevada Military Base", 2, sovietred)
-                screen.blit(but1text, (700, h/2+6))
+                screen.blit(but1text, (900, h/2+6))
                 screen.fill((20,22,20), butrects[1])
                 but2text = font25.render("West Germany Military Base", 2, sovietred)
-                screen.blit(but2text, (700, h/2+96))
+                screen.blit(but2text, (900, h/2+96))
                 screen.fill((20,22,20), butrects[2])
                 but3text = font25.render("Okinawa Military Base", 2, sovietred)
-                screen.blit(but3text, (700, h/2+186))
+                screen.blit(but3text, (900, h/2+186))
                 title = font40.render("Select Setting: ", 2, sovietred)
                 screen.fill((20,22,20), (10,h/8,1150,40))
                 screen.blit(title, (20, h/8))
@@ -148,4 +148,4 @@ if __name__ == "__main__":
     pygame.init()
     size = (1280, 720)
     screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
-    TitleScreen(screen)
+    TitleScreen(pygame, screen)
