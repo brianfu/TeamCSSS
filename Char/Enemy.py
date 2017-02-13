@@ -194,7 +194,7 @@ class Enemy(object):
                 self.Direction[2]=1 #Up
             else:
                 self.Direction[0]=1 #Down
-                
+
     def Check_Bullet_Collision(self, current_bullets):
         for x in range(0, len(current_bullets)):
             if(current_bullets[x].char_bullet):
@@ -347,6 +347,7 @@ class Soldier(Enemy):
         self.SpecialTraits = 0
         self.Name = "Soldier"
         self.images = [pygame.image.load('Art/Red_hat_guard.png'),pygame.image.load('Art/Pistol.png')]
+        self.currentpicture = pygame.image.load('Art/Red_Guard_Portrait.png')
 
 class Janitor(Enemy):
     def __init__(self,newX,newY):
@@ -359,3 +360,4 @@ class Janitor(Enemy):
         self.SpecialTraits = 0
         self.Name = "Janitor"
         self.images = [pygame.image.load('Art/Green_hat.png'),pygame.image.load('Art/Arms.png')]
+        self.currentpicture = pygame.image.load('Art/Green_hat_portrait.png')
