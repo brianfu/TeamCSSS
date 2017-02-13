@@ -46,7 +46,7 @@ def WIN(pygame, screen):
         pygame.display.flip()
 
         # --- Limit to 60 frames per second
-        sleep(0.5)
+        sleep(4)
         clock.tick(60)
 
 
