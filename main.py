@@ -37,7 +37,7 @@ pygame.init()
 # Set the width and height of the screen [width, height]
 size = (1280, 720)
 
-screen = pygame.display.set_mode(size, pygame.FULLSCREEN )
+screen = pygame.display.set_mode(size, pygame.FULLSCREEN ) #delet optional arg to un fullscreen
 
 pygame.display.set_caption("Escape! by TEAM CSSSSS")
 
